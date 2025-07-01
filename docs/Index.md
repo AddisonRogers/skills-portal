@@ -1,0 +1,27 @@
+This is documentation for the skills-portal that has many goals but with a primary focus of helping navigate the different skills within a company. Original proposal made by [Addison Rogers](https://www.linkedin.com/in/addisonkarogers/) found [here](https://docs.google.com/document/d/1uc9pWkD6h3i8aupl9DjDx-9AwIRW8a8h8ly8bCh17PM/edit?usp=sharing).
+
+## Features
+- UI
+	-  Main (Duolingo) skills view
+		- [ ] Skills Tree to view skills in a duolingo type view
+			- [ ] Pan view
+			- [ ] Connections via some json doc?
+			- [ ] Individual skill view popup
+			- [ ] Individual skill view
+			- [ ] Individual certification view
+		- [ ] Overview thing to see where different people are at in your team
+		- [ ] Some form of filter
+		- [ ] Some form of search
+		- [ ] Left Side panel
+		- [ ] Right Side panel
+	 - Projects view
+	 - Clients view
+	 - Chat view
+	 - Opshub view
+	 - My skills plan view
+	 - Leaderboard view
+	 - Challenges view
+	 - Teams view
+	 - Admin view
+		 - 
+	 - Lite version
