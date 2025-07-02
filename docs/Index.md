@@ -24,4 +24,8 @@ This is documentation for the skills-portal that has many goals but with a prima
 	 - Teams view
 	 - Admin view
 		 - 
-	 - Lite version
+- Non-UI
+	- Need to CRON export the roadmap.sh data to a usable format
+	- Need to have a standard where people can upload and save and extend their own
+	- Opshub API fixes
+	- 
