@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Technical Design/Sequence diagram.md",
+                "file": "Interviews/Diwas - Placement Perspective.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Sequence diagram"
+              "title": "Diwas - Placement Perspective"
             }
           }
         ]
@@ -170,10 +170,10 @@
   },
   "active": "b450169e662345b2",
   "lastOpenFiles": [
-    "Technical Design/Graph View.md",
-    "Technical Design/Database Design.md",
-    "Technical Design/Sequence diagram.md",
     "Index.md",
+    "Interviews/Diwas - Placement Perspective.md",
+    "Interviews",
+    "Technical Design/Graph View.md",
     "Technical Design"
   ]
 }
