@@ -8,8 +8,8 @@ export default function Home() {
   const status = isPending ? "loading" : "authenticated";
   const user = data?.user;
 
-
-
+  // Get data from backend with user info
+  // Otherwise show default
 
 
 

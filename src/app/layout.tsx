@@ -24,10 +24,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const { isPending, data } = useSession();
-  const status = isPending ? "loading" : "authenticated";
-  const user = data?.user;
-
   return (
     <html lang="en">
       <body
