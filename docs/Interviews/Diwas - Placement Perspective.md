@@ -23,3 +23,7 @@
 
 Gamified is interesting, competitive is good.
 Documentation, books, mslearn, videos, medium articles, 
+
+"how has fsp set you up to start" : there is no help. The most vague-est setup is to be told about a qualification and thats all. Qualifications are somewhat useful but are very bloated in some cases broadly and not applying skills. 5 minutes a day, streak. Likes getting questions right. 
+
+Wants it to be split up and small things

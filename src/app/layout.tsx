@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import {useSession} from "@/lib/auth-client";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,6 +23,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const { isPending, data } = useSession();
+  const status = isPending ? "loading" : "authenticated";
+  const user = data?.user;
+
   return (
     <html lang="en">
       <body
