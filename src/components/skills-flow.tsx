@@ -1,7 +1,7 @@
 "use client"
 
-import { useCallback, useState } from 'react';
-import { ReactFlow, applyEdgeChanges, applyNodeChanges, MiniMap } from '@xyflow/react';
+import {useCallback, useState} from 'react';
+import {ReactFlow, applyEdgeChanges, applyNodeChanges, MiniMap, Edge, Node} from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
 const initialNodes = [
@@ -31,9 +31,11 @@ const initialEdges = [
   { id: 'e2-3', source: '2', target: '3', animated: true },
 ];
 
-function Flow() {
-  const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState(initialEdges);
+export default function SkillsFlow() {
+
+  const [nodes] = useState(initialNodes);
+  const [edges] = useState(initialEdges);
+
 
   const nodeColor = (node) => {
     switch (node.type) {
@@ -47,16 +49,18 @@ function Flow() {
   };
 
   return (
-    <ReactFlow
-      nodes={nodes}
-      edges={edges}
+    <div style={{ height: '100vh', width: '100vw' }}>
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
 
-      fitView
-    >
-      <MiniMap nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable />
+        width={100}
+        height={100}
+      >
+        <MiniMap nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable/>
 
-    </ReactFlow>
+      </ReactFlow>
+    </div>
+
   );
 }
-
-export default Flow;

@@ -10,7 +10,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils"; // Assumes you have a cn util for merging classes
 
 const navLinks = [
-  { name: "Skills", href: "/skills" },
+  { name: "Skills", href: "/" },
   { name: "Projects", href: "/projects" },
   { name: "Clients", href: "/clients" },
   { name: "Roles", href: "/roles" },
