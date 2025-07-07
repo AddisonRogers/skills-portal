@@ -1,4 +1,4 @@
-import { SkillsSidebar } from "@/components/skills-sidebar"
+import { CnSidebar } from "@/components/cn-sidebar"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -17,7 +17,7 @@ import {
 export default function Page() {
   return (
     <SidebarProvider>
-      <SkillsSidebar />
+      <CnSidebar />
       <SidebarInset>
         <header className="bg-background sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger className="-ml-1" />
