@@ -1,5 +1,7 @@
 "use client"
 
+// TODO make this a popup componenet
+
 import React from 'react';
 import {authClient} from "@/lib/auth-client";
 
