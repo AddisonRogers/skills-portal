@@ -11,6 +11,9 @@ Website --> OurUpdateQueue
 OurUpdateQueue --> OurSkillsTable
 Website <--> OpenAI
 
+Opshub --> FunctionAPP
+FunctionAPP --> AzSQL
+
 ```
 
 

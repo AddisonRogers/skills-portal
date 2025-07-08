@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { MssqlDialect } from "kysely";
 import * as Tedious from 'tedious'
 import * as Tarn from 'tarn'
+import {dialect} from "@/db/database";
 
 
 
