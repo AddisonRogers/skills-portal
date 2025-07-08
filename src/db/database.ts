@@ -3,7 +3,7 @@ import * as Tarn from "tarn";
 import * as Tedious from "tedious";
 import type {Database} from "@/db/types";
 
-const dialect = new MssqlDialect({
+export const dialect = new MssqlDialect({
     tarn: {
         ...Tarn,
         options: {

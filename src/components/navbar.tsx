@@ -18,11 +18,13 @@ const navLinks = [
   { name: "Admin Panel", href: "/admin-panel" },
   { name: "Statistics", href: "/statistics" },
   { name: "AI", href: "/ai" },
-  { name: "Opshub", href: "/opshub" },
+  { name: "Opshub", href: "https://operations.fsp.team/" },
   { name: "Settings", href: "/settings" },
 ];
 
 export default function Navbar() {
+  // TODO Conditionally render admin panel on the user's role
+
   return (
     <nav className="w-full bg-white/70 backdrop-blur border-b border-gray-200 shadow-sm py-4 px-8 sticky top-0 z-50">
       <NavigationMenu className="max-w-7xl mx-auto w-full">
