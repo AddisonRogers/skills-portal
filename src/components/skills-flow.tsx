@@ -56,8 +56,8 @@ export default function SkillsFlow() {
 
         width={100}
         height={100}
+
       >
-        <MiniMap nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable/>
 
       </ReactFlow>
     </div>

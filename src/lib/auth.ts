@@ -10,7 +10,7 @@ export const auth = betterAuth({
       clientId: process.env.MICROSOFT_CLIENT_ID as string,
       clientSecret: process.env.MICROSOFT_CLIENT_SECRET as string,
       // Optional
-      tenantId: '805d0794-f9ac-42a6-b40a-9e41418a213e',
+      tenantId: process.env.MICROSOFT_TENANT_ID as string,
       requireSelectAccount: true
     }
   }

@@ -1,12 +1,16 @@
 ```mermaid
 graph TD
 RoadmapRepo --> FunctionAPP
-FunctionAPP --> CosmosDB
-FunctionAPP --> AzSQL
-User --> Website
+FunctionAPP --> UpdateQueue
+UpdateQueue --> FunctionAPP
+FunctionAPP --> RoadmapSkillsTable
+
 Website <--> AzSQL
-Website <--> CosmosDB
+RoadmapSkillsTable --> Website
+Website --> OurUpdateQueue
+OurUpdateQueue --> OurSkillsTable
 Website <--> OpenAI
-Website <--> FunctionAPP
+
 ```
+
 
