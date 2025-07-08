@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "e44e728d106a4347",
+        "id": "c5dd88d81c914d11",
         "type": "tabs",
         "children": [
           {
-            "id": "298f3c30674a9a21",
+            "id": "8844a0f73f079adb",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Technical Design/Database Design.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Database Design"
             }
           }
         ]
@@ -164,8 +168,9 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "298f3c30674a9a21",
+  "active": "8844a0f73f079adb",
   "lastOpenFiles": [
+    "Index.md",
     "Technical Design/Getting Skills.md",
     "Technical Design/Graph View.md",
     "Technical Design/Sequence diagram.md",
@@ -173,7 +178,6 @@
     "shapes at 25-07-07 22.54.22.png",
     "Pasted image 20250707224530.png",
     "Pasted image 20250707223421.png",
-    "Index.md",
     "Technical Design/Use Cases.md",
     "Interviews/Diwas - Placement Perspective.md",
     "Interviews/Harrison - Apprenticeship Perspective.md",
