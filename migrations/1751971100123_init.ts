@@ -1,108 +1,38 @@
 import { Kysely, sql } from 'kysely'
 
 export async function up(db: Kysely<any>): Promise<void> {
-    // User Table
-    await db.schema
-        .createTable('user')
-        .addColumn('id', 'varchar(255)', (col) => col.primaryKey())
-        .addColumn('name', 'text', (col) => col.notNull())
-        .addColumn('email', 'text', (col) => col.notNull().unique())
-        .addColumn('email_verified', 'boolean', (col) => col.notNull())
-        .addColumn('image', 'text')
-        .addColumn('created_at', 'timestamp', (col) =>
-            col.notNull().defaultTo(sql`CURRENT_TIMESTAMP`)
-        )
-        .addColumn('updated_at', 'timestamp', (col) =>
-            col.notNull().defaultTo(sql`CURRENT_TIMESTAMP`)
-        )
-        .execute()
-
-    // Session Table
-    await db.schema
-        .createTable('session')
-        .addColumn('id', 'varchar(255)', (col) => col.primaryKey())
-        .addColumn('expires_at', 'timestamp', (col) => col.notNull())
-        .addColumn('token', 'text', (col) => col.notNull().unique())
-        .addColumn('created_at', 'timestamp', (col) =>
-            col.notNull().defaultTo(sql`CURRENT_TIMESTAMP`)
-        )
-        .addColumn('updated_at', 'timestamp', (col) =>
-            col.notNull().defaultTo(sql`CURRENT_TIMESTAMP`)
-        )
-        .addColumn('ip_address', 'text')
-        .addColumn('user_agent', 'text')
-        .addColumn('user_id', 'varchar(255)', (col) =>
-            col.references('user.id').onDelete('cascade').notNull()
-        )
-        .execute()
-
-    // Account Table
-    await db.schema
-        .createTable('account')
-        .addColumn('id', 'varchar(255)', (col) => col.primaryKey())
-        .addColumn('account_id', 'text', (col) => col.notNull())
-        .addColumn('provider_id', 'text', (col) => col.notNull())
-        .addColumn('user_id', 'varchar(255)', (col) =>
-            col.references('user.id').onDelete('cascade').notNull()
-        )
-        .addColumn('access_token', 'text')
-        .addColumn('refresh_token', 'text')
-        .addColumn('id_token', 'text')
-        .addColumn('access_token_expires_at', 'timestamp')
-        .addColumn('refresh_token_expires_at', 'timestamp')
-        .addColumn('scope', 'text')
-        .addColumn('password', 'text')
-        .addColumn('created_at', 'timestamp', (col) =>
-            col.notNull().defaultTo(sql`CURRENT_TIMESTAMP`)
-        )
-        .addColumn('updated_at', 'timestamp', (col) =>
-            col.notNull().defaultTo(sql`CURRENT_TIMESTAMP`)
-        )
-        .execute()
-
-    // Verification Table
-    await db.schema
-        .createTable('verification')
-        .addColumn('id', 'varchar(255)', (col) => col.primaryKey())
-        .addColumn('identifier', 'text', (col) => col.notNull())
-        .addColumn('value', 'text', (col) => col.notNull())
-        .addColumn('expires_at', 'timestamp', (col) => col.notNull())
-        .addColumn('created_at', 'timestamp')
-        .addColumn('updated_at', 'timestamp')
-        .execute()
-
     // Skill Table
     await db.schema
         .createTable('skill')
-        .addColumn('id', 'serial', (col) => col.primaryKey())
-        .addColumn('name', 'text', (col) => col.notNull().unique())
+        .addColumn('id', 'integer', (col) => col.primaryKey())
+        .addColumn('name', 'varchar(255)', (col) => col.notNull().unique())
         .addColumn('description', 'text')
-        .addColumn('created_at', 'timestamp', (col) =>
-            col.notNull().defaultTo(sql`CURRENT_TIMESTAMP`)
+        .addColumn('created_at', 'datetime', (col) =>
+            col.notNull().defaultTo(sql`GETDATE()`)
         )
-        .addColumn('updated_at', 'timestamp', (col) =>
-            col.notNull().defaultTo(sql`CURRENT_TIMESTAMP`)
+        .addColumn('updated_at', 'datetime', (col) =>
+            col.notNull().defaultTo(sql`GETDATE()`)
         )
         .execute()
 
     // UserSkill Table
     await db.schema
         .createTable('user_skill')
-        .addColumn('id', 'serial', (col) => col.primaryKey())
-        .addColumn('user_id', 'varchar(255)', (col) =>
+        .addColumn('id', 'integer', (col) => col.primaryKey())
+        .addColumn('user_id', 'varchar(36)', (col) =>
             col.references('user.id').onDelete('cascade').notNull()
         )
         .addColumn('skill_id', 'integer', (col) =>
             col.references('skill.id').onDelete('cascade').notNull()
         )
-        .addColumn('acquired_at', 'timestamp')
+        .addColumn('acquired_at', 'datetime')
         .addColumn('level', 'integer')
         .execute()
 
     // Certification Table
     await db.schema
         .createTable('certification')
-        .addColumn('id', 'serial', (col) => col.primaryKey())
+        .addColumn('id', 'integer', (col) => col.primaryKey())
         .addColumn('name', 'text', (col) => col.notNull())
         .addColumn('issuer', 'text')
         .execute()
@@ -110,21 +40,21 @@ export async function up(db: Kysely<any>): Promise<void> {
     // UserCertification Table
     await db.schema
         .createTable('user_certification')
-        .addColumn('id', 'serial', (col) => col.primaryKey())
-        .addColumn('user_id', 'varchar(255)', (col) =>
+        .addColumn('id', 'integer', (col) => col.primaryKey())
+        .addColumn('user_id', 'varchar(36)', (col) =>
             col.references('user.id').onDelete('cascade').notNull()
         )
         .addColumn('cert_id', 'integer', (col) =>
             col.references('certification.id').onDelete('cascade').notNull()
         )
-        .addColumn('issued_at', 'timestamp')
-        .addColumn('expires_at', 'timestamp')
+        .addColumn('issued_at', 'datetime')
+        .addColumn('expires_at', 'datetime')
         .execute()
 
     // Role Table
     await db.schema
         .createTable('role')
-        .addColumn('id', 'serial', (col) => col.primaryKey())
+        .addColumn('id', 'integer', (col) => col.primaryKey())
         .addColumn('name', 'text', (col) => col.notNull())
         .addColumn('description', 'text')
         .execute()
@@ -132,7 +62,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     // Client Table
     await db.schema
         .createTable('client')
-        .addColumn('id', 'serial', (col) => col.primaryKey())
+        .addColumn('id', 'integer', (col) => col.primaryKey())
         .addColumn('name', 'text', (col) => col.notNull())
         .addColumn('description', 'text')
         .execute()
@@ -140,17 +70,17 @@ export async function up(db: Kysely<any>): Promise<void> {
     // Project Table
     await db.schema
         .createTable('project')
-        .addColumn('id', 'serial', (col) => col.primaryKey())
+        .addColumn('id', 'integer', (col) => col.primaryKey())
         .addColumn('name', 'text', (col) => col.notNull())
         .addColumn('description', 'text')
-        .addColumn('started_at', 'timestamp')
-        .addColumn('ended_at', 'timestamp')
+        .addColumn('started_at', 'datetime')
+        .addColumn('ended_at', 'datetime')
         .execute()
 
     // ClientProject Table
     await db.schema
         .createTable('client_project')
-        .addColumn('id', 'serial', (col) => col.primaryKey())
+        .addColumn('id', 'integer', (col) => col.primaryKey())
         .addColumn('client_id', 'integer', (col) =>
             col.references('client.id').onDelete('cascade').notNull()
         )
@@ -162,11 +92,11 @@ export async function up(db: Kysely<any>): Promise<void> {
     // ProjectUser Table
     await db.schema
         .createTable('project_user')
-        .addColumn('id', 'serial', (col) => col.primaryKey())
+        .addColumn('id', 'integer', (col) => col.primaryKey())
         .addColumn('project_id', 'integer', (col) =>
             col.references('project.id').onDelete('cascade').notNull()
         )
-        .addColumn('user_id', 'varchar(255)', (col) =>
+        .addColumn('user_id', 'varchar(36)', (col) =>
             col.references('user.id').onDelete('cascade').notNull()
         )
         .addColumn('role_id', 'integer', (col) =>
