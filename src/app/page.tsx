@@ -12,10 +12,9 @@ export default function Home() {
   const user = data?.user;
 
 
-
   return (
     <div className={"w-full min-h-screen bg-gray-950 dark:bg-gray-900"}>
-        <SkillsFlow/>
+      <SkillsFlow/>
     </div>
   );
 }

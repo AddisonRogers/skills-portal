@@ -1,16 +1,13 @@
 import { betterAuth } from "better-auth";
-import { MssqlDialect } from "kysely";
-import * as Tedious from 'tedious'
-import * as Tarn from 'tarn'
-import {dialect} from "@/db/database";
+import { db } from "@/lib/db";
+import {drizzleAdapter} from "better-auth/adapters/drizzle";
 
 
 
 export const auth = betterAuth({
-  database: {
-    dialect,
-    type: "mssql"
-  },
+  database: drizzleAdapter(db, {
+    provider: "pg",
+  }),
   socialProviders: {
     microsoft: {
       clientId: process.env.MICROSOFT_CLIENT_ID as string,
