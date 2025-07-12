@@ -11,6 +11,20 @@ export const signIn = async () => {
   });
 };
 
+export const isAdmin = async () => {
+  const { data: session, error } = await authClient.getSession()
+  if (error) return false;
+
+  if (
+    session === undefined ||
+    session?.user === undefined
+  ) return false;
+
+  session.user.email
+
+  return false;
+};
+
 
 
 export const { useSession } = authClient

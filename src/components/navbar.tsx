@@ -10,7 +10,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils"; // Assumes you have a cn util for merging classes
 
 const navLinks = [
-  { name: "Skills", href: "/" },
+  { name: "Skills", href: "/skills" },
   { name: "Projects", href: "/projects" },
   { name: "Clients", href: "/clients" },
   { name: "Roles", href: "/roles" },
@@ -24,6 +24,8 @@ const navLinks = [
 
 export default function Navbar() {
   // TODO Conditionally render admin panel on the user's role
+
+
 
   return (
     <nav className="w-full bg-white/70 backdrop-blur border-b border-gray-200 shadow-sm py-4 px-8 sticky top-0 z-50">
