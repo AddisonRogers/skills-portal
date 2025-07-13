@@ -1,7 +1,7 @@
 import {boolean, integer, pgTable, serial, text, timestamp, uuid, varchar} from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
-  id: serial('id').primaryKey(),
+  id: serial().primaryKey(),
   name: text('name').notNull(),
   email: text('email').notNull().unique(),
   emailVerified: boolean('email_verified').$defaultFn(() => false).notNull(),
@@ -11,21 +11,21 @@ export const user = pgTable("user", {
 });
 
 export const session = pgTable("session", {
-  id: serial('id').primaryKey(),
+  id: serial().primaryKey(),
   expiresAt: timestamp('expires_at').notNull(),
   token: text('token').notNull().unique(),
   createdAt: timestamp('created_at').notNull(),
   updatedAt: timestamp('updated_at').notNull(),
   ipAddress: text('ip_address'),
   userAgent: text('user_agent'),
-  userId: text('user_id').notNull().references(()=> user.id, { onDelete: 'cascade' })
+  userId: integer('user_id').notNull().references(()=> user.id, { onDelete: 'cascade' })
 });
 
 export const account = pgTable("account", {
-  id: serial('id').primaryKey(),
+  id: serial().primaryKey(),
   accountId: text('account_id').notNull(),
   providerId: text('provider_id').notNull(),
-  userId: text('user_id').notNull().references(()=> user.id, { onDelete: 'cascade' }),
+  userId: integer('user_id').notNull().references(()=> user.id, { onDelete: 'cascade' }),
   accessToken: text('access_token'),
   refreshToken: text('refresh_token'),
   idToken: text('id_token'),
@@ -38,7 +38,7 @@ export const account = pgTable("account", {
 });
 
 export const verification = pgTable("verification", {
-  id: serial('id').primaryKey(),
+  id: serial().primaryKey(),
   identifier: text('identifier').notNull(),
   value: text('value').notNull(),
   expiresAt: timestamp('expires_at').notNull(),
@@ -48,7 +48,7 @@ export const verification = pgTable("verification", {
 
 
 export const skill = pgTable("skill", {
-  id: serial('id').primaryKey(),
+  id: serial().primaryKey(),
   name: text('name').notNull().unique(),
   description: text('description'),
   createdAt: timestamp('created_at').$defaultFn(() => new Date()).notNull(),
@@ -56,7 +56,7 @@ export const skill = pgTable("skill", {
 });
 
 export const userSkill = pgTable("user_skill", {
-  id: serial('id').primaryKey(),
+  id: serial().primaryKey(),
   userId: integer('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
   skillId: integer('skill_id').notNull().references(() => skill.id, { onDelete: 'cascade' }),
   acquiredAt: timestamp('acquired_at'),
@@ -64,39 +64,39 @@ export const userSkill = pgTable("user_skill", {
 });
 
 export const certification = pgTable("certification", {
-  id: serial('id').primaryKey(),
+  id: serial().primaryKey(),
   name: text('name').notNull(),
   issuer: text('issuer'),
 });
 
 export const userCertification = pgTable("user_certification", {
-  id: serial('id').primaryKey(),
-  userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
-  certId: text('cert_id').notNull().references(() => certification.id, { onDelete: 'cascade' }),
+  id: serial().primaryKey(),
+  userId: integer('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+  certId: integer('cert_id').notNull().references(() => certification.id, { onDelete: 'cascade' }),
   issuedAt: timestamp('issued_at'),
   expiresAt: timestamp('expires_at'),
 });
 
 export const role = pgTable("role", {
-  id: serial('id').primaryKey(),
+  id: serial().primaryKey(),
   name: text('name'),
   description: text('description'),
 });
 
 export const user_roles = pgTable("user_role", {
-  id: serial('id').primaryKey(),
+  id: serial().primaryKey(),
   userId: integer('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
   roleId: integer('role_id').notNull().references(() => role.id, { onDelete: 'cascade' }),
 })
 
 export const client = pgTable("client", {
-  id: serial('id').primaryKey(),
+  id: serial().primaryKey(),
   name: text('name').notNull(),
   description: text('description'),
 });
 
 export const project = pgTable("project", {
-  id: serial('id').primaryKey(),
+  id: serial().primaryKey(),
   name: text('name').notNull(),
   description: text('description'),
   startedAt: timestamp('started_at'),
@@ -104,13 +104,13 @@ export const project = pgTable("project", {
 });
 
 export const clientProject = pgTable("client_project", {
-  id: serial('id').primaryKey(),
+  id: serial().primaryKey(),
   clientId: integer('client_id').notNull().references(() => client.id, { onDelete: 'cascade' }),
   projectId: integer('project_id').notNull().references(() => project.id, { onDelete: 'cascade' }),
 });
 
 export const projectUser = pgTable("project_user", {
-  id: serial('id').primaryKey(),
+  id: serial().primaryKey(),
   projectId: integer('project_id').notNull().references(() => project.id, { onDelete: 'cascade' }),
   userId: integer('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
   roleId: integer('role_id').references(() => role.id, { onDelete: 'set null' }),
