@@ -1,12 +1,14 @@
 import { betterAuth } from "better-auth";
 import { db } from "@/lib/db";
 import {drizzleAdapter} from "better-auth/adapters/drizzle";
+import * as schema from '@/db/schema' // adjust the path to where your exports are
 
 
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "pg",
+    schema: schema
   }),
   socialProviders: {
     microsoft: {
