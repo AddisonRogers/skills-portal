@@ -83,7 +83,7 @@ export const role = pgTable("role", {
   description: text('description'),
 });
 
-export const user_roles = pgTable("user_role", {
+export const userroles = pgTable("user_role", {
   id: serial().primaryKey(),
   userId: integer('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
   roleId: integer('role_id').notNull().references(() => role.id, { onDelete: 'cascade' }),
