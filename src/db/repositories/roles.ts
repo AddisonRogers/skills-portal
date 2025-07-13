@@ -1,3 +1,4 @@
+"use server"
 // Need a drizzle repo where
 
 import {and, eq} from "drizzle-orm";
@@ -15,7 +16,7 @@ export async function getRoles(userEmail: string) {
     .where(eq(user.email, userEmail));
 }
 
-export function isAdmin(userEmail: string): Promise<boolean> {
+export async function isAdmin(userEmail: string): Promise<boolean> {
   return userHasRole(userEmail, "admin")
 }
 
@@ -101,7 +102,7 @@ export async function removeRoleFromSomeone(userEmail: string, roleName: string)
   console.debug(result)
 }
 
-export async function addRole(roleName: string, roleDescription): Promise<void> {
+export async function addRole(roleName: string, roleDescription: string): Promise<void> {
   const result = await db
     .insert(role)
     .values({

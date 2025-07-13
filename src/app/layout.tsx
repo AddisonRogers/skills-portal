@@ -2,7 +2,7 @@ import type {Metadata} from "next";
 import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import {useSession} from "@/lib/auth-client";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/navbar/navbar";
 import {NuqsAdapter} from "nuqs/adapters/next/app";
 
 const geistSans = Geist({
