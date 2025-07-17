@@ -1,0 +1,23 @@
+[
+  {
+    "partitionKey": "frontend-developer",
+    "rowkey": "html",
+    "x": 100,
+    "y": 200,
+    "type": "skill"
+  },
+  {
+    "partitionKey": "frontend-developer",
+    "rowkey": "css",
+    "x": 250,
+    "y": 200,
+    "type": "skill"
+  },
+  {
+    "partitionKey": "frontend-developer",
+    "rowkey": "javascript",
+    "x": 400,
+    "y": 200,
+    "type": "skill"
+  }
+]

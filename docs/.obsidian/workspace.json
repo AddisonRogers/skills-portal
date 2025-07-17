@@ -15,7 +15,7 @@
               "state": {
                 "file": "Technical Design/Cosmos Tables.md",
                 "mode": "source",
-                "source": false
+                "source": true
               },
               "icon": "lucide-file",
               "title": "Cosmos Tables"

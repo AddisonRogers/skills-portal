@@ -1,0 +1,12 @@
+[
+  {
+    "partitionKey": "roadmap",
+    "rowkey": "frontend-developer",
+    "relatedRoadmap": ["backend-developer", "full-stack-developer", "devops-engineer"]
+  },
+  {
+    "partitionKey": "roadmap",
+    "rowkey": "backend-developer",
+    "relatedRoadmap": ["frontend-developer", "full-stack-developer", "database-administrator"]
+  }
+]
