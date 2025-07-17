@@ -68,6 +68,9 @@ importers:
       effect:
         specifier: ^3.16.13
         version: 3.16.13
+      ky:
+        specifier: ^1.8.2
+        version: 1.8.2
       lucide-react:
         specifier: ^0.525.0
         version: 0.525.0(react@19.1.0)
@@ -3015,6 +3018,10 @@ packages:
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
+
+  ky@1.8.2:
+    resolution: {integrity: sha512-XybQJ3d4Ea1kI27DoelE5ZCT3bSJlibYTtQuMsyzKox3TMyayw1asgQdl54WroAm+fIA3ZCr8zXW2RpR7qWVpA==}
+    engines: {node: '>=18'}
 
   kysely-ctl@0.13.1:
     resolution: {integrity: sha512-DhTgpt1ru3Y74rI8O3IRLJ5HV09vMSz4q2KEeqaUX0GYMB09zO1KsdwSsF+ZMa8bHeS4F4J3Vjfbc4ulJQ1r0A==}
@@ -7009,6 +7016,8 @@ snapshots:
   keyv@4.5.4:
     dependencies:
       json-buffer: 3.0.1
+
+  ky@1.8.2: {}
 
   kysely-ctl@0.13.1(kysely@0.28.2):
     dependencies:
