@@ -6,5 +6,7 @@ export default defineConfig({
   plugins: [tsconfigPaths(), react()],
   test: {
     environment: 'jsdom',
+    hookTimeout: 100000,
   },
+
 })
