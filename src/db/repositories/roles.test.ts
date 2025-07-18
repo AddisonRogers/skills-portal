@@ -1,6 +1,6 @@
 import {describe, it, expect, vi, beforeEach, beforeAll, afterAll} from "vitest";
 import * as rolesModule from "./roles";
-import {createDb} from "@/lib/db";
+import {getDb} from "@/lib/db";
 import {PostgreSqlContainer, type StartedPostgreSqlContainer} from "@testcontainers/postgresql"
 import {Pool} from "pg";
 import * as usersModule from "./users";
@@ -9,7 +9,7 @@ import { migrate } from 'drizzle-orm/node-postgres/migrator';
 
 
 let container: StartedPostgreSqlContainer;
-let db: ReturnType<typeof createDb>;
+let db: ReturnType<typeof getDb>;
 
 const mockUser = { id: nanoid(), email: "user@example.com", name: "Test", email_verified: false };
 const otherUser = { id: nanoid(), email: "other@example.com", name: "Other", email_verified: false };
@@ -17,24 +17,27 @@ const adminRole = { name: "admin", description: "Administrator" };
 const editorRole = { name: "editor", description: "Editor" };
 
 
-describe("roles.ts (integration, no mocks)", () => {
+describe("roles tests", () => {
     beforeAll(async () => {
         try {
             container = await new PostgreSqlContainer("postgres:17-alpine")
                 .withUsername("postgres")
+                .withDatabase("postgres")
+                .withPassword("postgres")
                 .start();
-            console.debug(`Container started: ${container.getHost()}:${container.getPort()}`);
+
             const testPool = new Pool({
-                connectionString: container.getConnectionUri()
+                user: "postgres",
+                password: "postgres",
+                database: "postgres",
             });
 
-            db = createDb(testPool);
+            db = getDb(testPool);
             await migrate(db, {
                 migrationsFolder: "./drizzle",
                 migrationsSchema: "./src/db/schema.ts"
             })
 
-            // Setup initial data
             await usersModule.test_use_createUser(mockUser);
             await usersModule.test_use_createUser(otherUser);
             console.debug(`Created users: ${mockUser.email}, ${otherUser.email}`);
