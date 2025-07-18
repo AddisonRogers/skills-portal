@@ -1,22 +1,9 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import { 
+import {
   getCurrentLearningRoadmap, 
   getSuggestedRoadmaps, 
   getAllRoadmaps, 
   getAllCapabilities,
 } from './serverFunctions';
-import { 
-  Search, 
-  Filter, 
-  Star, 
-  Briefcase, 
-  Users, 
-  User 
-} from 'lucide-react';
-import {Roadmap} from "@/types/Roadmap";
-import RoadmapCard from "@/components/roadmapCard";
 import ContinueLearningSection from "@/app/learn/ContinueLearningSection";
 import SuggestedRoadmapsSection from "@/app/learn/SuggestedRoadmapsSection";
 import AllRoadmapsSection from "@/app/learn/AllRoadmapsSection";
@@ -27,10 +14,7 @@ export default async function LearnPage() {
   const allRoadmapsData = await getAllRoadmaps();
   const capabilities = await getAllCapabilities();
 
-  // Generate random avatar URLs for demo purposes
-  const generateAvatarUrl = (index: number) => {
-    return `https://i.pravatar.cc/40?img=${index}`;
-  };
+  console.log(capabilities);
 
   return (
     <main className="container mx-auto px-4 py-8">

@@ -1,9 +1,11 @@
+"use client"
+
 import {Search} from "lucide-react";
 import RoadmapCard from "@/components/roadmapCard";
 import {useState} from "react";
 import { Roadmap } from "@/types/Roadmap";
 
-export default function AllRoadmapsSection( allRoadmapsData: any, capabilities: any[]) {
+export default function AllRoadmapsSection( {allRoadmapsData, allCapabilities }: { allRoadmapsData: Roadmap[], allCapabilities: string[] } ) {
 
   const [allRoadmaps, setAllRoadmaps] = useState<Roadmap[]>(allRoadmapsData);
   const [searchTerm, setSearchTerm] = useState('');
@@ -13,6 +15,10 @@ export default function AllRoadmapsSection( allRoadmapsData: any, capabilities: 
     capability: ''
   });
 
+  // Generate random avatar URLs for demo purposes
+  const generateAvatarUrl = (index: number) => {
+    return `https://i.pravatar.cc/40?img=${index}`;
+  };
 
   return (
     <section>
@@ -67,7 +73,7 @@ export default function AllRoadmapsSection( allRoadmapsData: any, capabilities: 
               onChange={(e) => setFilters({...filters, capability: e.target.value})}
             >
               <option value="">All Capabilities</option>
-              {capabilities.map((capability) => (
+              {allCapabilities.map((capability) => (
                 <option key={capability} value={capability}>
                   {capability}
                 </option>
