@@ -1,7 +1,18 @@
 import {Search} from "lucide-react";
 import RoadmapCard from "@/components/roadmapCard";
+import {useState} from "react";
+import { Roadmap } from "@/types/Roadmap";
 
-export default function AllRoadmapsSection() {
+export default function AllRoadmapsSection( allRoadmapsData: any, capabilities: any[]) {
+
+  const [allRoadmaps, setAllRoadmaps] = useState<Roadmap[]>(allRoadmapsData);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filters, setFilters] = useState({
+    suggestedByManager: false,
+    isFavorite: false,
+    capability: ''
+  });
+
 
   return (
     <section>

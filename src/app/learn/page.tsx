@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import {Roadmap} from "@/types/Roadmap";
 import RoadmapCard from "@/components/roadmapCard";
-import ContinueLearningSection from "@/app/learn/continueLearningSection";
+import ContinueLearningSection from "@/app/learn/ContinueLearningSection";
 import SuggestedRoadmapsSection from "@/app/learn/SuggestedRoadmapsSection";
 import AllRoadmapsSection from "@/app/learn/AllRoadmapsSection";
 
@@ -26,30 +26,6 @@ export default async function LearnPage() {
   const suggestedRoadmaps = await getSuggestedRoadmaps();
   const allRoadmapsData = await getAllRoadmaps();
   const capabilities = await getAllCapabilities();
-
-  const [allRoadmaps, setAllRoadmaps] = useState<Roadmap[]>(allRoadmapsData);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filters, setFilters] = useState({
-    suggestedByManager: false,
-    isFavorite: false,
-    capability: ''
-  });
-
-
-  // // Apply filters and search
-  // useEffect(() => {
-  //   const applyFiltersAndSearch = async () => {
-  //     const filteredRoadmaps = await getAllRoadmaps({
-  //       suggestedByManager: filters.suggestedByManager,
-  //       isFavorite: filters.isFavorite,
-  //       capability: filters.capability,
-  //       searchTerm
-  //     });
-  //     setAllRoadmaps(filteredRoadmaps);
-  //   };
-  //
-  //   applyFiltersAndSearch();
-  // }, [filters, searchTerm]);
 
   // Generate random avatar URLs for demo purposes
   const generateAvatarUrl = (index: number) => {
@@ -68,7 +44,7 @@ export default async function LearnPage() {
         <SuggestedRoadmapsSection suggestedRoadmaps={suggestedRoadmaps} />
       )}
       
-      <AllRoadmapsSection />
+      <AllRoadmapsSection allRoadmapsData={allRoadmapsData} allCapabilities={capabilities}/>
     </main>
   );
 }
