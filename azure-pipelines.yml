@@ -1,0 +1,60 @@
+trigger:
+  - main
+
+variables:
+  IMAGE_NAME: skills-portal
+  REGISTRY: <your-acr-name>.azurecr.io
+
+stages:
+  - stage: Test
+    displayName: "Test App"
+    jobs:
+      - job: Test
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - checkout: self
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '18.x'
+            displayName: 'Install Node.js'
+          - script: |
+              corepack enable
+              pnpm install
+            displayName: 'Install dependencies'
+          - script: pnpm run vitest
+            displayName: "Run tests"
+
+  - stage: BuildAndPush
+    displayName: "Build and Push Docker Image"
+    dependsOn: Test
+    jobs:
+      - job: BuildAndPush
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - checkout: self
+
+          - task: DockerInstaller@0
+            displayName: "Install Docker"
+
+          - script: |
+              echo "##vso[task.setvariable variable=GIT_SHA]$(git rev-parse --short HEAD)"
+            displayName: "Get commit SHA"
+
+          - task: Docker@2
+            displayName: Build image
+            inputs:
+              command: buildAndPush
+              repository: $(REGISTRY)/$(IMAGE_NAME)
+              Dockerfile: Dockerfile
+              tags: |
+                $(GIT_SHA)
+                latest
+              containerRegistry: $(DOCKER_REGISTRY_SERVICE_CONNECTION)
+
+# Notes:
+# - Replace <your-acr-name> with your actual Azure Container Registry name.
+# - You must create a service connection in Azure DevOps named 'DOCKER_REGISTRY_SERVICE_CONNECTION'
+#   (this can be any service connection name you assign; match it in the pipeline variable above)
+# - This pipeline will tag images with both the short commit SHA and 'latest'.
