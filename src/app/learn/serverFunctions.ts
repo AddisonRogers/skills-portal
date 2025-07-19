@@ -9,8 +9,16 @@
 //   return getSuggestedRoadmaps()
 // }
 
-export async function getAllRoadmaps() {}
+import {getAllRoadmaps} from "@/db/repositories/roadmap";
 
-export async function getAllCapabilities() {}
+// export async function getAllRoadmaps() {
+//   return getAllRoadmaps
+// }
 
-export async function getSkillsForRoadmap(userId: string, roadmapId: string) {}
+// export async function getAllCapabilities() {
+//   return getAllCapabilities()
+// }
+
+// export async function getSkillsForRoadmap(userId: string, roadmapId: string) {
+//   return getSkillsForRoadmap(userId, roadmapId)
+// }

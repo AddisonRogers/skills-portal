@@ -4,20 +4,17 @@ import { and, eq } from "drizzle-orm";
 import {
 	roadmap,
 	role,
-	skill,
+	skill, skillRoadmap,
 	suggestedRoadmap,
 	user,
 	user_roles,
 } from "@/db/schema";
 import { db } from "@/lib/db";
+import {getSkillsForRoadmap} from "@/db/repositories/skills";
 
-// export async function getSkillsOnRoadmap(roadmapId: string) {
-//   return db
-//     .select()
-//     .from(skill)
-//     .innerJoin(roadmap, eq(skill.roadmapId, roadmap.id))
-//     .where(eq(roadmap.id, roadmapId))
-// }
+export async function getSkillsOnRoadmap(roadmapId: string) {
+  return getSkillsForRoadmap(roadmapId)
+}
 
 export async function getSuggestedRoadmaps(userEmail: string) {
 	return db
@@ -29,6 +26,6 @@ export async function getSuggestedRoadmaps(userEmail: string) {
 		.where(eq(user.email, userEmail));
 }
 
-export async function getRoadmaps() {
+export async function getAllRoadmaps() {
 	return db.select().from(roadmap);
 }
