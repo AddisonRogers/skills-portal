@@ -1,3 +1,12 @@
+export type AZRoadmapData = {
+	partitionKey: string;
+	rowkey: string;
+	title: string;
+	description: string;
+	capability: string;
+	relatedRoadmap: string[];
+};
+
 export type Roadmap = {
 	id: string;
 	title: string;
@@ -7,8 +16,6 @@ export type Roadmap = {
 	isFavorite?: boolean;
 	usersLearning?: UsersLearning;
 };
-
-// TODO change usersLearning
 
 export type UsersLearning = {
 	usersLearning: number;

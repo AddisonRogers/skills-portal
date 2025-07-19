@@ -1,0 +1,219 @@
+[
+	{
+		"partitionKey": "frontend-developer",
+		"rowkey": "html",
+		"x": 100,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "frontend-developer",
+		"rowkey": "css",
+		"x": 250,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "frontend-developer",
+		"rowkey": "javascript",
+		"x": 400,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "frontend-developer",
+		"rowkey": "react",
+		"x": 100,
+		"y": 250,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "frontend-developer",
+		"rowkey": "angular",
+		"x": 250,
+		"y": 250,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "frontend-developer",
+		"rowkey": "vue",
+		"x": 400,
+		"y": 250,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "backend-developer",
+		"rowkey": "nodejs",
+		"x": 100,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "backend-developer",
+		"rowkey": "express",
+		"x": 250,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "backend-developer",
+		"rowkey": "python",
+		"x": 400,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "backend-developer",
+		"rowkey": "django",
+		"x": 100,
+		"y": 250,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "backend-developer",
+		"rowkey": "sql",
+		"x": 250,
+		"y": 250,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "backend-developer",
+		"rowkey": "mongodb",
+		"x": 400,
+		"y": 250,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "full-stack-developer",
+		"rowkey": "html",
+		"x": 100,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "full-stack-developer",
+		"rowkey": "css",
+		"x": 250,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "full-stack-developer",
+		"rowkey": "javascript",
+		"x": 400,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "full-stack-developer",
+		"rowkey": "react",
+		"x": 100,
+		"y": 250,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "full-stack-developer",
+		"rowkey": "nodejs",
+		"x": 250,
+		"y": 250,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "full-stack-developer",
+		"rowkey": "mongodb",
+		"x": 400,
+		"y": 250,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "devops-engineer",
+		"rowkey": "docker",
+		"x": 100,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "devops-engineer",
+		"rowkey": "kubernetes",
+		"x": 250,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "devops-engineer",
+		"rowkey": "aws",
+		"x": 400,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "devops-engineer",
+		"rowkey": "azure",
+		"x": 100,
+		"y": 250,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "data-scientist",
+		"rowkey": "python",
+		"x": 100,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "data-scientist",
+		"rowkey": "tensorflow",
+		"x": 250,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "data-scientist",
+		"rowkey": "pytorch",
+		"x": 400,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "cloud-architect",
+		"rowkey": "aws",
+		"x": 100,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "cloud-architect",
+		"rowkey": "azure",
+		"x": 250,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "site-reliability-engineer",
+		"rowkey": "docker",
+		"x": 100,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "site-reliability-engineer",
+		"rowkey": "kubernetes",
+		"x": 250,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "database-administrator",
+		"rowkey": "sql",
+		"x": 100,
+		"y": 100,
+		"type": "skill"
+	},
+	{
+		"partitionKey": "database-administrator",
+		"rowkey": "mongodb",
+		"x": 250,
+		"y": 100,
+		"type": "skill"
+	}
+]

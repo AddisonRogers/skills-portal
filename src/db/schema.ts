@@ -163,3 +163,26 @@ export const projectUser = pgTable("project_user", {
 		onDelete: "set null",
 	}),
 });
+
+export const userFavoriteRoadmap = pgTable("user_favorite_roadmap", {
+	id: serial().primaryKey(),
+	userId: text("user_id")
+		.notNull()
+		.references(() => user.id, { onDelete: "cascade" }),
+	roadmapId: text("roadmap_id")
+		.notNull()
+})
+
+export const suggestedRoadmap = pgTable("suggested_roadmap", {
+	id: serial().primaryKey(),
+	fromUserId: text("from_user_id") // Who suggested
+		.notNull()
+		.references(() => user.id, { onDelete: "cascade" }),
+	toUserId: text("to_user_id") // Who received the suggestion
+		.notNull()
+		.references(() => user.id, { onDelete: "cascade" }),
+	roadmapId: text("roadmap_id")
+		.notNull(),
+	message: text("message"), // Optional custom message
+	createdAt: timestamp("created_at").defaultNow().notNull(),
+});

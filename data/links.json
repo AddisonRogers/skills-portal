@@ -1,0 +1,156 @@
+[
+	{
+		"partitionKey": "frontend-developer",
+		"id": "link-1",
+		"style": "solid",
+		"source": "html",
+		"target": "css"
+	},
+	{
+		"partitionKey": "frontend-developer",
+		"id": "link-2",
+		"style": "solid",
+		"source": "css",
+		"target": "javascript"
+	},
+	{
+		"partitionKey": "frontend-developer",
+		"id": "link-3",
+		"style": "solid",
+		"source": "javascript",
+		"target": "react"
+	},
+	{
+		"partitionKey": "frontend-developer",
+		"id": "link-4",
+		"style": "solid",
+		"source": "javascript",
+		"target": "angular"
+	},
+	{
+		"partitionKey": "frontend-developer",
+		"id": "link-5",
+		"style": "solid",
+		"source": "javascript",
+		"target": "vue"
+	},
+	{
+		"partitionKey": "backend-developer",
+		"id": "link-6",
+		"style": "solid",
+		"source": "nodejs",
+		"target": "express"
+	},
+	{
+		"partitionKey": "backend-developer",
+		"id": "link-7",
+		"style": "solid",
+		"source": "python",
+		"target": "django"
+	},
+	{
+		"partitionKey": "backend-developer",
+		"id": "link-8",
+		"style": "dashed",
+		"source": "express",
+		"target": "mongodb"
+	},
+	{
+		"partitionKey": "backend-developer",
+		"id": "link-9",
+		"style": "dashed",
+		"source": "django",
+		"target": "sql"
+	},
+	{
+		"partitionKey": "full-stack-developer",
+		"id": "link-10",
+		"style": "solid",
+		"source": "html",
+		"target": "css"
+	},
+	{
+		"partitionKey": "full-stack-developer",
+		"id": "link-11",
+		"style": "solid",
+		"source": "css",
+		"target": "javascript"
+	},
+	{
+		"partitionKey": "full-stack-developer",
+		"id": "link-12",
+		"style": "solid",
+		"source": "javascript",
+		"target": "react"
+	},
+	{
+		"partitionKey": "full-stack-developer",
+		"id": "link-13",
+		"style": "solid",
+		"source": "javascript",
+		"target": "nodejs"
+	},
+	{
+		"partitionKey": "full-stack-developer",
+		"id": "link-14",
+		"style": "solid",
+		"source": "nodejs",
+		"target": "mongodb"
+	},
+	{
+		"partitionKey": "devops-engineer",
+		"id": "link-15",
+		"style": "solid",
+		"source": "docker",
+		"target": "kubernetes"
+	},
+	{
+		"partitionKey": "devops-engineer",
+		"id": "link-16",
+		"style": "dashed",
+		"source": "kubernetes",
+		"target": "aws"
+	},
+	{
+		"partitionKey": "devops-engineer",
+		"id": "link-17",
+		"style": "dashed",
+		"source": "kubernetes",
+		"target": "azure"
+	},
+	{
+		"partitionKey": "data-scientist",
+		"id": "link-18",
+		"style": "solid",
+		"source": "python",
+		"target": "tensorflow"
+	},
+	{
+		"partitionKey": "data-scientist",
+		"id": "link-19",
+		"style": "solid",
+		"source": "python",
+		"target": "pytorch"
+	},
+	{
+		"partitionKey": "cloud-architect",
+		"id": "link-20",
+		"style": "dashed",
+		"source": "aws",
+		"target": "azure"
+	},
+	{
+		"partitionKey": "site-reliability-engineer",
+		"id": "link-21",
+		"style": "solid",
+		"source": "docker",
+		"target": "kubernetes"
+	},
+	{
+		"partitionKey": "database-administrator",
+		"id": "link-22",
+		"style": "dashed",
+		"source": "sql",
+		"target": "mongodb"
+	}
+]
