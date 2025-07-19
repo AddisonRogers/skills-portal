@@ -4,58 +4,6 @@ import positionsData from "@/dummyData/positions.json";
 import linksData from "@/dummyData/links.json";
 import { Roadmap } from "@/types/Roadmap";
 
-// Extended roadmap type with additional properties needed for the Learn page
-
-// Mock data for roadmaps with extended properties
-const extendedRoadmaps: Roadmap[] = [
-	{
-		id: "frontend-developer",
-		title: "Frontend Developer",
-		description: "Learn the skills needed to become a frontend developer",
-		capability: "Web Development",
-		suggestedBy: "manager",
-		isFavorite: true,
-		usersLearning: 42,
-	},
-	{
-		id: "backend-developer",
-		title: "Backend Developer",
-		description: "Master backend development technologies and practices",
-		capability: "Software Engineering",
-		suggestedBy: "role",
-		isFavorite: false,
-		usersLearning: 38,
-	},
-	{
-		id: "full-stack-developer",
-		title: "Full Stack Developer",
-		description: "Become proficient in both frontend and backend development",
-		capability: "Web Development",
-		suggestedBy: null,
-		isFavorite: false,
-		usersLearning: 65,
-	},
-	{
-		id: "devops-engineer",
-		title: "DevOps Engineer",
-		description:
-			"Learn DevOps practices and tools for efficient software delivery",
-		capability: "Cloud Engineering",
-		suggestedBy: null,
-		isFavorite: true,
-		usersLearning: 27,
-	},
-	{
-		id: "database-administrator",
-		title: "Database Administrator",
-		description: "Master database management and optimization techniques",
-		capability: "Data Engineering",
-		suggestedBy: "role",
-		isFavorite: false,
-		usersLearning: 19,
-	},
-];
-
 // Get the current user's learning roadmap
 export async function getCurrentLearningRoadmap(): Promise<Roadmap> {
 	// In a real application, this would fetch from an API based on the authenticated user

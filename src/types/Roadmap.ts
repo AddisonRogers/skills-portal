@@ -5,7 +5,7 @@ export type Roadmap = {
 	capability: string;
 	suggestedBy?: "manager" | "role" | null;
 	isFavorite?: boolean;
-	usersLearning?: number;
+	usersLearning?: UsersLearning;
 };
 
 // TODO change usersLearning

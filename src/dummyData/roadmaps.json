@@ -2,6 +2,8 @@
 	{
 		"partitionKey": "roadmap",
 		"rowkey": "frontend-developer",
+		"description": "Learn the skills needed to become a frontend developer",
+		"capability": "Cloud Engineering",
 		"relatedRoadmap": [
 			"backend-developer",
 			"full-stack-developer",
@@ -11,6 +13,8 @@
 	{
 		"partitionKey": "roadmap",
 		"rowkey": "backend-developer",
+		"description": "Learn the skills needed to become a frontend developer",
+		"capability": "Cloud Engineering",
 		"relatedRoadmap": [
 			"frontend-developer",
 			"full-stack-developer",
