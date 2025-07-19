@@ -12,8 +12,8 @@ export type Roadmap = {
 
 export type UsersLearning = {
 	usersLearning: number;
-	users: UserLearning[]
-}
+	users: UserLearning[];
+};
 
 export type UserLearning = {
 	id: string;
@@ -21,4 +21,4 @@ export type UserLearning = {
 	email: string;
 	avatar: string;
 	isFavourite: boolean;
-}
+};

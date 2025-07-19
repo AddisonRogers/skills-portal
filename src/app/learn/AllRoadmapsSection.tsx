@@ -1,6 +1,6 @@
 "use client";
 
-import {Check, ChevronsUpDown, Search} from "lucide-react";
+import { Check, ChevronsUpDown, Search } from "lucide-react";
 import RoadmapCard from "@/components/roadmapCard";
 import { useState } from "react";
 import { Roadmap } from "@/types/Roadmap";
@@ -12,7 +12,7 @@ import {
 	SelectLabel,
 	SelectTrigger,
 	SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 import {
 	Command,
@@ -21,15 +21,15 @@ import {
 	CommandInput,
 	CommandItem,
 	CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
 import { Button } from "@/components/ui/button";
-import {cn} from "@/lib/utils";
+import { cn } from "@/lib/utils";
 export default function AllRoadmapsSection({
 	allRoadmapsData,
 	allCapabilities,
@@ -39,10 +39,15 @@ export default function AllRoadmapsSection({
 }) {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [capability, setCapability] = useState("any");
-	const [open, setOpen] = useState(false)
+	const [open, setOpen] = useState(false);
 
 	const allRoadmapsFiltered = allRoadmapsData.filter((roadmap) => {
-		return (searchTerm === "" || roadmap.title.toLowerCase().includes(searchTerm.toLowerCase())) && (capability === "any" || roadmap.capability.toLowerCase().includes(capability.toLowerCase()));
+		return (
+			(searchTerm === "" ||
+				roadmap.title.toLowerCase().includes(searchTerm.toLowerCase())) &&
+			(capability === "any" ||
+				roadmap.capability.toLowerCase().includes(capability.toLowerCase()))
+		);
 	});
 
 	return (
@@ -74,14 +79,19 @@ export default function AllRoadmapsSection({
 								className="w-[200px] justify-between"
 							>
 								{capability
-									? allCapabilities.find((capabilityVal) => capabilityVal === capability)
+									? allCapabilities.find(
+											(capabilityVal) => capabilityVal === capability,
+										)
 									: "Select framework..."}
 								<ChevronsUpDown className="opacity-50" />
 							</Button>
 						</PopoverTrigger>
 						<PopoverContent className="w-[200px] p-0">
 							<Command>
-								<CommandInput placeholder="Search framework..." className="h-9" />
+								<CommandInput
+									placeholder="Search framework..."
+									className="h-9"
+								/>
 								<CommandList>
 									<CommandEmpty>No framework found.</CommandEmpty>
 									<CommandGroup>
@@ -90,15 +100,19 @@ export default function AllRoadmapsSection({
 												key={capabilityVal}
 												value={capabilityVal}
 												onSelect={(currentValue) => {
-													setCapability(currentValue === capability ? "" : currentValue)
-													setOpen(false)
+													setCapability(
+														currentValue === capability ? "" : currentValue,
+													);
+													setOpen(false);
 												}}
 											>
 												{capabilityVal}
 												<Check
 													className={cn(
 														"ml-auto",
-														capabilityVal === capability ? "opacity-100" : "opacity-0"
+														capabilityVal === capability
+															? "opacity-100"
+															: "opacity-0",
 													)}
 												/>
 											</CommandItem>
@@ -108,9 +122,8 @@ export default function AllRoadmapsSection({
 							</Command>
 						</PopoverContent>
 					</Popover>
-
 				</div>
-				</div>
+			</div>
 
 			{/* Roadmaps Grid */}
 			{allRoadmapsFiltered.length > 0 ? (

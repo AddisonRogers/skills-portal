@@ -7,7 +7,6 @@ export default function ContinueLearningSection({
 }: {
 	currentRoadmap: Roadmap;
 }) {
-
 	console.debug("currentRoadmap: ", currentRoadmap);
 
 	return (
