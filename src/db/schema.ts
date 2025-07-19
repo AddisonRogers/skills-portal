@@ -207,7 +207,7 @@ export const capabilities = pgTable("capabilities", {
 	id: serial().primaryKey(),
 	name: text("name").notNull().unique(),
 	description: text("description"),
-})
+});
 
 export const capability_roadmap = pgTable("capability_roadmap", {
 	id: serial().primaryKey(),
@@ -216,4 +216,4 @@ export const capability_roadmap = pgTable("capability_roadmap", {
 		.references(() => capabilities.id, { onDelete: "cascade" }),
 	roadmapId: text("roadmap_id").notNull(),
 	createdAt: timestamp("created_at").defaultNow().notNull(),
-})
+});

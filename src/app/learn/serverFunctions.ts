@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 // TODO id checks the last roadmap clicked on ?? no idea how to do this properly probably a bit in data
 // export async function getCurrentLearningRoadmap() {
@@ -9,14 +9,8 @@
 //   return getSuggestedRoadmaps()
 // }
 
-export async function getAllRoadmaps() {
+export async function getAllRoadmaps() {}
 
-}
+export async function getAllCapabilities() {}
 
-export async function getAllCapabilities() {
-
-}
-
-export async function getSkillsForRoadmap(userId: string, roadmapId: string) {
-
-}
+export async function getSkillsForRoadmap(userId: string, roadmapId: string) {}
