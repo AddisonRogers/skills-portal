@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "vitest": "vitest",
-    "migrate": "npx drizzle-kit push"
+    "migrate": "npx drizzle-kit push",
+    "prepare": "husky"
   },
   "dependencies": {
     "@ai-sdk/react": "^1.2.12",
@@ -58,6 +59,7 @@
     "drizzle-kit": "^0.31.4",
     "eslint": "^9.31.0",
     "eslint-config-next": "15.3.4",
+    "husky": "^9.1.7",
     "jsdom": "^26.1.0",
     "kysely-ctl": "^0.13.1",
     "tailwindcss": "^4.1.11",
