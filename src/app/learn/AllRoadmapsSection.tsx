@@ -1,10 +1,35 @@
 "use client";
 
-import { Search } from "lucide-react";
+import {Check, ChevronsUpDown, Search} from "lucide-react";
 import RoadmapCard from "@/components/roadmapCard";
 import { useState } from "react";
 import { Roadmap } from "@/types/Roadmap";
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectLabel,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select"
 
+import {
+	Command,
+	CommandEmpty,
+	CommandGroup,
+	CommandInput,
+	CommandItem,
+	CommandList,
+} from "@/components/ui/command"
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover"
+
+import { Button } from "@/components/ui/button";
+import {cn} from "@/lib/utils";
 export default function AllRoadmapsSection({
 	allRoadmapsData,
 	allCapabilities,
@@ -12,12 +37,12 @@ export default function AllRoadmapsSection({
 	allRoadmapsData: Roadmap[];
 	allCapabilities: string[];
 }) {
-	const [allRoadmaps, setAllRoadmaps] = useState<Roadmap[]>(allRoadmapsData);
 	const [searchTerm, setSearchTerm] = useState("");
-	const [filters, setFilters] = useState({
-		suggestedByManager: false,
-		isFavorite: false,
-		capability: "",
+	const [capability, setCapability] = useState("any");
+	const [open, setOpen] = useState(false)
+
+	const allRoadmapsFiltered = allRoadmapsData.filter((roadmap) => {
+		return (searchTerm === "" || roadmap.title.toLowerCase().includes(searchTerm.toLowerCase())) && (capability === "any" || roadmap.capability.toLowerCase().includes(capability.toLowerCase()));
 	});
 
 	return (
@@ -40,69 +65,58 @@ export default function AllRoadmapsSection({
 						/>
 					</div>
 
-					<div className="flex flex-wrap gap-2">
-						<div className="flex items-center">
-							<input
-								id="manager-filter"
-								type="checkbox"
-								className="h-4 w-4 text-fsp-core-teal focus:ring-fsp-core-teal border-gray-300 rounded"
-								checked={filters.suggestedByManager}
-								onChange={(e) =>
-									setFilters({
-										...filters,
-										suggestedByManager: e.target.checked,
-									})
-								}
-							/>
-							<label
-								htmlFor="manager-filter"
-								className="ml-2 block text-sm text-gray-900"
+					<Popover open={open} onOpenChange={setOpen}>
+						<PopoverTrigger asChild>
+							<Button
+								variant="outline"
+								role="combobox"
+								aria-expanded={open}
+								className="w-[200px] justify-between"
 							>
-								Manager Suggested
-							</label>
-						</div>
+								{capability
+									? allCapabilities.find((capabilityVal) => capabilityVal === capability)
+									: "Select framework..."}
+								<ChevronsUpDown className="opacity-50" />
+							</Button>
+						</PopoverTrigger>
+						<PopoverContent className="w-[200px] p-0">
+							<Command>
+								<CommandInput placeholder="Search framework..." className="h-9" />
+								<CommandList>
+									<CommandEmpty>No framework found.</CommandEmpty>
+									<CommandGroup>
+										{allCapabilities.map((capabilityVal) => (
+											<CommandItem
+												key={capabilityVal}
+												value={capabilityVal}
+												onSelect={(currentValue) => {
+													setCapability(currentValue === capability ? "" : currentValue)
+													setOpen(false)
+												}}
+											>
+												{capabilityVal}
+												<Check
+													className={cn(
+														"ml-auto",
+														capabilityVal === capability ? "opacity-100" : "opacity-0"
+													)}
+												/>
+											</CommandItem>
+										))}
+									</CommandGroup>
+								</CommandList>
+							</Command>
+						</PopoverContent>
+					</Popover>
 
-						<div className="flex items-center">
-							<input
-								id="favorite-filter"
-								type="checkbox"
-								className="h-4 w-4 text-fsp-core-teal focus:ring-fsp-core-teal border-gray-300 rounded"
-								checked={filters.isFavorite}
-								onChange={(e) =>
-									setFilters({ ...filters, isFavorite: e.target.checked })
-								}
-							/>
-							<label
-								htmlFor="favorite-filter"
-								className="ml-2 block text-sm text-gray-900"
-							>
-								Favorited
-							</label>
-						</div>
-
-						<select
-							className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-fsp-core-teal focus:border-fsp-core-teal sm:text-sm rounded-md"
-							value={filters.capability}
-							onChange={(e) =>
-								setFilters({ ...filters, capability: e.target.value })
-							}
-						>
-							<option value="">All Capabilities</option>
-							{allCapabilities.map((capability) => (
-								<option key={capability} value={capability}>
-									{capability}
-								</option>
-							))}
-						</select>
-					</div>
 				</div>
-			</div>
+				</div>
 
 			{/* Roadmaps Grid */}
-			{allRoadmaps.length > 0 ? (
+			{allRoadmapsFiltered.length > 0 ? (
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-					{allRoadmaps.map((roadmap) => (
-						<RoadmapCard key={roadmap.id} roadmap={roadmap} />
+					{allRoadmapsFiltered.map((roadmap) => (
+						<RoadmapCard key={roadmap.id} {...roadmap} />
 					))}
 				</div>
 			) : (

@@ -1,5 +1,5 @@
 import RoadmapCard from "@/components/roadmapCard";
-import {Roadmap} from "@/types/Roadmap";
+import { Roadmap } from "@/types/Roadmap";
 
 export default function SuggestedRoadmapsSection({
 	suggestedRoadmaps,

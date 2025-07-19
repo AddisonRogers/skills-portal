@@ -14,7 +14,6 @@ export default async function LearnPage() {
 	const allRoadmapsData = await getAllRoadmaps();
 	const capabilities = await getAllCapabilities();
 
-	console.log(capabilities);
 
 	return (
 		<main className="container mx-auto px-4 py-8">
