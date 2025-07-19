@@ -4,16 +4,17 @@ import { and, eq } from "drizzle-orm";
 import {
 	roadmap,
 	role,
-	skill, skillRoadmap,
+	skill,
+	skillRoadmap,
 	suggestedRoadmap,
 	user,
 	user_roles,
 } from "@/db/schema";
 import { db } from "@/lib/db";
-import {getSkillsForRoadmap} from "@/db/repositories/skills";
+import { getSkillsForRoadmap } from "@/db/repositories/skills";
 
 export async function getSkillsOnRoadmap(roadmapId: string) {
-  return getSkillsForRoadmap(roadmapId)
+	return getSkillsForRoadmap(roadmapId);
 }
 
 export async function getSuggestedRoadmaps(userEmail: string) {

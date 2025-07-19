@@ -9,7 +9,7 @@
 //   return getSuggestedRoadmaps()
 // }
 
-import {getAllRoadmaps} from "@/db/repositories/roadmap";
+import { getAllRoadmaps } from "@/db/repositories/roadmap";
 
 // export async function getAllRoadmaps() {
 //   return getAllRoadmaps
