@@ -1,3 +1,5 @@
+import {Button} from "@/components/ui/button";
+
 export default function ContinueLearningSection({
 	currentRoadmap,
 }: {
@@ -9,7 +11,7 @@ export default function ContinueLearningSection({
 
 	return (
 		<section className="mb-12">
-			<h2 className="text-2xl font-semibold mb-4">Continue Learning</h2>
+			<h2 className="text-2xl font-medium mb-4">Continue Learning</h2>
 			<div className="bg-white rounded-lg shadow-md p-6">
 				<div className="flex flex-col md:flex-row md:items-center md:justify-between">
 					<div className="mb-4 md:mb-0">
@@ -42,12 +44,10 @@ export default function ContinueLearningSection({
 					</div>
 				</div>
 				<div className="mt-4">
-					<button
-						type={"button"}
-						className="bg-fsp-core-teal text-white px-4 py-2 rounded-md hover:opacity-90 transition-opacity"
+					<Button
 					>
 						Continue
-					</button>
+					</Button>
 				</div>
 			</div>
 		</section>

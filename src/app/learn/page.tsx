@@ -18,7 +18,7 @@ export default async function LearnPage() {
 
 	return (
 		<main className="container mx-auto px-4 py-8">
-			<h1 className="text-4xl font-bold text-fsp-core-teal mb-8">Learn</h1>
+			<h1 className="text-4xl font-medium text-fsp-core-teal mb-8">Learn</h1>
 
 			{/* Continue Learning Section */}
 			<ContinueLearningSection currentRoadmap={currentRoadmap} />
