@@ -1,8 +1,6 @@
-"use server"
+"use server";
 
-export async function getPathInfo() {
-
-}
+export async function getPathInfo() {}
 
 function getRoadmapSkills() {}
 

@@ -1,17 +1,17 @@
 [
-  {
-    "partitionKey": "HTML",
-    "id": "html",
-    "blobUrl": "https://your-storage-account.blob.core.windows.net/skills/html.md"
-  },
-  {
-    "partitionKey": "CSS",
-    "id": "css",
-    "blobUrl": "https://your-storage-account.blob.core.windows.net/skills/css.md"
-  },
-  {
-    "partitionKey": "JavaScript",
-    "id": "javascript",
-    "blobUrl": "https://your-storage-account.blob.core.windows.net/skills/javascript.md"
-  }
+	{
+		"partitionKey": "HTML",
+		"id": "html",
+		"blobUrl": "https://your-storage-account.blob.core.windows.net/skills/html.md"
+	},
+	{
+		"partitionKey": "CSS",
+		"id": "css",
+		"blobUrl": "https://your-storage-account.blob.core.windows.net/skills/css.md"
+	},
+	{
+		"partitionKey": "JavaScript",
+		"id": "javascript",
+		"blobUrl": "https://your-storage-account.blob.core.windows.net/skills/javascript.md"
+	}
 ]
