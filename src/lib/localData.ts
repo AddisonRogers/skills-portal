@@ -11,14 +11,14 @@ const DATA_DIR = path.join(process.cwd(), "data");
  * @returns The parsed JSON data
  */
 export const loadLocalData = <T>(filename: string): T[] => {
-  try {
-    const filePath = path.join(DATA_DIR, filename);
-    const fileContent = fs.readFileSync(filePath, "utf-8");
-    return JSON.parse(fileContent) as T[];
-  } catch (error) {
-    console.error(`Error loading local data from ${filename}:`, error);
-    return [];
-  }
+	try {
+		const filePath = path.join(DATA_DIR, filename);
+		const fileContent = fs.readFileSync(filePath, "utf-8");
+		return JSON.parse(fileContent) as T[];
+	} catch (error) {
+		console.error(`Error loading local data from ${filename}:`, error);
+		return [];
+	}
 };
 
 /**
@@ -26,7 +26,7 @@ export const loadLocalData = <T>(filename: string): T[] => {
  * @returns All roadmaps
  */
 export const getLocalRoadmaps = <T>(): T[] => {
-  return loadLocalData<T>("roadmaps.json");
+	return loadLocalData<T>("roadmaps.json");
 };
 
 /**
@@ -34,7 +34,7 @@ export const getLocalRoadmaps = <T>(): T[] => {
  * @returns All skills
  */
 export const getLocalSkills = <T>(): T[] => {
-  return loadLocalData<T>("skills.json");
+	return loadLocalData<T>("skills.json");
 };
 
 /**
@@ -42,7 +42,7 @@ export const getLocalSkills = <T>(): T[] => {
  * @returns All positions
  */
 export const getLocalPositions = <T>(): T[] => {
-  return loadLocalData<T>("positions.json");
+	return loadLocalData<T>("positions.json");
 };
 
 /**
@@ -50,7 +50,7 @@ export const getLocalPositions = <T>(): T[] => {
  * @returns All links
  */
 export const getLocalLinks = <T>(): T[] => {
-  return loadLocalData<T>("links.json");
+	return loadLocalData<T>("links.json");
 };
 
 /**
@@ -59,16 +59,16 @@ export const getLocalLinks = <T>(): T[] => {
  * @returns The data from the corresponding local file
  */
 export const getLocalDataByTable = <T>(tableName: string): T[] => {
-  switch (tableName) {
-    case TABLES.ROADMAPS:
-      return getLocalRoadmaps<T>();
-    case TABLES.SKILLS:
-      return getLocalSkills<T>();
-    case TABLES.POSITIONS:
-      return getLocalPositions<T>();
-    case TABLES.LINKS:
-      return getLocalLinks<T>();
-    default:
-      throw new Error(`Unknown table name: ${tableName}`);
-  }
+	switch (tableName) {
+		case TABLES.ROADMAPS:
+			return getLocalRoadmaps<T>();
+		case TABLES.SKILLS:
+			return getLocalSkills<T>();
+		case TABLES.POSITIONS:
+			return getLocalPositions<T>();
+		case TABLES.LINKS:
+			return getLocalLinks<T>();
+		default:
+			throw new Error(`Unknown table name: ${tableName}`);
+	}
 };

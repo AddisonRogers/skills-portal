@@ -164,14 +164,31 @@ export const projectUser = pgTable("project_user", {
 	}),
 });
 
+export const roadmap = pgTable("roadmap", {
+	id: text("id").primaryKey(),
+	name: text("name").notNull(),
+	description: text("description"),
+	blobUrl: text("blob_url"),
+	createdAt: timestamp("created_at").notNull(),
+	updatedAt: timestamp("updated_at").notNull(),
+});
+
+export const skillRoadmap = pgTable("skill_roadmap", {
+	id: serial().primaryKey(),
+	skillId: integer("skill_id")
+		.notNull()
+		.references(() => skill.id, { onDelete: "cascade" }),
+	roadmapId: text("roadmap_id").notNull(),
+	createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 export const userFavoriteRoadmap = pgTable("user_favorite_roadmap", {
 	id: serial().primaryKey(),
 	userId: text("user_id")
 		.notNull()
 		.references(() => user.id, { onDelete: "cascade" }),
-	roadmapId: text("roadmap_id")
-		.notNull()
-})
+	roadmapId: text("roadmap_id").notNull(),
+});
 
 export const suggestedRoadmap = pgTable("suggested_roadmap", {
 	id: serial().primaryKey(),
@@ -181,8 +198,22 @@ export const suggestedRoadmap = pgTable("suggested_roadmap", {
 	toUserId: text("to_user_id") // Who received the suggestion
 		.notNull()
 		.references(() => user.id, { onDelete: "cascade" }),
-	roadmapId: text("roadmap_id")
-		.notNull(),
+	roadmapId: text("roadmap_id").notNull(),
 	message: text("message"), // Optional custom message
 	createdAt: timestamp("created_at").defaultNow().notNull(),
 });
+
+export const capabilities = pgTable("capabilities", {
+	id: serial().primaryKey(),
+	name: text("name").notNull().unique(),
+	description: text("description"),
+})
+
+export const capability_roadmap = pgTable("capability_roadmap", {
+	id: serial().primaryKey(),
+	capabilityId: integer("capability_id")
+		.notNull()
+		.references(() => capabilities.id, { onDelete: "cascade" }),
+	roadmapId: text("roadmap_id").notNull(),
+	createdAt: timestamp("created_at").defaultNow().notNull(),
+})
