@@ -1,7 +1,10 @@
 import SuggestedRoadmapsSection from "@/app/learn/SuggestedRoadmapsSection";
 import AllRoadmapsSection from "@/app/learn/AllRoadmapsSection";
-import {getAllRoadmaps, getSuggestedRoadmaps} from "@/db/repositories/roadmap";
-import {getAllCapabilities} from "@/db/repositories/capabilities";
+import {
+	getAllRoadmaps,
+	getSuggestedRoadmaps,
+} from "@/db/repositories/roadmap";
+import { getAllCapabilities } from "@/db/repositories/capabilities";
 
 export default async function LearnPage() {
 	const suggestedRoadmaps = await getSuggestedRoadmaps();

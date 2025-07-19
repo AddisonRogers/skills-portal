@@ -193,11 +193,12 @@ export const userFavoriteRoadmap = pgTable("user_favorite_roadmap", {
 export const userFavoriteSkill = pgTable("user_favorite_skill", {
 	id: serial().primaryKey(),
 	userId: text("user_id")
-		.notNull().references(() => user.id, { onDelete: "cascade" }),
+		.notNull()
+		.references(() => user.id, { onDelete: "cascade" }),
 	skillId: integer("skill_id")
 		.notNull()
 		.references(() => skill.id, { onDelete: "cascade" }),
-})
+});
 
 export const suggestedRoadmap = pgTable("suggested_roadmap", {
 	id: serial().primaryKey(),
