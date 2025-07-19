@@ -20,14 +20,9 @@ export default function AllRoadmapsSection({
 		capability: "",
 	});
 
-	// Generate random avatar URLs for demo purposes
-	const generateAvatarUrl = (index: number) => {
-		return `https://i.pravatar.cc/40?img=${index}`;
-	};
-
 	return (
 		<section>
-			<h2 className="text-2xl font-semibold mb-4">All Roadmaps</h2>
+			<h2 className="text-xl font-normal mb-4">All Roadmaps</h2>
 
 			{/* Search and Filters */}
 			<div className="bg-white rounded-lg shadow-md p-4 mb-6">

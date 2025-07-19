@@ -57,12 +57,11 @@ const extendedRoadmaps: Roadmap[] = [
 ];
 
 // Get the current user's learning roadmap
-export async function getCurrentLearningRoadmap(): Promise<Roadmap | null> {
+export async function getCurrentLearningRoadmap(): Promise<Roadmap> {
 	// In a real application, this would fetch from an API based on the authenticated user
 	// For now, we'll return a mock roadmap
 	return (
-		extendedRoadmaps.find((roadmap) => roadmap.id === "frontend-developer") ||
-		null
+		extendedRoadmaps.find((roadmap) => roadmap.id === "frontend-developer")
 	);
 }
 
