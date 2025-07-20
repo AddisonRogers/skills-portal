@@ -2,7 +2,7 @@
 // Need a drizzle repo where
 
 import { and, eq } from "drizzle-orm";
-import { role, user, user_roles } from "@/db/schema";
+import { role, user, userRoles as user_roles } from "@/db/schema";
 import { db } from "@/lib/db";
 
 export async function getRoles(userEmail: string) {

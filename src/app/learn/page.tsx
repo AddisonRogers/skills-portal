@@ -5,13 +5,44 @@ import {
 	getSuggestedRoadmaps,
 } from "@/db/repositories/roadmap";
 import { getAllCapabilities } from "@/db/repositories/capabilities";
+import {isSignedIn, useSession} from "@/lib/auth-client";
+import * as dummyRoadmaps from "@/dummyData/roadmaps.json";
+import {AZRoadmapData, Roadmap} from "@/types/Roadmap";
 
 export default async function LearnPage() {
-	const suggestedRoadmaps = await getSuggestedRoadmaps();
-	const allRoadmapsData = await getAllRoadmaps();
-	const capabilities = await getAllCapabilities();
+	if (!(await isSignedIn)) {
+		// TODO redirect to the login page
+
+	}
+
+	const { data } = useSession();
+	const userEmail = data!.user!.email;
+
+	let suggestedRoadmaps = null
+	let allRoadmapsData = null
+	let capabilities = null
+
+	try {
+		suggestedRoadmaps = await getSuggestedRoadmaps(userEmail);
+		allRoadmapsData = await getAllRoadmaps();
+		capabilities = await getAllCapabilities();
+	} catch (error) {
+		console.debug(error);
+		console.debug("Failed to get item will be using local data instead.");
+	}
 
 	// TODO if they are null replace with dummy data
+	if (allRoadmapsData === null) {
+		allRoadmapsData = dummyRoadmaps as AZRoadmapData[];
+	};
+
+	if (suggestedRoadmaps === null) {
+
+	}
+
+	if (capabilities === null) {
+
+	}
 
 	return (
 		<main className="container mx-auto px-4 py-8">
