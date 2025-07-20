@@ -5,22 +5,21 @@ import {
 	getSuggestedRoadmaps,
 } from "@/db/repositories/roadmap";
 import { getAllCapabilities } from "@/db/repositories/capabilities";
-import {isSignedIn, useSession} from "@/lib/auth-client";
+import { isSignedIn, useSession } from "@/lib/auth-client";
 import * as dummyRoadmaps from "@/dummyData/roadmaps.json";
-import {AZRoadmapData, Roadmap} from "@/types/Roadmap";
+import { AZRoadmapData, Roadmap } from "@/types/Roadmap";
 
 export default async function LearnPage() {
 	if (!(await isSignedIn)) {
 		// TODO redirect to the login page
-
 	}
 
 	const { data } = useSession();
 	const userEmail = data!.user!.email;
 
-	let suggestedRoadmaps = null
-	let allRoadmapsData = null
-	let capabilities = null
+	let suggestedRoadmaps = null;
+	let allRoadmapsData = null;
+	let capabilities = null;
 
 	try {
 		suggestedRoadmaps = await getSuggestedRoadmaps(userEmail);
@@ -34,14 +33,12 @@ export default async function LearnPage() {
 	// TODO if they are null replace with dummy data
 	if (allRoadmapsData === null) {
 		allRoadmapsData = dummyRoadmaps as AZRoadmapData[];
-	};
+	}
 
 	if (suggestedRoadmaps === null) {
-
 	}
 
 	if (capabilities === null) {
-
 	}
 
 	return (
