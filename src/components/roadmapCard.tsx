@@ -19,7 +19,7 @@ export default function RoadmapCard(roadmap: Roadmap) {
 		<div className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow">
 			<div className="flex justify-between items-start">
 				<div className={"flex items-center gap-2"}>
-					<h3 className="text-lg font-normal">{roadmap.title}</h3>
+					<h3 className="text-lg font-normal">{roadmap.name}</h3>
 
 					{roadmap.suggestedBy === "manager" && (
 						<Tooltip>

@@ -12,6 +12,7 @@ import {
 } from "@/db/schema";
 import { db } from "@/lib/db";
 import { getSkillsForRoadmap } from "@/db/repositories/skills";
+import {AZRoadmapData, PGRoadmapData, Roadmap} from "@/types/Roadmap";
 
 export async function getSkillsOnRoadmap(roadmapId: string) {
 	return getSkillsForRoadmap(roadmapId);
@@ -27,6 +28,6 @@ export async function getSuggestedRoadmaps(userEmail: string) {
 		.where(eq(user.email, userEmail));
 }
 
-export async function getAllRoadmaps() {
+export async function getAllRoadmaps(): Promise<PGRoadmapData[]> {
 	return db.select().from(roadmap);
 }

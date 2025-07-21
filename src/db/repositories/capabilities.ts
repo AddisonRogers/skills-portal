@@ -9,10 +9,13 @@ import {
 	user,
 	capabilityUser,
 } from "@/db/schema";
+import {Capability} from "@/types/Capability";
 
 // Get ALL capabilities
-export async function getAllCapabilities() {
-	return db.select().from(capabilities);
+export async function getAllCapabilities(): Promise<Capability[]> {
+	return db.select({
+		name: capabilities.name,
+	}).from(capabilities);
 }
 
 // Get capabilities for a given roadmap

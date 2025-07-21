@@ -1,10 +1,10 @@
-export type AZRoadmapData = {
-	partitionKey: string;
-	rowkey: string;
-	title: string;
-	description: string;
-	capability: string;
-	relatedRoadmap: string[];
+export type PGRoadmapData = {
+	id: string;
+	name: string;
+	description: string | null;
+	relatedRoadmaps: string | null;
+	createdAt: Date
+	updatedAt: Date
 };
 
 export type Roadmap = {

@@ -1,3 +1,5 @@
+"use client";
+
 import RoadmapCard from "@/components/roadmapCard";
 import { Roadmap } from "@/types/Roadmap";
 
