@@ -12,7 +12,7 @@ import {
 } from "@/db/schema";
 import { db } from "@/lib/db";
 import { getSkillsForRoadmap } from "@/db/repositories/skills";
-import {AZRoadmapData, PGRoadmapData, Roadmap} from "@/types/Roadmap";
+import { AZRoadmapData, PGRoadmapData, Roadmap } from "@/types/Roadmap";
 
 export async function getSkillsOnRoadmap(roadmapId: string) {
 	return getSkillsForRoadmap(roadmapId);

@@ -3,8 +3,8 @@ export type PGRoadmapData = {
 	name: string;
 	description: string | null;
 	relatedRoadmaps: string | null;
-	createdAt: Date
-	updatedAt: Date
+	createdAt: Date;
+	updatedAt: Date;
 };
 
 export type Roadmap = {
