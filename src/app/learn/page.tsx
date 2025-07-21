@@ -30,17 +30,6 @@ export default async function LearnPage() {
 		console.debug("Failed to get item will be using local data instead.");
 	}
 
-	// TODO if they are null replace with dummy data
-	if (allRoadmapsData === null) {
-		allRoadmapsData = dummyRoadmaps as AZRoadmapData[];
-	}
-
-	if (suggestedRoadmaps === null) {
-	}
-
-	if (capabilities === null) {
-	}
-
 	return (
 		<main className="container mx-auto px-4 py-8">
 			<h1 className="text-4xl font-medium text-fsp-core-teal mb-8">Learn</h1>
