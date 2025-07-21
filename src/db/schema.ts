@@ -72,13 +72,10 @@ export const verification = pgTable("verification", {
 export const skill = pgTable("skill", {
 	id: serial().primaryKey(),
 	name: text("name").notNull().unique(),
+	blobUrl: text("blob_url"),
 	description: text("description"),
-	createdAt: timestamp("created_at")
-		.$defaultFn(() => new Date())
-		.notNull(),
-	updatedAt: timestamp("updated_at")
-		.$defaultFn(() => new Date())
-		.notNull(),
+	createdAt: timestamp("created_at").defaultNow().notNull(),
+	updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export const userSkill = pgTable("user_skill", {
@@ -166,11 +163,11 @@ export const projectUser = pgTable("project_user", {
 
 export const roadmap = pgTable("roadmap", {
 	id: text("id").primaryKey(),
-	name: text("name").notNull(),
+	name: text("name").notNull().unique(),
 	description: text("description"),
-	blobUrl: text("blob_url"),
-	createdAt: timestamp("created_at").notNull(),
-	updatedAt: timestamp("updated_at").notNull(),
+	relatedRoadmaps: text("related_roadmaps"),
+	createdAt: timestamp("created_at").defaultNow().notNull(),
+	updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export const skillRoadmap = pgTable("skill_roadmap", {
