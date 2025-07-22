@@ -1,62 +1,34 @@
-"use client"
+// REMOVE "use client"!
 
-import {checkPathwayValid, getRoadmap, getSkillsOnRoadmap} from "@/db/repositories/roadmap";
-import {getSkillsForRoadmapForUser} from "@/db/repositories/skills";
+import { checkPathwayValid, getRoadmap } from "@/db/repositories/roadmap";
+import { getSkillsForRoadmapForUser } from "@/db/repositories/skills";
+import { getUserByEmail } from "@/db/repositories/users"; // adjust as needed
 import {useUserInfo} from "@/hooks/useUserInfo";
-import {getSkillNodes} from "@/app/learn/[pathway]/serverFunctions";
-import {use} from "react";
+import RoadmapInfoClient from "@/components/RoadmapInfoClient";
+import {auth} from "@/lib/auth";
 
-export type PathwayPageProps = {
-  pathway: string;
-}
+export default async function PathwayPage({ params }: { params: { pathway: string } }) {
+  const pathway = await params.pathway;
 
-export default function pathwayPage({
-                                      params,
-                                    }: {
-  params: Promise<PathwayPageProps>;
-}) {
-  const {loggedIn, user, userEmail, isAdmin} = useUserInfo()
+  // Fetch all needed data at once
+  const [roadmapInfoRaw, valid] = await Promise.all([
+    getRoadmap(pathway), // This is an array! (from your function)
+    checkPathwayValid(pathway),
+  ]);
 
-  if (!loggedIn || !user || userEmail === null) {
-    return null // TODO redirect to login
-  }
-
-  const pathway = use(params).pathway
-
-  const roadmapInfo = getRoadmap(pathway);
-  const data = getSkillsForRoadmapForUser(pathway, userEmail);
-
-
-  console.debug("data: ", data)
-
-  return (
-    <RoadmapInfo pathway={pathway} roadmapInfoData={roadmapInfo} skillNodesData={data}/>
-  )
-}
-
-function RoadmapInfo({
-                       pathway,
-                       roadmapInfoData,
-                       skillNodesData,
-                     }: {
-  pathway: string;
-  roadmapInfoData: Promise<any>;
-  skillNodesData: Promise<any>;
-}) {
-
-  const skillNodes = use(skillNodesData)
-  const roadmapInfo = use(roadmapInfoData)
-  const valid = checkPathwayValid(pathway)
+  // Pick single roadmap, or adjust if multiple expected
+  const roadmapInfo = Array.isArray(roadmapInfoRaw) ? roadmapInfoRaw[0] : roadmapInfoRaw;
 
   if (!valid) {
-    return null
+    // Optionally render 404 or redirect
+    console.debug(roadmapInfoRaw)
+    return <div>Not found</div>;
   }
 
   return (
-    <>
-      <div>{pathway} Page</div>
-      <div>{roadmapInfo}</div>
-      <div>{skillNodes}</div>
-    </>
+    <RoadmapInfoClient
+      pathway={pathway}
+      roadmapInfo={roadmapInfo}
+    />
   );
 }
