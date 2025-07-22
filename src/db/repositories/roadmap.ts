@@ -38,7 +38,10 @@ export async function getRoadmap(roadmapId: string) {
 
 export async function checkPathwayValid(roadmapId: string): Promise<boolean> {
 	try {
-		const items = await db.select().from(roadmap).where(eq(roadmap.id, roadmapId));
+		const items = await db
+			.select()
+			.from(roadmap)
+			.where(eq(roadmap.id, roadmapId));
 		console.debug(items);
 		return items.length > 0;
 	} catch (error) {
