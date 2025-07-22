@@ -31,3 +31,16 @@ export async function getSuggestedRoadmaps(userEmail: string) {
 export async function getAllRoadmaps(): Promise<PGRoadmapData[]> {
 	return db.select().from(roadmap);
 }
+
+export async function getRoadmap(roadmapId: string) {
+	return db.select().from(roadmap).where(eq(roadmap.id, roadmapId));
+}
+
+export async function checkPathwayValid(roadmapId: string): boolean {
+	try {
+		const items = db.select().from(roadmap).where(eq(roadmap.id, roadmapId));
+		return items.length > 0;
+	} catch (error) {
+		return false;
+	}
+}
