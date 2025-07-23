@@ -33,21 +33,21 @@ export type UserLearning = {
 export type PGSkillDataUser = PGSkillData & {
 	acquiredAt: Date | null;
 	level: number | null;
-}
+};
 
 export type PGSkillData = {
 	name: string;
 	description: string | null;
 	blobUrl: string | null;
-}
+};
 
-export type SkillNode = PGSkillDataUser & PositionData
+export type SkillNode = PGSkillDataUser & PositionData;
 
 export type PositionData = {
 	nodeType: string;
 	x: number;
 	y: number;
-}
+};
 
 export type AZTPositionData = PositionData & {
 	PartitionKey: string;

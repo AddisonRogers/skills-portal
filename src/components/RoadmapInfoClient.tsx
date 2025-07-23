@@ -26,9 +26,7 @@ export default function RoadmapInfoClient({
 			</div>
 			<div>
 				<h2>Your Skills</h2>
-				{
-					skillNodes.size === 0 && <div>No skills found</div>
-				}
+				{skillNodes.size === 0 && <div>No skills found</div>}
 				<pre>{JSON.stringify(skillNodes, null, 2)}</pre>
 			</div>
 		</>

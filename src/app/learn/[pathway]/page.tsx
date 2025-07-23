@@ -15,7 +15,7 @@ export default async function PathwayPage({
 	const [roadmapInfoRaw, valid, skillNodes] = await Promise.all([
 		getRoadmap(pathway),
 		checkPathwayValid(pathway),
-		getSkillNodes(pathway)
+		getSkillNodes(pathway),
 	]);
 
 	// Pick single roadmap, or adjust if multiple expected
@@ -29,5 +29,11 @@ export default async function PathwayPage({
 		return <div>Not found</div>;
 	}
 
-	return <RoadmapInfoClient pathway={pathway} roadmapInfo={roadmapInfo} skillNodes={skillNodes}/>;
+	return (
+		<RoadmapInfoClient
+			pathway={pathway}
+			roadmapInfo={roadmapInfo}
+			skillNodes={skillNodes}
+		/>
+	);
 }

@@ -1,7 +1,7 @@
 "use server";
 
 import {and, eq} from "drizzle-orm";
-import {roadmap, skill, skillRoadmap, user, userSkill,} from "@/db/schema";
+import {roadmap, skill, skillRoadmap, user, userSkill} from "@/db/schema";
 import {db} from "@/lib/db";
 import {PGSkillData, PGSkillDataUser, SkillNode} from "@/types/Roadmap";
 
@@ -23,30 +23,30 @@ export async function getSkillsForUser(userEmail: string) {
 }
 
 // Only possible with the positions table
-export async function getSkillsForRoadmap(roadmapId: string): Promise<Map<string, SkillNode>> {
-
-
+export async function getSkillsForRoadmap(
+	roadmapId: string,
+): Promise<Map<string, SkillNode>> {
 	const data: PGSkillData[] = await db
 		.select({
 			name: skill.name,
 			description: skill.description,
-			blobUrl: skill.blobUrl
+			blobUrl: skill.blobUrl,
 		})
 		.from(skill)
 		.innerJoin(skillRoadmap, eq(skill.id, skillRoadmap.skillId))
 		.innerJoin(roadmap, eq(skillRoadmap.roadmapId, roadmap.id))
 		.where(eq(roadmap.id, roadmapId));
 
-
-	return new Map(data.map(skill => [
+	return new Map(
+		data.map((skill) => [
 			skill.name,
 			{
 				...skill,
 				nodeType: "skill",
 				x: 0,
 				y: 0,
-			} as SkillNode
-		])
+			} as SkillNode,
+		]),
 	);
 }
 
@@ -69,13 +69,15 @@ export async function getSkillsForRoadmapForUser(
 		.innerJoin(user, eq(userSkill.userId, user.id))
 		.where(and(eq(roadmap.id, roadmapId), eq(user.email, userEmail)));
 
-	return new Map(data.map(skill => [
-		skill.name,
-		{
-			...skill,
-			nodeType: "skill",
-			x: 0,
-			y: 0,
-		} as SkillNode
-	]))
+	return new Map(
+		data.map((skill) => [
+			skill.name,
+			{
+				...skill,
+				nodeType: "skill",
+				x: 0,
+				y: 0,
+			} as SkillNode,
+		]),
+	);
 }
