@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Technical Design/Cosmos Tables.md",
+                "file": "Backlog/Main.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Cosmos Tables"
+              "title": "Main"
             }
           }
         ]
@@ -181,10 +181,13 @@
   },
   "active": "8844a0f73f079adb",
   "lastOpenFiles": [
+    "Backlog/SP-Functions.md",
+    "Backlog/Main.md",
+    "Technical Design/Cosmos Tables.md",
+    "Backlog",
     "Technical Design/Getting Skills.md",
     "Technical Design/Database Design.md",
     "Technical Design/Daily Leetcode challenges.md",
-    "Technical Design/Cosmos Tables.md",
     "Technical Design/Sequence diagram.md",
     "Technical Design/Graph View.md",
     "Technical Design/Untitled",

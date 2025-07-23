@@ -1,23 +1,21 @@
 // REMOVE "use client"!
 
-import { checkPathwayValid, getRoadmap } from "@/db/repositories/roadmap";
-import { getSkillsForRoadmapForUser } from "@/db/repositories/skills";
-import { getUserByEmail } from "@/db/repositories/users"; // adjust as needed
-import { useUserInfo } from "@/hooks/useUserInfo";
+import {checkPathwayValid, getRoadmap} from "@/db/repositories/roadmap";
 import RoadmapInfoClient from "@/components/RoadmapInfoClient";
-import { auth } from "@/lib/auth";
+import {getSkillNodes} from "@/app/learn/[pathway]/serverFunctions";
 
 export default async function PathwayPage({
 	params,
 }: {
-	params: { pathway: string };
+	params: Promise<{ pathway: string }>;
 }) {
-	const pathway = await params.pathway;
+	const pathway = (await params).pathway;
 
 	// Fetch all needed data at once
-	const [roadmapInfoRaw, valid] = await Promise.all([
-		getRoadmap(pathway), // This is an array! (from your function)
+	const [roadmapInfoRaw, valid, skillNodes] = await Promise.all([
+		getRoadmap(pathway),
 		checkPathwayValid(pathway),
+		getSkillNodes(pathway)
 	]);
 
 	// Pick single roadmap, or adjust if multiple expected
@@ -25,11 +23,11 @@ export default async function PathwayPage({
 		? roadmapInfoRaw[0]
 		: roadmapInfoRaw;
 
-	if (!valid) {
+	if (!valid || skillNodes === null) {
 		// Optionally render 404 or redirect
 		console.debug(roadmapInfoRaw);
 		return <div>Not found</div>;
 	}
 
-	return <RoadmapInfoClient pathway={pathway} roadmapInfo={roadmapInfo} />;
+	return <RoadmapInfoClient pathway={pathway} roadmapInfo={roadmapInfo} skillNodes={skillNodes}/>;
 }

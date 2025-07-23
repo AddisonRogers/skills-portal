@@ -1,0 +1,1 @@
+- Clean up the description further so that it doesnt have the "vist the following resources to learn more"

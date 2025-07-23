@@ -1,22 +1,21 @@
 "use client";
 
-import React, { use } from "react";
-import { getSkillsForRoadmapForUser } from "@/db/repositories/skills";
-import { useUserInfo } from "@/hooks/useUserInfo";
+import React from "react";
+import {SkillNode} from "@/types/Roadmap";
 
 export default function RoadmapInfoClient({
 	pathway,
 	roadmapInfo,
+											  skillNodes,
 }: {
 	pathway: string;
 	roadmapInfo: any;
+	skillNodes: Map<string, SkillNode>;
 }) {
 	console.debug("roadmapInfo: ", roadmapInfo);
 	console.debug("pathway: ", pathway);
 
-	const { userEmail } = useUserInfo();
-
-	const skillNodes = use(getSkillsForRoadmapForUser(pathway, userEmail!));
+	console.debug("skillNodes: ", skillNodes);
 
 	return (
 		<>
@@ -27,6 +26,9 @@ export default function RoadmapInfoClient({
 			</div>
 			<div>
 				<h2>Your Skills</h2>
+				{
+					skillNodes.size === 0 && <div>No skills found</div>
+				}
 				<pre>{JSON.stringify(skillNodes, null, 2)}</pre>
 			</div>
 		</>
