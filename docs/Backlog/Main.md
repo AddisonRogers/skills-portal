@@ -1,0 +1,4 @@
+- Add AI tutor
+- Add AI generate roadmaps probably
+- Fix skills probably and make it so it's xp / role / pathway rather than individual skills
+- 
