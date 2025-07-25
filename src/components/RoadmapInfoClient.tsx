@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import {SkillNode} from "@/types/Roadmap";
+import { SkillNode } from "@/types/Roadmap";
 
 export default function RoadmapInfoClient({
 	pathway,
 	roadmapInfo,
-											  skillNodes,
+	skillNodes,
 }: {
 	pathway: string;
 	roadmapInfo: any;

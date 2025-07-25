@@ -1,8 +1,8 @@
 // REMOVE "use client"!
 
-import {checkPathwayValid, getRoadmap} from "@/db/repositories/roadmap";
+import { checkPathwayValid, getRoadmap } from "@/db/repositories/roadmap";
 import RoadmapInfoClient from "@/components/RoadmapInfoClient";
-import {getSkillNodes} from "@/app/learn/[pathway]/serverFunctions";
+import { getSkillNodes } from "@/app/learn/[pathway]/serverFunctions";
 
 export default async function PathwayPage({
 	params,

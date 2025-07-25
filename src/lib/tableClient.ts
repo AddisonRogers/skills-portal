@@ -1,6 +1,6 @@
 // src/infrastructure/cosmosTableClient.ts
-import {TableClient} from "@azure/data-tables";
-import type {AZTPositionData, LinkData, SkillNode} from "@/types/Roadmap";
+import { TableClient } from "@azure/data-tables";
+import type { AZTPositionData, LinkData, SkillNode } from "@/types/Roadmap";
 
 // Replace with your own connection string retrieval
 const COSMOS_CONNECTION_STRING = process.env.AZTABLE_CONNECTION_STRING!;

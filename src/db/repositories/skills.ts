@@ -1,9 +1,9 @@
 "use server";
 
-import {and, eq} from "drizzle-orm";
-import {roadmap, skill, skillRoadmap, user, userSkill} from "@/db/schema";
-import {db} from "@/lib/db";
-import {PGSkillData, PGSkillDataUser, SkillNode} from "@/types/Roadmap";
+import { and, eq } from "drizzle-orm";
+import { roadmap, skill, skillRoadmap, user, userSkill } from "@/db/schema";
+import { db } from "@/lib/db";
+import { PGSkillData, PGSkillDataUser, SkillNode } from "@/types/Roadmap";
 
 export async function getSkills() {
 	return db.select().from(skill);
