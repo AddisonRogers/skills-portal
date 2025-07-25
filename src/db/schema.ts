@@ -1,13 +1,4 @@
-import {
-	boolean,
-	integer,
-	pgTable,
-	serial,
-	text,
-	timestamp,
-	uuid,
-	varchar,
-} from "drizzle-orm/pg-core";
+import {boolean, integer, pgTable, serial, text, timestamp,} from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
 	id: text("id").primaryKey(),
@@ -74,6 +65,7 @@ export const skill = pgTable("skill", {
 	name: text("name").notNull().unique(),
 	blobUrl: text("blob_url"),
 	description: text("description"),
+	bigSkill: boolean("big_skill").default(false).notNull(),
 	createdAt: timestamp("created_at").defaultNow().notNull(),
 	updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
