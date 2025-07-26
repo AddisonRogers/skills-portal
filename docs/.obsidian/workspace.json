@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Backlog/Main.md",
+                "file": "Backlog/SP-Functions.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Main"
+              "title": "SP-Functions"
             }
           }
         ]
@@ -181,8 +181,8 @@
   },
   "active": "8844a0f73f079adb",
   "lastOpenFiles": [
-    "Backlog/SP-Functions.md",
     "Backlog/Main.md",
+    "Backlog/SP-Functions.md",
     "Technical Design/Cosmos Tables.md",
     "Backlog",
     "Technical Design/Getting Skills.md",

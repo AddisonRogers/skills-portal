@@ -3,4 +3,6 @@
 - Make it so that in sections it groups then automatically
 - Fix the issue of stuff maybe not connecting to sections? Chatgpt?
 - Confirm the card sections work
-- 
+
+
+TODO delete everything and instead manually create the roadmaps myself but use the data that they have because oh my god it's awful
