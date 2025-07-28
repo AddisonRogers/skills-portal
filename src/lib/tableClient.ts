@@ -21,30 +21,42 @@ export async function attachPositions(
 	roadmapName: string,
 	nodesMap: Map<string, SkillNode>,
 ): Promise<Map<string, SkillNode>> {
-	const entities = positionsClient.listEntities<AZTPositionData>({
-		queryOptions: { filter: `partitionKey eq '${roadmapName}'` },
-	});
 
-	for await (const entity of entities) {
-		const skillId = entity.Rowkey; // handle both possible keys
-		const node = nodesMap.get(skillId);
-		if (node) {
-			// Update x, y, and nodeType (from PositionData)
-			node.x = entity.x;
-			node.y = entity.y;
-			node.nodeType = entity.nodeType;
+	// add a try catch and if fail because no tail or no positions then return with 0 for xy
+	try {
+		const entities = positionsClient.listEntities<AZTPositionData>({
+			queryOptions: { filter: `partitionKey eq '${roadmapName}'` },
+		});
+
+		for await (const entity of entities) {
+			const skillId = entity.Rowkey; // handle both possible keys
+			const node = nodesMap.get(skillId);
+			if (node) {
+				// Update x, y, and nodeType (from PositionData)
+				node.x = entity.x;
+				node.y = entity.y;
+				node.nodeType = entity.nodeType;
+			}
 		}
+		return nodesMap;
+	} catch (error) {
+		console.debug(error)
+		return nodesMap;
 	}
-	return nodesMap;
 }
 
 export async function getLinks(roadmapName: string): Promise<LinkData[]> {
-	const entities = linksClient.listEntities<LinkData>({
-		queryOptions: { filter: `partitionKey eq '${roadmapName}'` },
-	});
-	const results: LinkData[] = [];
-	for await (const entity of entities) {
-		results.push(entity);
+	try {
+		const entities = linksClient.listEntities<LinkData>({
+			queryOptions: { filter: `partitionKey eq '${roadmapName}'` },
+		});
+		const results: LinkData[] = [];
+		for await (const entity of entities) {
+			results.push(entity);
+		}
+		return results;
+	} catch (error) {
+		console.debug(error)
+		return [];
 	}
-	return results;
 }

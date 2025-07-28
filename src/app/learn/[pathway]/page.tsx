@@ -1,9 +1,8 @@
-// REMOVE "use client"!
-
 import { checkPathwayValid, getRoadmap } from "@/db/repositories/roadmap";
 import RoadmapInfoClient from "@/components/RoadmapInfoClient";
 import { getSkillNodes } from "@/app/learn/[pathway]/serverFunctions";
 
+// I am essentially using this as the loading page.
 export default async function PathwayPage({
 	params,
 }: {

@@ -18,7 +18,6 @@ export async function getSkillNodes(pathway: string): getSkillNodesReturnType {
 	});
 
 	const userEmail = (await user)?.user.email;
-	console.debug("userEmail: ", userEmail);
 	const valid = checkPathwayValid(pathway);
 	if (!valid) {
 		return null;
