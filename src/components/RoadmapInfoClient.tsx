@@ -3,7 +3,7 @@
 import React from "react";
 import { SkillNode } from "@/types/Roadmap";
 import SkillsFlow from "@/components/skills-flow";
-import {NodeBase} from "@xyflow/system";
+import { NodeBase } from "@xyflow/system";
 
 export default function RoadmapInfoClient({
 	pathway,
@@ -16,7 +16,6 @@ export default function RoadmapInfoClient({
 	skillNodes: Map<string, SkillNode>;
 	flowSkillNodes: NodeBase[];
 }) {
-
 	return (
 		<>
 			<div>{pathway} Page</div>
