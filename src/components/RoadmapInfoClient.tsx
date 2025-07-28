@@ -34,14 +34,19 @@ export default function RoadmapInfoClient({
 							<li key={key} style={{ marginBottom: "1rem" }}>
 								<strong>{skill.name ?? key}</strong>
 								<ul style={{ marginTop: "0.4rem", paddingLeft: "1.2rem" }}>
-									{Object.entries(skill).map(([prop, value]) => (
-										prop !== "name" && (
-											<li key={prop}>
-												<span style={{ fontWeight: 500 }}>{prop}:</span>{" "}
-												<span>{typeof value === "object" ? JSON.stringify(value) : String(value)}</span>
-											</li>
-										)
-									))}
+									{Object.entries(skill).map(
+										([prop, value]) =>
+											prop !== "name" && (
+												<li key={prop}>
+													<span style={{ fontWeight: 500 }}>{prop}:</span>{" "}
+													<span>
+														{typeof value === "object"
+															? JSON.stringify(value)
+															: String(value)}
+													</span>
+												</li>
+											),
+									)}
 								</ul>
 							</li>
 						))}

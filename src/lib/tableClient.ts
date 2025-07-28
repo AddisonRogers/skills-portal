@@ -21,7 +21,6 @@ export async function attachPositions(
 	roadmapName: string,
 	nodesMap: Map<string, SkillNode>,
 ): Promise<Map<string, SkillNode>> {
-
 	// add a try catch and if fail because no tail or no positions then return with 0 for xy
 	try {
 		const entities = positionsClient.listEntities<AZTPositionData>({
@@ -40,7 +39,7 @@ export async function attachPositions(
 		}
 		return nodesMap;
 	} catch (error) {
-		console.debug(error)
+		console.debug(error);
 		return nodesMap;
 	}
 }
@@ -56,7 +55,7 @@ export async function getLinks(roadmapName: string): Promise<LinkData[]> {
 		}
 		return results;
 	} catch (error) {
-		console.debug(error)
+		console.debug(error);
 		return [];
 	}
 }
