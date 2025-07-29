@@ -1,12 +1,11 @@
-import {create} from "zustand";
+import { create } from "zustand";
 
 interface SelectedNodeState {
-  selectedNode: string | null;
-  setSelectedNode: (selectedNode: string | null) => void;
+	selectedNode: string | null;
+	setSelectedNode: (selectedNode: string | null) => void;
 }
 
 export const useSelectedNodeStore = create<SelectedNodeState>((set) => ({
-  selectedNode: null,
-  setSelectedNode: (selectedNode) => set({ selectedNode }),
+	selectedNode: null,
+	setSelectedNode: (selectedNode) => set({ selectedNode }),
 }));
-

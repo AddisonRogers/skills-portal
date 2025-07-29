@@ -94,6 +94,6 @@ export async function getSkill(skillMachineName: string) {
 			.from(skill)
 			.where(eq(skill.machineName, skillMachineName));
 	} catch (error) {
-		return null
+		return null;
 	}
 }

@@ -9,11 +9,7 @@ export default function PathwayPage() {
 	const { isPending, data } = useSession();
 	const status = isPending ? "loading" : "authenticated";
 	const user = data?.user;
-  // TODO implement a skills viewer
+	// TODO implement a skills viewer
 
-	return (
-		<div className="w-full min-h-screen bg-accent">
-      wassup
-		</div>
-	);
+	return <div className="w-full min-h-screen bg-accent">wassup</div>;
 }
