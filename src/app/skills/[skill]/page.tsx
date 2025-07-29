@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { fetchBlob } from "@/lib/blobClient";
+import {ExternalLink} from "lucide-react";
 
 export default async function IndividualSkillPage({
 	params,
@@ -33,7 +34,9 @@ export default async function IndividualSkillPage({
 			</Card>
 		);
 
-	const info = await fetchBlob(skill.blobUrl);
+	const skillData = await fetchBlob(skill.blobUrl);
+	const skillDataJson = JSON.parse(skillData);
+	console.log(skillDataJson.urls);
 
 	return (
 		<div className="max-w-2xl mx-auto py-8 space-y-8">
@@ -64,20 +67,34 @@ export default async function IndividualSkillPage({
 			) : (
 				<p className="text-muted-foreground text-sm">No description.</p>
 			)}
-			{skill.blobUrl && (
-				<div className="mt-4 flex items-center gap-2">
-					<p className="mr-2 font-semibold">URL:</p>
-					<Button asChild variant="link" className="px-0">
-						<a
-							href={skill.blobUrl}
-							target="_blank"
-							rel="noopener noreferrer"
-							className="break-all"
-						>
-							{info}
-						</a>
-					</Button>
-				</div>
+			{skillDataJson?.urls && skillDataJson.urls.length > 0 && (
+				<Card>
+					<CardHeader>
+						<CardTitle className="text-lg">Learning Resources</CardTitle>
+						<CardDescription>
+							Click on the links below to learn more about this skill
+						</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<div className="space-y-3">
+							{skillDataJson.urls.map((url, index) => (
+								<div key={index} className="flex items-center space-x-3 p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+									<ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+									<Button asChild variant="link" className="h-auto p-0 text-left justify-start">
+										<a
+											href={url}
+											target="_blank"
+											rel="noopener noreferrer"
+											className="break-all text-blue-600 hover:text-blue-800"
+										>
+											{url}
+										</a>
+									</Button>
+								</div>
+							))}
+						</div>
+					</CardContent>
+				</Card>
 			)}
 		</div>
 	);

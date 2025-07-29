@@ -5,11 +5,13 @@ export function parseAzureBlobUrl(url: string): {
 	blobName: string;
 } {
 	const urlObj = new URL(url);
-	// e.g. path = "/container/blobname/dir/file.txt"
+	// e.g. path = "/skills/skills/basic-backend-development%3AVPI89s-m885r2YrXjYxdd.json"
 	const parts = urlObj.pathname.replace(/^\/+/, "").split("/");
-	const containerName = parts.shift()!;
-	const blobName = parts.join("/");
+	const containerName = parts.shift()!; // "skills" (container)
+	const blobName = decodeURIComponent(parts.join("/")); // "skills/basic-backend-development:VPI89s-m885r2YrXjYxdd.json"
+
 	return { containerName, blobName };
+
 }
 
 /**
@@ -45,12 +47,16 @@ function streamToString(
  * @param blobUrl
  */
 export async function fetchBlob(blobUrl: string): Promise<string> {
+	console.debug(`Fetching blob ${blobUrl}`);
+
 	const { containerName, blobName } = parseAzureBlobUrl(blobUrl);
 
 	const serviceClient = BlobServiceClient.fromConnectionString(
 		process.env.AZURE_STORAGE_CONNECTION_STRING!,
 	);
-	const containerClient = serviceClient.getContainerClient(containerName);
+
+	console.debug(`Blob ${blobName}`);
+	const containerClient = serviceClient.getContainerClient("skills");
 	const blobClient = containerClient.getBlobClient(blobName);
 
 	const downloadBlockBlobResponse = await blobClient.download();
