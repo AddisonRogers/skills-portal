@@ -1,9 +1,13 @@
 "use server";
 
-export async function getPathInfo() {}
+import {getRoadmapSkills} from "@/db/repositories/skills";
+import {getUserByEmail} from "@/db/repositories/users";
 
-function getRoadmapSkills() {}
+export async function getAllSkills(userEmail: string) {
+  const user = await getUserByEmail(userEmail)
+  const rawRoadmapSkills = await getRoadmapSkills(user.id)
 
-function getOurSkills() {}
+  console.debug(rawRoadmapSkills[0])
 
-export async function getProgressOnPath() {}
+  return Map.groupBy(rawRoadmapSkills, skill => skill.roadmapId);
+}

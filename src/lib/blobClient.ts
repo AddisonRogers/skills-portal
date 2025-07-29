@@ -11,7 +11,6 @@ export function parseAzureBlobUrl(url: string): {
 	const blobName = decodeURIComponent(parts.join("/")); // "skills/basic-backend-development:VPI89s-m885r2YrXjYxdd.json"
 
 	return { containerName, blobName };
-
 }
 
 /**
