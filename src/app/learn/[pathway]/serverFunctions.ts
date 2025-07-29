@@ -44,7 +44,9 @@ export async function convertToSkillNodes(
 		position: { x: skillNode.x, y: skillNode.y },
 		data: {
 			label: skillNode.name,
-			...skillNode,
+			blobUrl: skillNode.blobUrl,
+			description: skillNode.description,
+			name: skillNode.name,
 		},
 	}));
 }

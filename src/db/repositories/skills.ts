@@ -81,3 +81,19 @@ export async function getSkillsForRoadmapForUser(
 		]),
 	);
 }
+
+export async function getSkill(skillMachineName: string) {
+	try {
+		return db
+			.select({
+				name: skill.name,
+				description: skill.description,
+				blobUrl: skill.blobUrl,
+				madeBy: skill.madeBy,
+			})
+			.from(skill)
+			.where(eq(skill.machineName, skillMachineName));
+	} catch (error) {
+		return null
+	}
+}

@@ -1,4 +1,11 @@
-import {boolean, integer, pgTable, serial, text, timestamp,} from "drizzle-orm/pg-core";
+import {
+	boolean,
+	integer,
+	pgTable,
+	serial,
+	text,
+	timestamp,
+} from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
 	id: text("id").primaryKey(),
@@ -63,6 +70,7 @@ export const verification = pgTable("verification", {
 export const skill = pgTable("skill", {
 	id: serial().primaryKey(),
 	name: text("name").notNull().unique(),
+	machineName: text("machine_name"),
 	blobUrl: text("blob_url"),
 	description: text("description"),
 	bigSkill: boolean("big_skill").default(false).notNull(),
