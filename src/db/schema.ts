@@ -1,11 +1,4 @@
-import {
-	boolean,
-	integer,
-	pgTable,
-	serial,
-	text,
-	timestamp,
-} from "drizzle-orm/pg-core";
+import {boolean, integer, pgTable, serial, text, timestamp,} from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
 	id: text("id").primaryKey(),
@@ -73,6 +66,7 @@ export const skill = pgTable("skill", {
 	blobUrl: text("blob_url"),
 	description: text("description"),
 	bigSkill: boolean("big_skill").default(false).notNull(),
+	madeBy: text("made_by").default("roadmap.sh"),
 	createdAt: timestamp("created_at").defaultNow().notNull(),
 	updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -165,6 +159,8 @@ export const roadmap = pgTable("roadmap", {
 	name: text("name").notNull().unique(),
 	description: text("description"),
 	relatedRoadmaps: text("related_roadmaps"),
+	viewable: boolean("viewable").default(false).notNull(),
+	createdBy: text("created_by").default("roadmap.sh").notNull(),
 	createdAt: timestamp("created_at").defaultNow().notNull(),
 	updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -175,6 +171,8 @@ export const skillRoadmap = pgTable("skill_roadmap", {
 		.notNull()
 		.references(() => skill.id, { onDelete: "cascade" }),
 	roadmapId: text("roadmap_id").notNull(),
+	viewable: boolean("viewable").default(false).notNull(),
+	createdBy: text("created_by").default("roadmap.sh").notNull(),
 	createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
