@@ -1,13 +1,13 @@
 "use server";
 
-import {getRoadmapSkills} from "@/db/repositories/skills";
-import {getUserByEmail} from "@/db/repositories/users";
+import { getRoadmapSkills } from "@/db/repositories/skills";
+import { getUserByEmail } from "@/db/repositories/users";
 
 export async function getAllSkills(userEmail: string) {
-  const user = await getUserByEmail(userEmail)
-  const rawRoadmapSkills = await getRoadmapSkills(user.id)
+	const user = await getUserByEmail(userEmail);
+	const rawRoadmapSkills = await getRoadmapSkills(user.id);
 
-  console.debug(rawRoadmapSkills[0])
+	console.debug(rawRoadmapSkills[0]);
 
-  return Map.groupBy(rawRoadmapSkills, skill => skill.roadmapId);
+	return Map.groupBy(rawRoadmapSkills, (skill) => skill.roadmapId);
 }

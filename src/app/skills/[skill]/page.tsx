@@ -60,9 +60,9 @@ export default async function IndividualSkillPage({
 					</BreadcrumbItem>
 				</BreadcrumbList>
 			</Breadcrumb>
-			
-			<Link 
-				href="/skills" 
+
+			<Link
+				href="/skills"
 				className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground"
 			>
 				<ChevronLeft className="mr-1 h-4 w-4" />
