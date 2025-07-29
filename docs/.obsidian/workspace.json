@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Backlog/SP-Functions.md",
+                "file": "Backlog/Remaining.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "SP-Functions"
+              "title": "Remaining"
             }
           }
         ]
@@ -182,6 +182,7 @@
   "active": "15bdf92a0a3d35a1",
   "lastOpenFiles": [
     "Backlog/Main.md",
+    "Backlog/Remaining.md",
     "Backlog/SP-Functions.md",
     "Technical Design/Use Cases.md",
     "Interviews/Diwas - Placement Perspective.md",
