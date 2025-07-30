@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { auth } from "@/lib/auth";
-import {headers} from "next/headers";
+import { headers } from "next/headers";
 
 // Helper function to convert skill name to URL slug
 function skillNameToSlug(name: string) {
@@ -19,8 +19,8 @@ function skillNameToSlug(name: string) {
 export default async function SkillsPage() {
 	// Fetch all roadmaps with their skills
 	const session = await auth.api.getSession({
-		headers: await headers()
-	})
+		headers: await headers(),
+	});
 
 	const roadmapsWithSkills = await getAllSkills(session?.user?.email || null);
 

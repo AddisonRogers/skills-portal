@@ -43,7 +43,7 @@ export default function SkillsFlow(props: SkillsFlowProps) {
 	);
 
 	return (
-		<div style={{ height: "100vh", width: "100vw" }}>
+		<div style={{ height: "99vh", width: "99vw" }} className={"flex justify-center px-4 " }>
 			<ReactFlow
 				nodes={nodes}
 				edges={edges}
@@ -52,7 +52,7 @@ export default function SkillsFlow(props: SkillsFlowProps) {
 				onConnect={onConnect}
 				fitView={true}
 				nodeTypes={nodeTypes}
-			></ReactFlow>
+			/>
 		</div>
 	);
 }

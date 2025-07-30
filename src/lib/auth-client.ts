@@ -6,12 +6,19 @@ export const authClient = createAuthClient({
 	baseURL: "http://localhost:3000",
 });
 
-export const signIn = async () => {
+export const MicrosoftSignIn = async () => {
 	const data = await authClient.signIn.social({
 		provider: "microsoft",
-		callbackURL: "/dashboard", // The URL to redirect to after the sign in
+		callbackURL: "/", // The URL to redirect to after the sign in
 	});
 };
+
+export const GithubSignIn = async () => {
+	const data = await authClient.signIn.social({
+		provider: "github",
+		callbackURL: "/"
+	})
+}
 
 export const isAdmin = async () => {
 	const { data: session, error } = await authClient.getSession();

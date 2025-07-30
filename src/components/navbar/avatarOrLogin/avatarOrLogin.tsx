@@ -12,7 +12,6 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { useUserInfo } from "@/hooks/useUserInfo";
 import { Button } from "@/components/ui/button";
-import { signIn } from "@/lib/auth-client";
 
 export default function AvatarOrLogin() {
 	const { loggedIn, user, userEmail, isAdmin } = useUserInfo();
@@ -40,6 +39,8 @@ export default function AvatarOrLogin() {
 		</DropdownMenu>
 	) : (
 		// Log in button
-		<Button onClick={signIn}>Login</Button>
+		<Link href={"/login"}>
+			<Button>Login</Button>
+		</Link>
 	);
 }

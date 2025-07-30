@@ -5,24 +5,6 @@ import { roadmap, skill, skillRoadmap, user, userSkill } from "@/db/schema";
 import { db } from "@/lib/db";
 import { PGSkillData, PGSkillDataUser, SkillNode } from "@/types/Roadmap";
 
-// export async function getSkills() {
-// 	return db.select().from(skill);
-// }
-
-//
-// export async function getSkillsForUser(userEmail: string) {
-// 	return db
-// 		.select({
-// 			name: skill.name,
-// 			acquiredAt: userSkill.acquiredAt,
-// 			level: userSkill.level,
-// 		})
-// 		.from(skill)
-// 		.innerJoin(userSkill, eq(skill.id, userSkill.skillId))
-// 		.innerJoin(user, eq(userSkill.userId, user.id))
-// 		.where(eq(user.email, userEmail));
-// }
-
 // Only possible with the positions table
 export async function getSkillsForRoadmap(
 	roadmapId: string,
