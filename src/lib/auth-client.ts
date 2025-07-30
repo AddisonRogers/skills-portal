@@ -16,9 +16,9 @@ export const MicrosoftSignIn = async () => {
 export const GithubSignIn = async () => {
 	const data = await authClient.signIn.social({
 		provider: "github",
-		callbackURL: "/"
-	})
-}
+		callbackURL: "/",
+	});
+};
 
 export const isAdmin = async () => {
 	const { data: session, error } = await authClient.getSession();

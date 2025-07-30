@@ -43,7 +43,10 @@ export default function SkillsFlow(props: SkillsFlowProps) {
 	);
 
 	return (
-		<div style={{ height: "99vh", width: "99vw" }} className={"flex justify-center px-4 " }>
+		<div
+			style={{ height: "99vh", width: "99vw" }}
+			className={"flex justify-center px-4 "}
+		>
 			<ReactFlow
 				nodes={nodes}
 				edges={edges}
