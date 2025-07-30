@@ -20,15 +20,14 @@ export const GithubSignIn = async () => {
 	});
 };
 
-export const isAdmin = async () => {
-	const { data: session, error } = await authClient.getSession();
-	if (error) return false;
-
-	if (session === undefined || session?.user === undefined) return false;
-
-	// get from roles
-	return await rolesDb.isAdmin(session.user.email);
-};
+// export const isAdmin = async () => {
+// 	const { data: session, error } = await authClient.getSession();
+//
+// 	if (session === undefined || session?.user === undefined) return false;
+//
+// 	// get from roles
+// 	return await rolesDb.isAdmin(session.user.email);
+// };
 
 export const isSignedIn = async () => {
 	const { data: session, error } = await authClient.getSession();

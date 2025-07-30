@@ -1,7 +1,9 @@
 import { betterAuth } from "better-auth";
 import { db } from "@/lib/db";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import * as schema from "@/db/schema"; // adjust the path to where your exports are
+import * as schema from "@/db/schema";
+import {headers} from "next/headers";
+import {isAdmin} from "@/db/repositories/roles"; // adjust the path to where your exports are
 
 export const auth = betterAuth({
 	database: drizzleAdapter(db, {
@@ -22,3 +24,16 @@ export const auth = betterAuth({
 		},
 	},
 });
+
+export const authIsAdmin = async () => {
+	const session = await auth.api.getSession({
+		headers: await headers(), // some endpoint might require headers
+	});
+
+	const userEmail = session?.user?.email;
+	if (!userEmail) {
+		return false;
+	}
+
+	return isAdmin(userEmail)
+}

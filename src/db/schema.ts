@@ -74,6 +74,7 @@ export const skill = pgTable("skill", {
 	blobUrl: text("blob_url"),
 	description: text("description"),
 	bigSkill: boolean("big_skill").default(false).notNull(),
+	xpAmount: integer("xp_level").default(0).notNull(),
 	madeBy: text("made_by").default("roadmap.sh"),
 	createdAt: timestamp("created_at").defaultNow().notNull(),
 	updatedAt: timestamp("updated_at").defaultNow().notNull(),

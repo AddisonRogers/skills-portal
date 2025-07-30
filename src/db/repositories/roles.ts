@@ -17,7 +17,10 @@ export async function getRoles(userEmail: string) {
 }
 
 export async function isAdmin(userEmail: string): Promise<boolean> {
-	return userHasRole(userEmail, "admin");
+	const response = userHasRole(userEmail, "admin");
+
+	const data = await response;
+	return data;
 }
 
 export async function userHasRole(
