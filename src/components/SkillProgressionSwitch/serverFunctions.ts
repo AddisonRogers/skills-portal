@@ -2,7 +2,10 @@
 
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import {getSkillForUserEmail, setSkillProgressionForUserEmail} from "@/db/repositories/skills";
+import {
+	getSkillForUserEmail,
+	setSkillProgressionForUserEmail,
+} from "@/db/repositories/skills";
 
 export async function changeSkillProgression(skillId: string, value: number) {
 	const session = await auth.api.getSession({
@@ -11,10 +14,10 @@ export async function changeSkillProgression(skillId: string, value: number) {
 
 	const userEmail = session?.user?.email;
 	if (!userEmail) {
-		return
+		return;
 	}
 
-	setSkillProgressionForUserEmail(skillId, userEmail, value)
+	setSkillProgressionForUserEmail(skillId, userEmail, value);
 }
 
 export async function getSkillProgression(skillId: string) {
@@ -27,5 +30,5 @@ export async function getSkillProgression(skillId: string) {
 		return null;
 	}
 
-	return getSkillForUserEmail(userEmail, skillId)
+	return getSkillForUserEmail(userEmail, skillId);
 }
