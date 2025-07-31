@@ -5,6 +5,7 @@ import { user, userSkill, skill } from "@/db/schema";
 import { count, sql } from "drizzle-orm";
 import type { ChartConfig } from "@/components/ui/chart";
 
+// TODO reformat into repos
 export type getPopularSkillsStatsReturnType = {
 	data: { skill: string; users: number }[];
 	config: ChartConfig;

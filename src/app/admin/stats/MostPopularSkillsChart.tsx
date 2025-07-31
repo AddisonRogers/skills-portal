@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/chart";
 import { Bar, BarChart, XAxis, YAxis } from "recharts";
 import {
-  getPopularSkillsStatsReturnType,
-  getPopularSkillsStatsReturnTypePromised
+	getPopularSkillsStatsReturnType,
+	getPopularSkillsStatsReturnTypePromised,
 } from "@/app/admin/stats/serverFunctions";
 import { use } from "react";
 

@@ -11,8 +11,8 @@ import {
 } from "@/components/ui/chart";
 import { Bar, BarChart, Cell, Pie, PieChart, XAxis, YAxis } from "recharts";
 import {
-  getProficiencyDistributionStatsReturnType,
-  getProficiencyDistributionStatsReturnTypePromised
+	getProficiencyDistributionStatsReturnType,
+	getProficiencyDistributionStatsReturnTypePromised,
 } from "@/app/admin/stats/serverFunctions";
 import { use } from "react";
 
