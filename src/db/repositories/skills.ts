@@ -206,7 +206,6 @@ export async function getSkillForUserEmail(
 			.where(eq(user.email, userEmail))
 			.limit(1);
 
-
 		console.debug(`line 144 user ${userEmail} has ${userData.length} rows`);
 		const userId = userData[0].id;
 		console.debug(`line 146 user ${userEmail} has id ${userId}`);
@@ -215,8 +214,8 @@ export async function getSkillForUserEmail(
 
 		const machineNameSkill = skillIdentifier
 			.toLowerCase()
-			.replace(/\s+/g, "-")                    // Replace spaces with dashes
-			.replace(/[^a-zA-Z0-9\-]/g, "");        // Remove all except a-z, A-Z, 0-9, and dash
+			.replace(/\s+/g, "-") // Replace spaces with dashes
+			.replace(/[^a-zA-Z0-9\-]/g, ""); // Remove all except a-z, A-Z, 0-9, and dash
 		console.debug(`machineNameSkill: ${machineNameSkill}`);
 		// TODO fix
 
@@ -232,7 +231,10 @@ export async function getSkillForUserEmail(
 			.from(skill)
 			.leftJoin(userSkill, eq(skill.id, userSkill.skillId))
 			.where(
-				and(eq(userSkill.userId, userId), eq(skill.machineName, machineNameSkill)),
+				and(
+					eq(userSkill.userId, userId),
+					eq(skill.machineName, machineNameSkill),
+				),
 			);
 
 		console.debug(`data: ${data[0]}`);
@@ -254,11 +256,12 @@ export async function setSkillProgressionForUserEmail(
 	if (!skill || skill.length === 0) return null;
 
 	const user = await getUserByEmail(userEmail);
-	console.debug(`line 234 setting skill ${skill[0].id} for user ${user[0].id} to ${level}`);
+	console.debug(
+		`line 234 setting skill ${skill[0].id} for user ${user[0].id} to ${level}`,
+	);
 	if (!user || !user[0]) return null;
 
 	const skillId = skill[0].id;
-
 
 	console.debug(`setting skill ${skillId} for user ${user[0].id} to ${level}`);
 

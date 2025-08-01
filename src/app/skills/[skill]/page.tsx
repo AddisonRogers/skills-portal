@@ -65,13 +65,13 @@ export default async function IndividualSkillPage({
 			</Breadcrumb>
 
 			<div className="flex flex-row justify-between items-center mb-4">
-			<Link
-				href="/skills"
-				className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground"
-			>
-				<ChevronLeft className="mr-1 h-4 w-4" />
-				Back to all skills
-			</Link>
+				<Link
+					href="/skills"
+					className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground"
+				>
+					<ChevronLeft className="mr-1 h-4 w-4" />
+					Back to all skills
+				</Link>
 
 				<SkillProgressionSwitchWrapper skillName={skill.name} />
 			</div>
