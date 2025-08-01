@@ -8,7 +8,7 @@ const navLinks = [
 	{ name: "Projects", href: "/projects" },
 	{ name: "People", href: "/people" },
 	{ name: "AI", href: "/ai" },
-	{ name: "Admin Panel", href: "/admin-panel" },
+	{ name: "Admin Panel", href: "/admin" },
 ];
 
 export default async function Navbar() {
