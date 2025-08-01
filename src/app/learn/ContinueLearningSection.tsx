@@ -7,8 +7,6 @@ export default function ContinueLearningSection({
 }: {
 	currentRoadmap: Roadmap;
 }) {
-	console.debug("currentRoadmap: ", currentRoadmap);
-
 	return (
 		<section className="mb-12">
 			<h2 className="text-xl font-normal mb-4">Continue Learning</h2>

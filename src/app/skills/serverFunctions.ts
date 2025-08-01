@@ -3,12 +3,9 @@
 import { getRoadmapSkills } from "@/db/repositories/skills";
 import { getUserByEmail } from "@/db/repositories/users";
 
-// TODO fix
 export async function getAllSkills(userEmail: string | null) {
 	const user = await getUserByEmail(userEmail);
 	const rawRoadmapSkills = await getRoadmapSkills(user.id);
-
-	console.debug(rawRoadmapSkills[0]);
 
 	return Map.groupBy(rawRoadmapSkills, (skill) => skill.roadmapId);
 }

@@ -59,6 +59,19 @@ export async function getSkillsForRoadmapForUser(
 	roadmapId: string,
 	userEmail: string,
 ): Promise<Map<string, SkillNode>> {
+	const userData = await db
+		.select({ id: user.id })
+		.from(user)
+		.where(eq(user.email, userEmail))
+		.limit(1);
+
+	if (userData.length === 0) {
+		throw new Error("User not found");
+	}
+
+	const userId = userData[0].id;
+
+	// Then get all skills for the roadmap with optional user skill data
 	const data: PGSkillDataUser[] = await db
 		.select({
 			name: skill.name,
@@ -69,11 +82,14 @@ export async function getSkillsForRoadmapForUser(
 		})
 		.from(skill)
 		.innerJoin(skillRoadmap, eq(skill.id, skillRoadmap.skillId))
-		.innerJoin(userSkill, eq(skill.id, userSkill.skillId))
 		.innerJoin(roadmap, eq(skillRoadmap.roadmapId, roadmap.id))
-		.innerJoin(user, eq(userSkill.userId, user.id))
-		.where(and(eq(roadmap.id, roadmapId), eq(user.email, userEmail)));
+		.leftJoin(userSkill, and(
+			eq(skill.id, userSkill.skillId),
+			eq(userSkill.userId, userId)
+		))
+		.where(eq(roadmap.id, roadmapId));
 
+	console.debug(`we got: ${data.length} skills`);
 	return new Map(
 		data.map((skill) => [
 			skill.name,
@@ -82,8 +98,12 @@ export async function getSkillsForRoadmapForUser(
 				nodeType: "skill",
 				x: 0,
 				y: 0,
+				// Set defaults for users who haven't acquired the skill
+				level: skill.level ?? 0,
+				acquiredAt: skill.acquiredAt ?? null,
 			} as SkillNode,
 		]),
+
 	);
 }
 

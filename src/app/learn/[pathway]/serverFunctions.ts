@@ -21,12 +21,12 @@ export async function getSkillNodes(pathway: string): getSkillNodesReturnType {
 	const userEmail = (await user)?.user.email;
 	const valid = checkPathwayValid(pathway);
 	if (!valid) {
+		console.error("Invalid pathway:", pathway);
 		return null;
 	}
 
 	if (userEmail === undefined) {
-		console.debug("userEmail is undefined");
-
+		console.error("User not logged in");
 		const data = await getSkillsOnRoadmap(pathway);
 		return attachPositions(pathway, data);
 	}

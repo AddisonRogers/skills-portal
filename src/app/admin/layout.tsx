@@ -8,7 +8,6 @@ export default async function AdminLayout({
 }) {
 	// Check if user is admin
 	const userIsAdmin = await authIsAdmin();
-	console.debug("userIsAdmin: ", userIsAdmin);
 
 	// If not admin, redirect to home page
 	if (
