@@ -17,6 +17,7 @@ export default async function Navbar() {
 			<div className="flex items-start justify-baseline">
 				{navLinks.map((link) => (
 					<Link
+						key={link.name}
 						href={link.href}
 						className={cn(
 							"inline-block px-4 py-2 font-medium text-black transition-colors duration-150 relative",

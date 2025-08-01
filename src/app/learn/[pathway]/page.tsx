@@ -25,7 +25,12 @@ export default async function PathwayPage({
 		? roadmapInfoRaw[0]
 		: roadmapInfoRaw;
 
-	if (!valid || skillNodes === null || skillNodes === undefined || skillNodes.size === 0) {
+	if (
+		!valid ||
+		skillNodes === null ||
+		skillNodes === undefined ||
+		skillNodes.size === 0
+	) {
 		// Optionally render 404 or redirect
 		return <div>Not found</div>;
 	}

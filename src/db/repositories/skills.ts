@@ -83,10 +83,10 @@ export async function getSkillsForRoadmapForUser(
 		.from(skill)
 		.innerJoin(skillRoadmap, eq(skill.id, skillRoadmap.skillId))
 		.innerJoin(roadmap, eq(skillRoadmap.roadmapId, roadmap.id))
-		.leftJoin(userSkill, and(
-			eq(skill.id, userSkill.skillId),
-			eq(userSkill.userId, userId)
-		))
+		.leftJoin(
+			userSkill,
+			and(eq(skill.id, userSkill.skillId), eq(userSkill.userId, userId)),
+		)
 		.where(eq(roadmap.id, roadmapId));
 
 	console.debug(`we got: ${data.length} skills`);
@@ -103,7 +103,6 @@ export async function getSkillsForRoadmapForUser(
 				acquiredAt: skill.acquiredAt ?? null,
 			} as SkillNode,
 		]),
-
 	);
 }
 
@@ -201,7 +200,27 @@ export async function getSkillForUserEmail(
 	userEmail: string,
 ): Promise<getSkillForUserEmailResult[] | null> {
 	try {
-		return db
+		const userData = await db
+			.select({ id: user.id })
+			.from(user)
+			.where(eq(user.email, userEmail))
+			.limit(1);
+
+
+		console.debug(`line 144 user ${userEmail} has ${userData.length} rows`);
+		const userId = userData[0].id;
+		console.debug(`line 146 user ${userEmail} has id ${userId}`);
+
+		console.debug(`skillIdentifier: ${skillIdentifier}`);
+
+		const machineNameSkill = skillIdentifier
+			.toLowerCase()
+			.replace(/\s+/g, "-")                    // Replace spaces with dashes
+			.replace(/[^a-zA-Z0-9\-]/g, "");        // Remove all except a-z, A-Z, 0-9, and dash
+		console.debug(`machineNameSkill: ${machineNameSkill}`);
+		// TODO fix
+
+		const data = await db
 			.select({
 				id: skill.id,
 				name: skill.name,
@@ -211,11 +230,13 @@ export async function getSkillForUserEmail(
 				level: userSkill.level,
 			})
 			.from(skill)
-			.innerJoin(userSkill, eq(skill.id, userSkill.skillId))
-			.innerJoin(user, eq(userSkill.userId, user.id))
+			.leftJoin(userSkill, eq(skill.id, userSkill.skillId))
 			.where(
-				and(eq(user.email, userEmail), eq(skill.machineName, skillIdentifier)),
+				and(eq(userSkill.userId, userId), eq(skill.machineName, machineNameSkill)),
 			);
+
+		console.debug(`data: ${data[0]}`);
+		return data;
 	} catch (error) {
 		console.error("Error fetching skill:", error);
 		return null;
@@ -228,13 +249,20 @@ export async function setSkillProgressionForUserEmail(
 	level: number,
 ) {
 	const skill = await getSkillForUserEmail(skillIdentifier, userEmail);
+	// Skill is returning null nuh uh
+	console.debug(`line 30 skill ${skill} for user ${userEmail} to ${level}`);
 	if (!skill || skill.length === 0) return null;
 
 	const user = await getUserByEmail(userEmail);
+	console.debug(`line 234 setting skill ${skill[0].id} for user ${user[0].id} to ${level}`);
 	if (!user || !user[0]) return null;
 
 	const skillId = skill[0].id;
-	return await db
+
+
+	console.debug(`setting skill ${skillId} for user ${user[0].id} to ${level}`);
+
+	return db
 		.insert(userSkill)
 		.values({
 			userId: user[0].id,

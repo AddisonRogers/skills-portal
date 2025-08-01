@@ -14,6 +14,7 @@ export async function changeSkillProgression(skillId: string, value: number) {
 
 	const userEmail = session?.user?.email;
 	if (!userEmail) {
+		console.debug("No user email");
 		return;
 	}
 
@@ -30,5 +31,5 @@ export async function getSkillProgression(skillId: string) {
 		return null;
 	}
 
-	return getSkillForUserEmail(userEmail, skillId);
+	return getSkillForUserEmail(skillId, userEmail);
 }

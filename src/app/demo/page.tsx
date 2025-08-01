@@ -1,9 +1,10 @@
 "use server";
 
 import SkillProgressionSwitch from "@/components/SkillProgressionSwitch/SkillProgressionSwitch";
+import SkillProgressionSwitchWrapper from "@/components/SkillProgressionSwitch/SkillProgressionSwitchWrapper";
 
 export default async function TripleToggleExample() {
 	const skillName = "React";
 
-	return <SkillProgressionSwitch skillName={skillName} />;
+	return <SkillProgressionSwitchWrapper skillName={skillName} />;
 }

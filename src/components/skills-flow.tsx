@@ -31,7 +31,6 @@ type SkillsFlowProps = {
 export default function SkillsFlow(props: SkillsFlowProps) {
 	const { nodes, setNodes, edges, setEdges, onNodesChange, onEdgesChange } =
 		props;
-	const { setSelectedNode } = useSelectedNodeStore();
 
 	const nodeTypes = {
 		skill: SkillNode,
@@ -48,6 +47,7 @@ export default function SkillsFlow(props: SkillsFlowProps) {
 			className={"flex justify-center px-4 "}
 		>
 			<ReactFlow
+				key={nodes.length}
 				nodes={nodes}
 				edges={edges}
 				onNodesChange={onNodesChange}

@@ -17,13 +17,16 @@ import { Button } from "@/components/ui/button";
 import { fetchBlob } from "@/lib/blobClient";
 import { ExternalLink, ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import SkillProgressionSwitch from "@/components/SkillProgressionSwitch/SkillProgressionSwitch";
+import SkillProgressionSwitchWrapper from "@/components/SkillProgressionSwitch/SkillProgressionSwitchWrapper";
 
 export default async function IndividualSkillPage({
 	params,
 }: {
-	params: { skill: string };
+	params: Promise<{ skill: string }>;
 }) {
-	const skills = await getSkill(params.skill);
+	const { skill: skillName } = await params;
+	const skills = await getSkill(skillName);
 	const skill = skills?.[0];
 
 	if (!skill || !skill.blobUrl)
@@ -61,6 +64,7 @@ export default async function IndividualSkillPage({
 				</BreadcrumbList>
 			</Breadcrumb>
 
+			<div className="flex flex-row justify-between items-center mb-4">
 			<Link
 				href="/skills"
 				className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground"
@@ -68,6 +72,9 @@ export default async function IndividualSkillPage({
 				<ChevronLeft className="mr-1 h-4 w-4" />
 				Back to all skills
 			</Link>
+
+				<SkillProgressionSwitchWrapper skillName={skill.name} />
+			</div>
 
 			<h1 className="mb-2">{skill.name}</h1>
 			{skill.description ? (
