@@ -41,7 +41,7 @@ export type PGSkillData = {
 	blobUrl: string | null;
 };
 
-export type SkillNode = PGSkillDataUser & PositionData;
+export type SkillNode = PGSkillDataUser;
 
 export type PositionData = {
 	nodeType: string;
@@ -55,8 +55,6 @@ export type AZTPositionData = PositionData & {
 	Timestamp: string;
 };
 
-export type Edge = LinkData & {};
-
 export type LinkData = {
 	PartitionKey: string;
 	RowKey: string;
@@ -65,3 +63,8 @@ export type LinkData = {
 	target: string;
 	type: string;
 };
+
+export type EdgeData = {
+	source: string;
+	target: string;
+}

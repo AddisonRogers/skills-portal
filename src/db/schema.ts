@@ -4,7 +4,7 @@ import {
 	pgTable,
 	serial,
 	text,
-	timestamp,
+	timestamp, unique,
 } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
@@ -90,7 +90,11 @@ export const userSkill = pgTable("user_skill", {
 		.references(() => skill.id, { onDelete: "cascade" }),
 	acquiredAt: timestamp("acquired_at"),
 	level: integer("level"),
-});
+}, (table) => ({
+	// Add unique constraint on userId and skillId combination
+	uniqueUserSkill: unique().on(table.userId, table.skillId),
+}));
+
 
 export const certification = pgTable("certification", {
 	id: serial().primaryKey(),

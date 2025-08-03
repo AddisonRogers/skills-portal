@@ -1,13 +1,16 @@
 - [ ] Flow styling
-	- [ ] Add auto x, y on the nodes
+	- [x] Add auto x, y on the nodes
 	- [ ] Style the Nodes
 - [ ] Skills
-	- [ ] Add status none/started/done
+	- [x] Add status none/started/done
 	- [ ] Add XP
 - [ ] Badges
 	- [ ] Badges UI
 	- [ ] Badges System??
-- [ ] Projects
-	- [ ] Projects page
 - [ ] People
-	- [ ] Maybe Harrison's problem
+	- [ ] Have opshub queries showing time remaining
+	- [ ] Be able to query by skill
+	- [ ] Be able to query by roadmap
+- [ ] Home page with leaderboards
+- [ ] Suggestions page
+- [ ] 

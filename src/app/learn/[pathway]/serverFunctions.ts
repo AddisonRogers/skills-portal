@@ -7,7 +7,6 @@ import {
 import { getSkillsForRoadmapForUser } from "@/db/repositories/skills";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { attachPositions } from "@/lib/tableClient";
 import { SkillNode } from "@/types/Roadmap";
 import type { NodeBase } from "@xyflow/system";
 
@@ -28,11 +27,11 @@ export async function getSkillNodes(pathway: string): getSkillNodesReturnType {
 	if (userEmail === undefined) {
 		console.error("User not logged in");
 		const data = await getSkillsOnRoadmap(pathway);
-		return attachPositions(pathway, data);
+		return data;
 	}
 
 	const data = await getSkillsForRoadmapForUser(pathway, userEmail);
-	return attachPositions(pathway, data);
+	return data;
 }
 
 export async function convertToSkillNodes(

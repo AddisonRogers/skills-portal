@@ -41,7 +41,6 @@ export async function checkPathwayValid(roadmapId: string): Promise<boolean> {
 			.select()
 			.from(roadmap)
 			.where(eq(roadmap.id, roadmapId));
-		console.debug(items);
 		return items.length > 0;
 	} catch (error) {
 		return false;

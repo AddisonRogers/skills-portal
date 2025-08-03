@@ -61,14 +61,12 @@ const getLayoutedElements = (nodes, edges, direction = "TB") => {
 interface RoadmapInfoClientProps {
 	pathway: string;
 	roadmapInfo: any;
-	skillNodes: Map<string, SkillNode>;
 	flowSkillNodes: NodeBase[];
 }
 
 export default function RoadmapInfoClient({
 	pathway,
 	roadmapInfo,
-	skillNodes,
 	flowSkillNodes,
 }: RoadmapInfoClientProps) {
 	const { selectedNode } = useSelectedNodeStore();

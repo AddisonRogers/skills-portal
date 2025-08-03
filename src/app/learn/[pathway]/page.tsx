@@ -4,6 +4,7 @@ import {
 	convertToSkillNodes,
 	getSkillNodes,
 } from "@/app/learn/[pathway]/serverFunctions";
+import {getLinks} from "@/lib/tableClient";
 
 // I am essentially using this as the loading page.
 export default async function PathwayPage({
@@ -14,10 +15,11 @@ export default async function PathwayPage({
 	const pathway = (await params).pathway;
 
 	// Fetch all needed data at once
-	const [roadmapInfoRaw, valid, skillNodes] = await Promise.all([
+	const [roadmapInfoRaw, valid, skillNodes, links] = await Promise.all([
 		getRoadmap(pathway),
 		checkPathwayValid(pathway),
 		getSkillNodes(pathway),
+		getLinks(pathway)
 	]);
 
 	// Pick single roadmap, or adjust if multiple expected
@@ -50,7 +52,6 @@ export default async function PathwayPage({
 			<RoadmapInfoClient
 				pathway={pathway}
 				roadmapInfo={roadmapInfo}
-				skillNodes={skillNodes}
 				flowSkillNodes={flowSkillNodes}
 			/>
 		</div>

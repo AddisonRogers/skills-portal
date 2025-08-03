@@ -5,6 +5,7 @@ import AvatarOrLogin from "@/components/navbar/avatarOrLogin/avatarOrLogin";
 const navLinks = [
 	{ name: "Home", href: "/" },
 	{ name: "Learn", href: "/learn" },
+	{ name: "Skills", href: "/skills" },
 	{ name: "Projects", href: "/projects" },
 	{ name: "People", href: "/people" },
 	{ name: "AI", href: "/ai" },
