@@ -4,7 +4,7 @@ import {
 	convertToSkillNodes,
 	getSkillNodes,
 } from "@/app/learn/[pathway]/serverFunctions";
-import {getLinks} from "@/lib/tableClient";
+import { getLinks } from "@/lib/tableClient";
 
 // I am essentially using this as the loading page.
 export default async function PathwayPage({
@@ -19,7 +19,7 @@ export default async function PathwayPage({
 		getRoadmap(pathway),
 		checkPathwayValid(pathway),
 		getSkillNodes(pathway),
-		getLinks(pathway)
+		getLinks(pathway),
 	]);
 
 	// Pick single roadmap, or adjust if multiple expected
@@ -53,6 +53,7 @@ export default async function PathwayPage({
 				pathway={pathway}
 				roadmapInfo={roadmapInfo}
 				flowSkillNodes={flowSkillNodes}
+				initialLinks={links}
 			/>
 		</div>
 	);
