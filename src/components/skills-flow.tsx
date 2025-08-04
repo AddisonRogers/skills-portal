@@ -1,6 +1,6 @@
 "use client";
 
-import {useCallback, useMemo, useState} from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
 	Background,
 	ReactFlow,
@@ -11,18 +11,23 @@ import {
 	useEdgesState,
 	Edge,
 	Connection,
-	useReactFlow, Node,
+	useReactFlow,
+	Node,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { NodeBase } from "@xyflow/system";
 import { SkillNode } from "./nodes/SkillNode";
 import dagre from "@dagrejs/dagre";
-import {useEditModeStore, useFlowStore, useSelectedNodeStore} from "@/app/learn/[pathway]/zustandStore";
+import {
+	useEditModeStore,
+	useFlowStore,
+	useSelectedNodeStore,
+} from "@/app/learn/[pathway]/zustandStore";
 
 export default function SkillsFlow() {
 	const reactFlowInstance = useReactFlow();
 
-// Get everything from the flow store
+	// Get everything from the flow store
 	const {
 		nodes,
 		edges,
@@ -30,9 +35,8 @@ export default function SkillsFlow() {
 		setEdges,
 		setNodes,
 		onNodesChange,
-		onEdgesChange
+		onEdgesChange,
 	} = useFlowStore();
-
 
 	const nodeTypes = {
 		skill: SkillNode,

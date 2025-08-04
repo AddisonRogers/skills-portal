@@ -1,48 +1,51 @@
 "use client";
 
-import React, {useEffect, useState} from "react";
-import {SkillNode} from "@/types/Roadmap";
+import React, { useEffect, useState } from "react";
+import { SkillNode } from "@/types/Roadmap";
 import SkillsFlow from "@/components/skills-flow";
-import {NodeBase} from "@xyflow/system";
-import {Node, Edge, ReactFlowProvider, useEdgesState, useNodesState} from "@xyflow/react";
+import { NodeBase } from "@xyflow/system";
+import {
+	Node,
+	Edge,
+	ReactFlowProvider,
+	useEdgesState,
+	useNodesState,
+} from "@xyflow/react";
 import dagre from "@dagrejs/dagre";
 import {
-  useEditModeStore, useFlowStore,
-  useSelectedNodeStore,
+	useEditModeStore,
+	useFlowStore,
+	useSelectedNodeStore,
 } from "@/app/learn/[pathway]/zustandStore";
-import {EditButtons} from "@/app/learn/[pathway]/EditButtons";
-
+import { EditButtons } from "@/app/learn/[pathway]/EditButtons";
 
 // TODO use d3-force
 
-
 interface RoadmapInfoClientProps {
-  pathway: string;
-  initialNodes: Node[];
-  initialEdges: Edge[];
+	pathway: string;
+	initialNodes: Node[];
+	initialEdges: Edge[];
 }
 
 export default function RoadmapInfoClient({
-                                            pathway,
-                                            initialNodes,
-                                            initialEdges,
+	pathway,
+	initialNodes,
+	initialEdges,
+}: RoadmapInfoClientProps) {
+	const { initializeFlow } = useFlowStore();
 
-                                          }: RoadmapInfoClientProps) {
-  const {initializeFlow} = useFlowStore();
+	// Only initialize if the store is empty
+	const { nodes } = useFlowStore();
+	if (nodes.length === 0 && initialNodes.length > 0) {
+		initializeFlow(initialNodes, initialEdges);
+	}
 
-
-  // Only initialize if the store is empty
-  const {nodes} = useFlowStore();
-  if (nodes.length === 0 && initialNodes.length > 0) {
-    initializeFlow(initialNodes, initialEdges);
-  }
-
-  return (
-    <div>
-      <ReactFlowProvider>
-        <EditButtons pathway={pathway}/>
-        <SkillsFlow/>
-      </ReactFlowProvider>
-    </div>
-  );
+	return (
+		<div>
+			<ReactFlowProvider>
+				<EditButtons pathway={pathway} />
+				<SkillsFlow />
+			</ReactFlowProvider>
+		</div>
+	);
 }
