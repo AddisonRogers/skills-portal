@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import {useCallback, useMemo, useState} from "react";
 import {
 	Background,
 	ReactFlow,
@@ -11,27 +11,28 @@ import {
 	useEdgesState,
 	Edge,
 	Connection,
-	useReactFlow,
+	useReactFlow, Node,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { NodeBase } from "@xyflow/system";
 import { SkillNode } from "./nodes/SkillNode";
 import dagre from "@dagrejs/dagre";
-import { useSelectedNodeStore } from "@/app/learn/[pathway]/zustandStore";
+import {useEditModeStore, useFlowStore, useSelectedNodeStore} from "@/app/learn/[pathway]/zustandStore";
 
-type SkillsFlowProps = {
-	nodes;
-	setNodes;
-	edges;
-	setEdges;
-	onNodesChange;
-	onEdgesChange;
-	editMode?: boolean;
-};
-
-export default function SkillsFlow(props: SkillsFlowProps) {
-	const { nodes, setNodes, edges, setEdges, onNodesChange, onEdgesChange, editMode = false } = props;
+export default function SkillsFlow() {
 	const reactFlowInstance = useReactFlow();
+
+// Get everything from the flow store
+	const {
+		nodes,
+		edges,
+		editMode,
+		setEdges,
+		setNodes,
+		onNodesChange,
+		onEdgesChange
+	} = useFlowStore();
+
 
 	const nodeTypes = {
 		skill: SkillNode,
@@ -62,27 +63,27 @@ export default function SkillsFlow(props: SkillsFlowProps) {
 	const onPaneContextMenu = useCallback(
 		(event) => {
 			event.preventDefault();
-			
+
 			if (!editMode) return;
-			
+
 			// Get the position where the right-click occurred
 			const position = reactFlowInstance.screenToFlowPosition({
 				x: event.clientX,
 				y: event.clientY,
 			});
-			
+
 			// Create a new node with a placeholder blob URL
 			const newNode = {
 				id: getId(),
-				type: 'skill',
+				type: "skill",
 				position,
-				data: { 
+				data: {
 					name: `New Skill ${nodes.length + 1}`,
-					description: 'Click to edit this skill',
+					description: "Click to edit this skill",
 					blobUrl: generatePlaceholderBlobUrl(), // Generate a placeholder blob URL
 				},
 			};
-			
+
 			setNodes((nds) => nds.concat(newNode));
 		},
 		[editMode, nodes.length, reactFlowInstance, setNodes],
@@ -104,9 +105,9 @@ export default function SkillsFlow(props: SkillsFlowProps) {
 				fitView={true}
 				nodeTypes={nodeTypes}
 				connectionLineType={ConnectionLineType.SmoothStep}
-				deleteKeyCode={editMode ? 'Delete' : null}
-				selectionKeyCode={editMode ? 'Shift' : null}
-				multiSelectionKeyCode={editMode ? 'Control' : null}
+				deleteKeyCode={editMode ? "Delete" : null}
+				selectionKeyCode={editMode ? "Shift" : null}
+				multiSelectionKeyCode={editMode ? "Control" : null}
 				zoomOnScroll={!editMode}
 				panOnScroll={!editMode}
 				selectionOnDrag={editMode}
