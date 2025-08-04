@@ -1,9 +1,16 @@
 - [ ] Flow styling
 	- [x] Add auto x, y on the nodes
 	- [ ] Style the Nodes
+		- [ ] Restyling the main node
+		- [ ] Styling the new node
+		- [ ] Styling the button to see resources
+	- [ ] Allow for linking sub-resources
+	- [ ] 
 - [ ] Skills
 	- [x] Add status none/started/done
 	- [ ] Add XP
+		- [ ] XP bar in navbar
+		- [ ] XP Leaderboard
 - [ ] Badges
 	- [ ] Badges UI
 	- [ ] Badges System??
@@ -13,4 +20,4 @@
 	- [ ] Be able to query by roadmap
 - [ ] Home page with leaderboards
 - [ ] Suggestions page
-- [ ] 
+- [ ] AI Page

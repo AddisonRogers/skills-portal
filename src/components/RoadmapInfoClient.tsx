@@ -19,8 +19,6 @@ import {
 } from "@/app/learn/[pathway]/zustandStore";
 import { EditButtons } from "@/app/learn/[pathway]/EditButtons";
 
-// TODO use d3-force
-
 interface RoadmapInfoClientProps {
 	pathway: string;
 	initialNodes: Node[];

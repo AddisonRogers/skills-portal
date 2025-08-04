@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Handle } from "@xyflow/react";
-import { useSelectedNodeStore } from "@/app/learn/[pathway]/zustandStore";
+import {addEdge, Connection, Handle} from "@xyflow/react";
+import {useFlowStore, useSelectedNodeStore} from "@/app/learn/[pathway]/zustandStore";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -44,12 +44,51 @@ const statusText: Record<SkillStatus, string> = {
 };
 
 export function TargetHandleWithValidation({ position, source }) {
+	const {
+		setEdges,
+		editMode,
+	} = useFlowStore();
+
+	const handleConnect = (params: Connection) => {
+		console.log("handle onConnect", params);
+
+		if (!editMode) {
+			console.log("Not in edit mode, ignoring connection");
+			return false; // Prevent connection if not in edit mode
+		}
+
+		// Create the new edge
+		const newEdge = {
+			id: `${params.source}-${params.target}`,
+			source: params.source!,
+			target: params.target!,
+			type: "default",
+		};
+
+		// Add the edge to the store
+		setEdges((currentEdges) => addEdge(newEdge, currentEdges));
+
+		// Track this as a changed edge
+		const store = useFlowStore.getState();
+		const newChangedEdgeIds = new Set(store.changedEdgeIds);
+		newChangedEdgeIds.add(newEdge.id);
+
+		// Update the changed edges set
+		useFlowStore.setState({ changedEdgeIds: newChangedEdgeIds });
+
+		console.log("Edge added and tracked:", newEdge.id);
+
+		return true; // Allow the connection
+	};
+
+
 	return (
 		<Handle
 			type="target"
 			position={position}
-			onConnect={(params) => console.log("handle onConnect", params)}
+			onConnect={handleConnect}
 			style={{ background: "#fff" }}
+			isConnectable={editMode}
 		/>
 	);
 }
