@@ -41,6 +41,8 @@ export default async function IndividualSkillPage({
 	const skillData = await fetchBlob(skill.blobUrl);
 	const skillDataJson = JSON.parse(skillData);
 
+	// TODO allow for editing
+
 	return (
 		<div className="max-w-2xl mx-auto py-8 space-y-8">
 			{/* Breadcrumbs */}

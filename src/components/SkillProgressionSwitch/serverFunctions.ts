@@ -33,3 +33,5 @@ export async function getSkillProgression(skillId: string) {
 
 	return getSkillForUserEmail(skillId, userEmail);
 }
+
+// TODO calculate xp here

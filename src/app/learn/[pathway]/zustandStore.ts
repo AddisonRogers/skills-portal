@@ -1,5 +1,12 @@
-import {create} from "zustand";
-import {applyEdgeChanges, applyNodeChanges, Edge, EdgeChange, Node, NodeChange,} from "@xyflow/react";
+import { create } from "zustand";
+import {
+	applyEdgeChanges,
+	applyNodeChanges,
+	Edge,
+	EdgeChange,
+	Node,
+	NodeChange,
+} from "@xyflow/react";
 
 interface SelectedNodeState {
 	selectedNode: string | null;
@@ -153,11 +160,9 @@ export const useFlowStore = create<FlowState>((set, get) => ({
 			const newEdges = applyEdgeChanges(changes, state.edges);
 			const newChangedEdgeIds = new Set(state.changedEdgeIds);
 
-
-
 			// Track which edges changed
 			changes.forEach((change) => {
-				console.debug(`change: ${JSON.stringify(change, null, 2)}`)
+				console.debug(`change: ${JSON.stringify(change, null, 2)}`);
 				if (change.type === "add") {
 					newChangedEdgeIds.add(change.item.id);
 				} else if (change.type === "remove") {

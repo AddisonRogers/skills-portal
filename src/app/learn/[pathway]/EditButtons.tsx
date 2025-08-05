@@ -66,18 +66,6 @@ export function EditButtons(params: EditButtonsParams) {
 
 		console.log("Changes prepared for submission:", changes);
 
-		// Here you would call your API
-		// saveRoadmapChanges(changes)
-		//   .then(response => {
-		//     console.log("Changes saved successfully:", response);
-		//     commitChanges(); // Make current state the new original
-		//     setEditMode(false);
-		//     setChangesSubmitted(true);
-		//   })
-		//   .catch(error => {
-		//     console.error("Error saving changes:", error);
-		//   });
-
 		// For now, just simulate success
 		commitChanges();
 		setEditMode(false);

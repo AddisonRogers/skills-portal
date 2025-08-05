@@ -1,8 +1,11 @@
 "use client";
 
 import React from "react";
-import {addEdge, Connection, Handle} from "@xyflow/react";
-import {useFlowStore, useSelectedNodeStore} from "@/app/learn/[pathway]/zustandStore";
+import {addEdge, Connection, EdgeChange, Handle} from "@xyflow/react";
+import {
+	useFlowStore,
+	useSelectedNodeStore,
+} from "@/app/learn/[pathway]/zustandStore";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -44,12 +47,10 @@ const statusText: Record<SkillStatus, string> = {
 };
 
 export function TargetHandleWithValidation({ position, source }) {
-	const {
-		setEdges,
-		editMode,
-	} = useFlowStore();
+	const { setEdges, editMode, onEdgesChange } = useFlowStore();
 
-	const handleConnect = (params: Connection) => {
+	// TODO fix
+	const handleConnect = (params: EdgeChange[]) => {
 		console.log("handle onConnect", params);
 
 		if (!editMode) {
@@ -80,7 +81,6 @@ export function TargetHandleWithValidation({ position, source }) {
 
 		return true; // Allow the connection
 	};
-
 
 	return (
 		<Handle
