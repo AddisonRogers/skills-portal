@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import {addEdge, Connection, EdgeChange, Handle} from "@xyflow/react";
+import { addEdge, Connection, EdgeChange, Handle } from "@xyflow/react";
 import {
 	useFlowStore,
 	useSelectedNodeStore,

@@ -132,7 +132,6 @@ export default function SkillsFlow() {
 					panOnScroll={!editMode}
 					selectionOnDrag={editMode}
 					panOnDrag={!editMode}
-
 					nodesConnectable={editMode}
 					nodesDraggable={editMode}
 				>
