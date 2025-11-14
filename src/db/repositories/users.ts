@@ -66,3 +66,12 @@ export async function deleteUser(id: string) {
 export async function listUsers(limit = 50) {
 	return db.select().from(user).limit(limit);
 }
+
+export async function listUserEmails() {
+  return db
+    .select({
+      id: user.id,
+      email: user.email
+    })
+    .from(user);
+}

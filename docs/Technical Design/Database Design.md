@@ -1,4 +1,4 @@
-TODO entity relationship diagram
+
 ```mermaid
 erDiagram
     USER {
