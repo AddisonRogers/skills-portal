@@ -38,7 +38,7 @@ export default async function SkillsManagement() {
 							</TableRow>
 						</TableHeader>
 						<TableBody>
-							{skills.map((skill) => (
+							{skills?.map((skill) => (
 								<TableRow key={skill.id}>
 									<TableCell>{skill.id}</TableCell>
 									<TableCell className="font-medium">{skill.name}</TableCell>
@@ -49,7 +49,7 @@ export default async function SkillsManagement() {
 									<TableCell>{skill.createdAt.toLocaleDateString()}</TableCell>
 								</TableRow>
 							))}
-							{skills.length === 0 && (
+							{skills?.length === 0 && (
 								<TableRow>
 									<TableCell colSpan={7} className="text-center">
 										No skills found
