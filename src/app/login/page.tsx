@@ -1,12 +1,18 @@
 "use client";
 
 import React from "react";
-import {
-	handleGithubLogin,
-	handleMicrosoftLogin,
-} from "@/app/login/serverFunctions";
+import { handleMicrosoftLogin } from "@/app/login/serverFunctions";
+import { GithubSignIn } from "@/lib/auth-client";
 
 export default function LoginPage() {
+	async function handleGithubLogin() {
+		try {
+			await GithubSignIn();
+		} catch (error) {
+			console.error("GitHub login failed:", error);
+		}
+	}
+
 	return (
 		<div className="min-h-screen flex items-center justify-center bg-gray-50">
 			<div className="max-w-md w-full space-y-8">
