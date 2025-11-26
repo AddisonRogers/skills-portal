@@ -8,6 +8,13 @@
       "when": 1752845888389,
       "tag": "0000_lethal_senator_kelly",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1764064266278,
+      "tag": "0001_stiff_maverick",
+      "breakpoints": true
     }
   ]
 }
