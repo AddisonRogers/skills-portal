@@ -81,24 +81,17 @@ export const skill = pgTable("skill", {
 	updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-export const userSkill = pgTable(
-	"user_skill",
-	{
-		id: serial().primaryKey(),
-		userId: text("user_id")
-			.notNull()
-			.references(() => user.id, { onDelete: "cascade" }),
-		skillId: integer("skill_id")
-			.notNull()
-			.references(() => skill.id, { onDelete: "cascade" }),
-		acquiredAt: timestamp("acquired_at"),
-		level: integer("level"),
-	},
-	(table) => ({
-		// Add unique constraint on userId and skillId combination
-		uniqueUserSkill: unique().on(table.userId, table.skillId),
-	}),
-);
+export const userSkill = pgTable("user_skill", {
+	id: serial().primaryKey(),
+	userId: text("user_id")
+		.notNull()
+		.references(() => user.id, { onDelete: "cascade" }),
+	skillId: integer("skill_id")
+		.notNull()
+		.references(() => skill.id, { onDelete: "cascade" }),
+	acquiredAt: timestamp("acquired_at"),
+	level: integer("level"),
+});
 
 export const certification = pgTable("certification", {
 	id: serial().primaryKey(),
@@ -247,4 +240,9 @@ export const capabilityUser = pgTable("capability_user", {
 	userId: text("user_id")
 		.notNull()
 		.references(() => user.id, { onDelete: "cascade" }),
+});
+
+export const testTable = pgTable("test_table", {
+	id: serial().primaryKey(),
+	testName: text("test_name").notNull(),
 });

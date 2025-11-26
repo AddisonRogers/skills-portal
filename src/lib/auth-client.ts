@@ -14,15 +14,15 @@ export const MicrosoftSignIn = async () => {
 };
 
 export const GithubSignIn = async () => {
-	try{
+	try {
 		const data = await authClient.signIn.social({
 			provider: "github",
 			callbackURL: "/",
 		});
 		console.log("signIn.social result:", data);
-	}catch (error) {
+	} catch (error) {
 		console.error("Github sign in error:", error);
-		throw error
+		throw error;
 	}
 };
 
