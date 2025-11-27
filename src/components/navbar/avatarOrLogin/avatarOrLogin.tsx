@@ -14,7 +14,7 @@ import { useUserInfo } from "@/hooks/useUserInfo";
 import { Button } from "@/components/ui/button";
 
 export default function AvatarOrLogin() {
-	const { loggedIn, user, userEmail, isAdmin } = useUserInfo();
+	const { loggedIn, user, userEmail } = useUserInfo();
 
 	const userImg =
 		user?.image ||
