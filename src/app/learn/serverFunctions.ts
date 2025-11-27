@@ -5,22 +5,27 @@
 // //
 // // }
 //
-import {auth} from "@/lib/auth.ts";
-import {headers} from "next/headers";
-import {getSuggestedRoadmaps} from "@/db/repositories/roadmap.ts";
+import { auth } from "@/lib/auth.ts";
+import { headers } from "next/headers";
+import { getSuggestedRoadmaps } from "@/db/repositories/roadmap.ts";
 
 export async function fetchUserAndGetSuggestedRoadmaps() {
-    const session = await auth.api.getSession({
-        headers: await headers() // some endpoints might require headers
-    })
+	const session = await auth.api.getSession({
+		headers: await headers(), // some endpoints might require headers
+	});
 
-    const userEmail = session?.user?.email;
+	const userEmail = session?.user?.email;
 
-    if (!userEmail || userEmail === "" || userEmail === null || userEmail === undefined) {
-        return []
-    }
+	if (
+		!userEmail ||
+		userEmail === "" ||
+		userEmail === null ||
+		userEmail === undefined
+	) {
+		return [];
+	}
 
-    return getSuggestedRoadmaps(userEmail!)
+	return getSuggestedRoadmaps(userEmail!);
 }
 
 //

@@ -68,10 +68,10 @@ export async function listUsers(limit = 50) {
 }
 
 export async function listUserEmails() {
-  return db
-    .select({
-      id: user.id,
-      email: user.email
-    })
-    .from(user);
+	return db
+		.select({
+			id: user.id,
+			email: user.email,
+		})
+		.from(user);
 }
