@@ -14,6 +14,7 @@ import {
 } from "@/app/learn/[pathway]/zustandStore";
 import { Edit, Save } from "lucide-react";
 import { useEdges, useNodes } from "@xyflow/react";
+import {uploadChanges} from "@/app/learn/[pathway]/serverFunctions";
 
 export type EditButtonsParams = {
 	pathway: string;
@@ -61,10 +62,12 @@ export function EditButtons(params: EditButtonsParams) {
 	};
 
 	// Handle submitting changes
-	const handleSubmitChanges = () => {
+	const handleSubmitChanges = async () => {
 		const changes = prepareChangesForSubmission();
 
 		console.log("Changes prepared for submission:", changes);
+
+    await uploadChanges(pathway, changes.edges)
 
 		// For now, just simulate success
 		commitChanges();
