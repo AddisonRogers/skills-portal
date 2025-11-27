@@ -1,4 +1,3 @@
-// src/infrastructure/cosmosTableClient.ts
 import { TableClient } from "@azure/data-tables";
 import {
 	AZTPositionData,

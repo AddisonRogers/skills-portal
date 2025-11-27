@@ -12,8 +12,6 @@ export default async function LearnPage() {
 		// TODO redirect to the login page
 	}
 
-	const userEmail = "addisonrogers@protonmail.com";
-
 	const suggestedRoadmaps = getSuggestedRoadmaps(userEmail);
 	const allRoadmapsData = getAllRoadmaps();
 	const capabilities = getAllCapabilities();
