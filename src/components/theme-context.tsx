@@ -25,8 +25,9 @@ export function useTheme() {
 	return ctx;
 }
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
-	const [theme, setTheme] = useState<Theme>("light");
+export function ThemeProvider({ initialTheme, children }: { initialTheme:Theme, children: ReactNode }) {
+
+	const [theme, setTheme] = useState<Theme>(initialTheme);
 
 	useEffect(() => {
 		let cancelled = false;
