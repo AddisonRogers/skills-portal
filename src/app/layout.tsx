@@ -27,9 +27,8 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-
 	const user = await getServerUser();
-  	const theme = user ? await getUserTheme(user.id) : "light";
+	const theme = user ? await getUserTheme(user.id) : "light";
 
 	return (
 		<html lang="en" data-theme={theme}>

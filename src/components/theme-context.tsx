@@ -25,8 +25,13 @@ export function useTheme() {
 	return ctx;
 }
 
-export function ThemeProvider({ initialTheme, children }: { initialTheme:Theme, children: ReactNode }) {
-
+export function ThemeProvider({
+	initialTheme,
+	children,
+}: {
+	initialTheme: Theme;
+	children: ReactNode;
+}) {
 	const [theme, setTheme] = useState<Theme>(initialTheme);
 
 	useEffect(() => {

@@ -12,7 +12,7 @@ export type Tag = {
 };
 
 export type Proficiency = {
-	id: number,
-	value: number,
-	label: string
-}
+	id: number;
+	value: number;
+	label: string;
+};

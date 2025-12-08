@@ -8,7 +8,7 @@ export async function GET() {
 		return new NextResponse("Unauthorized", { status: 401 });
 	}
 
-	const theme = getUserTheme(user.id)
+	const theme = getUserTheme(user.id);
 
 	return NextResponse.json({ theme });
 }
@@ -19,13 +19,13 @@ export async function POST(req: NextRequest) {
 		return new NextResponse("Unauthorized", { status: 401 });
 	}
 
-	const { theme } = await req.json()
+	const { theme } = await req.json();
 
 	if (theme !== "light" && theme !== "dark") {
 		return new NextResponse("Invalid theme", { status: 400 });
 	}
 
-	await setUserTheme(user.id, theme)
+	await setUserTheme(user.id, theme);
 
 	return NextResponse.json({ success: true });
 }
