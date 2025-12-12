@@ -8,12 +8,8 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import React from "react";
-import {
-	useEditModeStore,
-	useFlowStore,
-} from "@/app/learn/[pathway]/zustandStore";
+import { useFlowStore } from "@/app/learn/[pathway]/zustandStore";
 import { Edit, Save } from "lucide-react";
-import { useEdges, useNodes } from "@xyflow/react";
 import { uploadChanges } from "@/app/learn/[pathway]/serverFunctions";
 
 export type EditButtonsParams = {
@@ -29,9 +25,7 @@ export function EditButtons(params: EditButtonsParams) {
 		getChangedNodes,
 		getChangedEdges,
 		commitChanges,
-		resetChanges,
 	} = useFlowStore();
-	// Prepare changes for submission
 	const prepareChangesForSubmission = () => {
 		const changedNodes = getChangedNodes();
 		const changedEdges = getChangedEdges();

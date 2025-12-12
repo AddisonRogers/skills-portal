@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { user, userSkill, skill } from "@/db/schema";
+import { userSkill, skill } from "@/db/schema";
 import { count, sql } from "drizzle-orm";
 import type { ChartConfig } from "@/components/ui/chart";
 
@@ -11,10 +11,7 @@ export type getPopularSkillsStatsReturnType = {
 	config: ChartConfig;
 };
 
-export type getPopularSkillsStatsReturnTypePromised =
-	Promise<getPopularSkillsStatsReturnType>;
-
-export async function getPopularSkillsStats(): getPopularSkillsStatsReturnTypePromised {
+export async function getPopularSkillsStats(): Promise<getPopularSkillsStatsReturnType> {
 	const popularSkills = await db
 		.select({
 			skillName: skill.name,

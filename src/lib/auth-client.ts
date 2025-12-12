@@ -1,5 +1,4 @@
 import { createAuthClient } from "better-auth/react";
-import * as rolesDb from "@/db/repositories/roles";
 
 export const authClient = createAuthClient({
 	/** The base URL of the server (optional if you're using the same domain) */
@@ -19,15 +18,6 @@ export const GithubSignIn = async () => {
 		callbackURL: "/",
 	});
 };
-
-// export const isAdmin = async () => {
-// 	const { data: session, error } = await authClient.getSession();
-//
-// 	if (session === undefined || session?.user === undefined) return false;
-//
-// 	// get from roles
-// 	return await rolesDb.isAdmin(session.user.email);
-// };
 
 export const isSignedIn = async () => {
 	const { data: session, error } = await authClient.getSession();

@@ -1,14 +1,13 @@
 "use client";
 
 import React from "react";
-import { addEdge, Connection, EdgeChange, Handle } from "@xyflow/react";
+import { addEdge, type EdgeChange, Handle } from "@xyflow/react";
 import {
 	useFlowStore,
 	useSelectedNodeStore,
 } from "@/app/learn/[pathway]/zustandStore";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 
 type SkillStatus = "completed" | "in progress" | "not started";
 

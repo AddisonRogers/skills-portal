@@ -7,11 +7,7 @@ import {
 	ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Line, LineChart, XAxis, YAxis } from "recharts";
-import {
-	getSkillsOverTimeStatsReturnType,
-	getSkillsOverTimeStatsReturnTypePromised,
-} from "@/app/admin/stats/serverFunctions";
-import { use } from "react";
+import type { getSkillsOverTimeStatsReturnType } from "@/app/admin/stats/serverFunctions";
 
 export default function SkillsOverTimeChart(
 	params: getSkillsOverTimeStatsReturnType,

@@ -3,7 +3,7 @@
 import { and, eq } from "drizzle-orm";
 import { roadmap, skill, skillRoadmap, user, userSkill } from "@/db/schema";
 import { db } from "@/lib/db";
-import { PGSkillData, PGSkillDataUser, SkillNode } from "@/types/Roadmap";
+import type { PGSkillData, PGSkillDataUser, SkillNode } from "@/types/Roadmap";
 import { getUserByEmail } from "@/db/repositories/users";
 
 export async function getAllSkills() {
@@ -213,7 +213,7 @@ export async function getSkillForUserEmail(
 		const machineNameSkill = skillIdentifier
 			.toLowerCase()
 			.replace(/\s+/g, "-") // Replace spaces with dashes
-			.replace(/[^a-zA-Z0-9\-]/g, ""); // Remove all except a-z, A-Z, 0-9, and dash
+			.replace(/[^a-zA-Z0-9-]/g, ""); // Remove all except a-z, A-Z, 0-9, and dash
 
 		const skillData = await db
 			.select({

@@ -2,19 +2,14 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-	type ChartConfig,
 	ChartContainer,
 	ChartLegend,
 	ChartLegendContent,
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/components/ui/chart";
-import { Bar, BarChart, Cell, Pie, PieChart, XAxis, YAxis } from "recharts";
-import {
-	getProficiencyDistributionStatsReturnType,
-	getProficiencyDistributionStatsReturnTypePromised,
-} from "@/app/admin/stats/serverFunctions";
-import { use } from "react";
+import { Cell, Pie, PieChart } from "recharts";
+import { type getProficiencyDistributionStatsReturnType } from "@/app/admin/stats/serverFunctions";
 
 const COLORS = [
 	"hsl(var(--chart-1))",

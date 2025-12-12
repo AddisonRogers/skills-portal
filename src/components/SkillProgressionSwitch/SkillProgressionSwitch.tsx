@@ -3,10 +3,7 @@
 import { TripleToggle } from "@/components/ui/tripleToggleSwitch";
 import { use, useState } from "react";
 import { useUserInfo } from "@/hooks/useUserInfo";
-import {
-	changeSkillProgression,
-	getSkillProgression,
-} from "@/components/SkillProgressionSwitch/serverFunctions";
+import { changeSkillProgression } from "@/components/SkillProgressionSwitch/serverFunctions";
 import type { getSkillForUserEmailResult } from "@/db/repositories/skills";
 
 export default function SkillProgressionSwitch({

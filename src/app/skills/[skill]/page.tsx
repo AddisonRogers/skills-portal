@@ -17,7 +17,6 @@ import { Button } from "@/components/ui/button";
 import { fetchBlob } from "@/lib/blobClient";
 import { ExternalLink, ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import SkillProgressionSwitch from "@/components/SkillProgressionSwitch/SkillProgressionSwitch";
 import SkillProgressionSwitchWrapper from "@/components/SkillProgressionSwitch/SkillProgressionSwitchWrapper";
 
 export default async function IndividualSkillPage({
