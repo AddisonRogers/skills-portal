@@ -104,6 +104,14 @@ export const certification = pgTable("certification", {
 	id: serial().primaryKey(),
 	name: text("name").notNull(),
 	issuer: text("issuer"),
+	machineName: text("machine_name"),
+	blobUrl: text("blob_url"),
+	description: text("description"),
+	bigSkill: boolean("big_skill").default(false).notNull(),
+	xpAmount: integer("xp_level").default(0).notNull(),
+	madeBy: text("made_by").default("roadmap.sh"),
+	createdAt: timestamp("created_at").defaultNow().notNull(),
+	updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export const userCertification = pgTable("user_certification", {
@@ -193,6 +201,17 @@ export const skillRoadmap = pgTable("skill_roadmap", {
 	createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const certificationRoadmap = pgTable("certification_roadmap", {
+	id: serial().primaryKey(),
+	certificationId: integer("certification_id")
+		.notNull()
+		.references(() => certification.id, { onDelete: "cascade" }),
+	roadmapId: text("roadmap_id").notNull(),
+	viewable: boolean("viewable").default(false).notNull(),
+	createdBy: text("created_by").default("roadmap.sh").notNull(),
+	createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 export const userFavoriteRoadmap = pgTable("user_favorite_roadmap", {
 	id: serial().primaryKey(),
 	userId: text("user_id")
@@ -209,6 +228,15 @@ export const userFavoriteSkill = pgTable("user_favorite_skill", {
 	skillId: integer("skill_id")
 		.notNull()
 		.references(() => skill.id, { onDelete: "cascade" }),
+});
+export const userFavoriteCertification = pgTable("user_favorite_certification", {
+	id: serial().primaryKey(),
+	userId: text("user_id")
+		.notNull()
+		.references(() => user.id, { onDelete: "cascade" }),
+	certId: integer("cert_id")
+		.notNull()
+		.references(() => certification.id, { onDelete: "cascade" }),
 });
 
 export const suggestedRoadmap = pgTable("suggested_roadmap", {
