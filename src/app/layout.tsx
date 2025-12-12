@@ -4,6 +4,8 @@ import "./globals.css";
 import { useSession } from "@/lib/auth-client";
 import Navbar from "@/components/navbar/navbar";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import {getMissingRequiredEnv} from "@/lib/envChecker.ts";
+import MissingEnvScreen from "@/app/MissingEnvScreen.tsx";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -25,6 +27,21 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+
+	const missing = getMissingRequiredEnv();
+
+	if (missing.length > 0) {
+		return (
+			<html lang="en">
+			<body
+				className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-svh`}
+			>
+			<MissingEnvScreen missingKeys={missing} />
+			</body>
+			</html>
+		);
+	}
+
 	return (
 		<html lang="en">
 			<body
