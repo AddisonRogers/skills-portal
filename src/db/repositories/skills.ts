@@ -151,7 +151,20 @@ export async function getSkill(skillIdentifier: string) {
 	}
 }
 
-export async function getRoadmapSkills(userId: string | null) {
+export type getRoadmapSkillsReturnType = {
+	id: number;
+	name: string;
+	description: string | null;
+	madeBy: string | null;
+	roadmapId: string;
+	roadmapName: string;
+	acquiredAt: Date | null;
+	level: number | null;
+}[];
+
+export async function getRoadmapSkills(
+	userId: string | null,
+): Promise<getRoadmapSkillsReturnType> {
 	if (userId) {
 		return db
 			.select({
@@ -160,30 +173,38 @@ export async function getRoadmapSkills(userId: string | null) {
 				description: skill.description,
 				madeBy: skill.madeBy,
 				roadmapId: skillRoadmap.roadmapId,
-				roadmapName: roadmap.name, // Add this
+				roadmapName: roadmap.name,
 				acquiredAt: userSkill.acquiredAt,
 				level: userSkill.level,
 			})
 			.from(skill)
-			.innerJoin(userSkill, eq(skill.id, userSkill.skillId))
+			.leftJoin(
+				userSkill,
+				and(eq(skill.id, userSkill.skillId), eq(userSkill.userId, userId)),
+			)
 			.innerJoin(skillRoadmap, eq(skill.id, skillRoadmap.skillId))
 			.innerJoin(roadmap, eq(skillRoadmap.roadmapId, roadmap.id))
-			.where(eq(userSkill.userId, userId))
 			.orderBy(roadmap.name);
 	}
 
-	return db
+	const data = await db
 		.select({
 			id: skill.id,
 			name: skill.name,
 			description: skill.description,
 			madeBy: skill.madeBy,
 			roadmapId: skillRoadmap.roadmapId,
-			roadmapName: roadmap.name, // Add this
+			roadmapName: roadmap.name,
 		})
 		.from(skill)
 		.innerJoin(skillRoadmap, eq(skill.id, skillRoadmap.skillId))
 		.innerJoin(roadmap, eq(skillRoadmap.roadmapId, roadmap.id));
+
+	return data.map((skill) => ({
+		...skill,
+		acquiredAt: null,
+		level: null,
+	}));
 }
 
 export type getSkillForUserEmailResult = {
