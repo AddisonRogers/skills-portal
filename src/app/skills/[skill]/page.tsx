@@ -13,11 +13,11 @@ import {
 	BreadcrumbSeparator,
 	BreadcrumbLink,
 } from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
 import { fetchBlob } from "@/lib/blobClient";
-import { ExternalLink, ChevronLeft } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import SkillProgressionSwitchWrapper from "@/components/SkillProgressionSwitch/SkillProgressionSwitchWrapper";
+import LearningResources from "@/app/skills/[skill]/LearningResources.tsx";
 
 export default async function IndividualSkillPage({
 	params,
@@ -92,30 +92,7 @@ export default async function IndividualSkillPage({
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<div className="space-y-3">
-							{skillDataJson.urls.map((url, index) => (
-								<div
-									key={index}
-									className="flex items-center space-x-3 p-3 border rounded-lg hover:bg-muted/50 transition-colors"
-								>
-									<ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-									<Button
-										asChild
-										variant="link"
-										className="h-auto p-0 text-left justify-start"
-									>
-										<a
-											href={url}
-											target="_blank"
-											rel="noopener noreferrer"
-											className="break-all text-blue-600 hover:text-blue-800"
-										>
-											{url}
-										</a>
-									</Button>
-								</div>
-							))}
-						</div>
+						<LearningResources skillDataJson={skillDataJson} />
 					</CardContent>
 				</Card>
 			)}

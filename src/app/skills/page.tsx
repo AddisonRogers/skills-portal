@@ -23,7 +23,6 @@ export default async function SkillsPage({ searchParams }: PageProps) {
 	const allSkills = Array.from(roadmapsWithSkills.values()).flat();
 
 	// TODO add skeleton
-	// TODO add grid vs list view
 	// TODO standardise titles of pages
 	return (
 		<div className="container mx-auto py-8">
