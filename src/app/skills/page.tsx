@@ -23,8 +23,6 @@ export default async function SkillsPage({ searchParams }: PageProps) {
 	const allSkills = Array.from(roadmapsWithSkills.values()).flat();
 
 	// TODO add skeleton
-	// TODO add search bar
-	// TODO add "all skills" by default then allowing to filter by roadmap
 	// TODO add grid vs list view
 	// TODO standardise titles of pages
 	return (

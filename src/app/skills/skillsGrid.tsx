@@ -5,6 +5,9 @@ import { SkillCard } from "@/app/skills/skillCard.tsx";
 import { useQueryState } from "nuqs";
 import { parseAsString } from "nuqs";
 import { useMemo } from "react";
+import { LayoutGrid, List } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import SkillRow from "@/app/skills/SkillRow.tsx";
 
 interface SkillsGridProps {
 	allSkills: unknown[];
@@ -25,6 +28,10 @@ export function SkillsGrid({
 	const [roadmapId] = useQueryState(
 		"roadmapId",
 		parseAsString.withDefault("all"),
+	);
+	const [viewMode, setViewMode] = useQueryState(
+		"viewMode",
+		parseAsString.withDefault("grid"),
 	);
 
 	const filteredSkills = useMemo(() => {
@@ -47,9 +54,29 @@ export function SkillsGrid({
 
 	return (
 		<>
-			<h2 className="text-2xl font-bold mb-4">
-				Skills ({filteredSkills.length})
-			</h2>
+			<div className="flex items-center justify-between mb-4">
+				<h2 className="text-2xl font-bold">Skills ({filteredSkills.length})</h2>
+				<div className="flex gap-2">
+					<Button
+						variant={viewMode === "grid" ? "default" : "outline"}
+						size="sm"
+						onClick={() => setViewMode("grid")}
+						aria-label="Grid view"
+						title="Grid view"
+					>
+						<LayoutGrid className="w-4 h-4" />
+					</Button>
+					<Button
+						variant={viewMode === "list" ? "default" : "outline"}
+						size="sm"
+						onClick={() => setViewMode("list")}
+						aria-label="List view"
+						title="List view"
+					>
+						<List className="w-4 h-4" />
+					</Button>
+				</div>
+			</div>
 
 			{filteredSkills.length === 0 ? (
 				<div className="text-center py-12">
@@ -57,7 +84,7 @@ export function SkillsGrid({
 						No skills found matching your criteria.
 					</p>
 				</div>
-			) : (
+			) : viewMode === "grid" ? (
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 					{filteredSkills.map((skill) => (
 						<Link
@@ -66,6 +93,18 @@ export function SkillsGrid({
 							className="block"
 						>
 							<SkillCard skill={skill} loggedIn={isLoggedIn} />
+						</Link>
+					))}
+				</div>
+			) : (
+				<div className="space-y-2">
+					{filteredSkills.map((skill) => (
+						<Link
+							key={skill.id}
+							href={`/skills/${skillNameToSlug(skill.name)}`}
+							className="block"
+						>
+							<SkillRow skill={skill} />
 						</Link>
 					))}
 				</div>
