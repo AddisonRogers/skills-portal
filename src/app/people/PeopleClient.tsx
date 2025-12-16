@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { PersonWithAccount, searchPeopleBySkill } from "./serverFunctions";
+import { type PersonWithAccount, searchPeopleBySkill } from "./serverFunctions";
 import { Input } from "@/components/ui/input";
 import {
 	Table,
@@ -101,7 +101,7 @@ export default function PeopleClient({ initialPeople }: PeopleClientProps) {
 	// Filter and sort people
 	const filteredAndSortedPeople = useMemo(() => {
 		// First filter by search term
-		let filtered = people.filter((person) => {
+		const filtered = people.filter((person) => {
 			const searchLower = searchTerm.toLowerCase();
 			return (
 				person.name.toLowerCase().includes(searchLower) ||

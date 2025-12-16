@@ -1,6 +1,5 @@
-import { Button } from "@/components/ui/button";
 import RoadmapCard from "@/components/roadmapCard";
-import { Roadmap } from "@/types/Roadmap";
+import type { Roadmap } from "@/types/Roadmap";
 
 export default function ContinueLearningSection({
 	currentRoadmap,

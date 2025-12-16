@@ -7,10 +7,9 @@ import {
 } from "@/components/ui/tooltip";
 import { Star } from "lucide-react";
 import { useState } from "react";
-import { Roadmap } from "@/types/Roadmap";
+import type { Roadmap } from "@/types/Roadmap";
 import {
 	addFavouriteRoadmapEmail,
-	addFavouriteRoadmapId,
 	removeFavouriteRoadmapEmail,
 } from "@/db/repositories/favourite";
 import { useSession } from "@/lib/auth-client";

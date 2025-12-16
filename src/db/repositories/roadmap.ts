@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import { roadmap, suggestedRoadmap, user } from "@/db/schema";
 import { db } from "@/lib/db";
 import { getSkillsForRoadmap } from "@/db/repositories/skills";
-import { PGRoadmapData } from "@/types/Roadmap";
+import type { PGRoadmapData } from "@/types/Roadmap";
 
 export async function getSkillsOnRoadmap(roadmapId: string) {
 	return getSkillsForRoadmap(roadmapId);

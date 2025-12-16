@@ -2,7 +2,7 @@
 
 import { db } from "@/lib/db";
 import { user, userSkill, skill } from "@/db/schema";
-import { eq, and, sum } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { getMemberDetails } from "@/lib/opshubClient";
 import { getKards } from "@/lib/opshubClient";
 import { TableClient, AzureNamedKeyCredential } from "@azure/data-tables";

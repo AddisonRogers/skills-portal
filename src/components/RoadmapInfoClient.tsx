@@ -1,22 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { SkillNode } from "@/types/Roadmap";
+import React from "react";
 import SkillsFlow from "@/components/skills-flow";
-import { NodeBase } from "@xyflow/system";
-import {
-	Node,
-	Edge,
-	ReactFlowProvider,
-	useEdgesState,
-	useNodesState,
-} from "@xyflow/react";
-import dagre from "@dagrejs/dagre";
-import {
-	useEditModeStore,
-	useFlowStore,
-	useSelectedNodeStore,
-} from "@/app/learn/[pathway]/zustandStore";
+import { type Node, type Edge, ReactFlowProvider } from "@xyflow/react";
+import { useFlowStore } from "@/app/learn/[pathway]/zustandStore";
 import { EditButtons } from "@/app/learn/[pathway]/EditButtons";
 
 interface RoadmapInfoClientProps {

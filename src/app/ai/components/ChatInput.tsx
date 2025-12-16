@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useCallback, useRef } from "react";
+import type React from "react";
+import { useCallback, useRef } from "react";
 import { Send } from "lucide-react";
 
 interface chatInputProps {
@@ -24,8 +25,10 @@ function ChatInput(props: chatInputProps) {
 			if (event.key === "Enter") {
 				handleSend();
 				event.preventDefault();
-				inputRef.current!.blur();
-				inputRef.current!.value = "";
+				inputRef.current?.blur();
+				if (inputRef.current) {
+					inputRef.current.value = "";
+				}
 			}
 		},
 		[handleSend],

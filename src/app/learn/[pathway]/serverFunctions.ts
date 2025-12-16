@@ -7,7 +7,7 @@ import {
 import { getSkillsForRoadmapForUser } from "@/db/repositories/skills";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { SkillNode } from "@/types/Roadmap";
+import type { SkillNode } from "@/types/Roadmap";
 import type { NodeBase } from "@xyflow/system";
 import { AzureNamedKeyCredential, TableClient } from "@azure/data-tables";
 

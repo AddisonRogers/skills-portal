@@ -2,10 +2,10 @@ import { create } from "zustand";
 import {
 	applyEdgeChanges,
 	applyNodeChanges,
-	Edge,
-	EdgeChange,
-	Node,
-	NodeChange,
+	type Edge,
+	type EdgeChange,
+	type Node,
+	type NodeChange,
 } from "@xyflow/react";
 
 interface SelectedNodeState {

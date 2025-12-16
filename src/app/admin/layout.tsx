@@ -10,11 +10,7 @@ export default async function AdminLayout({
 	const userIsAdmin = await authIsAdmin();
 
 	// If not admin, redirect to home page
-	if (
-		userIsAdmin === false ||
-		userIsAdmin === null ||
-		userIsAdmin === undefined
-	) {
+	if (!userIsAdmin) {
 		redirect("/");
 	}
 

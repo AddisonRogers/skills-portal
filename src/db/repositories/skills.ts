@@ -3,7 +3,7 @@
 import { and, eq } from "drizzle-orm";
 import { roadmap, skill, skillRoadmap, user, userSkill } from "@/db/schema";
 import { db } from "@/lib/db";
-import { PGSkillData, PGSkillDataUser, SkillNode } from "@/types/Roadmap";
+import type { PGSkillData, PGSkillDataUser, SkillNode } from "@/types/Roadmap";
 import { getUserByEmail } from "@/db/repositories/users";
 
 export async function getAllSkills() {
@@ -151,7 +151,20 @@ export async function getSkill(skillIdentifier: string) {
 	}
 }
 
-export async function getRoadmapSkills(userId: string | null) {
+export type getRoadmapSkillsReturnType = {
+	id: number;
+	name: string;
+	description: string | null;
+	madeBy: string | null;
+	roadmapId: string;
+	roadmapName: string;
+	acquiredAt: Date | null;
+	level: number | null;
+}[];
+
+export async function getRoadmapSkills(
+	userId: string | null,
+): Promise<getRoadmapSkillsReturnType> {
 	if (userId) {
 		return db
 			.select({
@@ -160,30 +173,38 @@ export async function getRoadmapSkills(userId: string | null) {
 				description: skill.description,
 				madeBy: skill.madeBy,
 				roadmapId: skillRoadmap.roadmapId,
-				roadmapName: roadmap.name, // Add this
+				roadmapName: roadmap.name,
 				acquiredAt: userSkill.acquiredAt,
 				level: userSkill.level,
 			})
 			.from(skill)
-			.innerJoin(userSkill, eq(skill.id, userSkill.skillId))
+			.leftJoin(
+				userSkill,
+				and(eq(skill.id, userSkill.skillId), eq(userSkill.userId, userId)),
+			)
 			.innerJoin(skillRoadmap, eq(skill.id, skillRoadmap.skillId))
 			.innerJoin(roadmap, eq(skillRoadmap.roadmapId, roadmap.id))
-			.where(eq(userSkill.userId, userId))
 			.orderBy(roadmap.name);
 	}
 
-	return db
+	const data = await db
 		.select({
 			id: skill.id,
 			name: skill.name,
 			description: skill.description,
 			madeBy: skill.madeBy,
 			roadmapId: skillRoadmap.roadmapId,
-			roadmapName: roadmap.name, // Add this
+			roadmapName: roadmap.name,
 		})
 		.from(skill)
 		.innerJoin(skillRoadmap, eq(skill.id, skillRoadmap.skillId))
 		.innerJoin(roadmap, eq(skillRoadmap.roadmapId, roadmap.id));
+
+	return data.map((skill) => ({
+		...skill,
+		acquiredAt: null,
+		level: null,
+	}));
 }
 
 export type getSkillForUserEmailResult = {
@@ -213,7 +234,7 @@ export async function getSkillForUserEmail(
 		const machineNameSkill = skillIdentifier
 			.toLowerCase()
 			.replace(/\s+/g, "-") // Replace spaces with dashes
-			.replace(/[^a-zA-Z0-9\-]/g, ""); // Remove all except a-z, A-Z, 0-9, and dash
+			.replace(/[^a-zA-Z0-9-]/g, ""); // Remove all except a-z, A-Z, 0-9, and dash
 
 		const skillData = await db
 			.select({

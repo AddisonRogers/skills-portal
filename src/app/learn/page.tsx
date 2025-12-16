@@ -4,6 +4,7 @@ import { getAllRoadmaps } from "@/db/repositories/roadmap";
 import { fetchUserAndGetSuggestedRoadmaps } from "@/app/learn/serverFunctions.ts";
 import { getAllCapabilities } from "@/db/repositories/capabilities";
 import { Suspense } from "react";
+import DevelopmentWarning from "@/components/DevelopmentWarning.tsx";
 
 export default async function LearnPage() {
 	// if (!(await isSignedIn)) {
@@ -19,6 +20,9 @@ export default async function LearnPage() {
 	return (
 		<main className="container mx-auto px-4 py-8">
 			<h1 className="text-4xl font-medium text-fsp-core-teal mb-8">Learn</h1>
+
+			<DevelopmentWarning />
+			<br />
 
 			{/* Continue Learning Section */}
 			{/*<ContinueLearningSection currentRoadmap={currentRoadmap} />*/}

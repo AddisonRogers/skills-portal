@@ -2,7 +2,7 @@
 
 // TODO make this a popup componenet
 
-import React from "react";
+import type React from "react";
 import { authClient } from "@/lib/auth-client";
 
 const UnauthenticatedScreen: React.FC = () => {
