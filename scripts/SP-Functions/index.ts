@@ -3,6 +3,7 @@ import {s3, write, S3Client} from "bun";
 import {loadConfig} from "./config.ts";
 import {error} from "effect/Brand";
 import {skill} from "../../src/db/schema.ts";
+import * as url from "node:url";
 
 
 async function main() {
@@ -30,11 +31,7 @@ async function main() {
         for (const node of roadmapContent) {
             console.log(`Processing: ${node}`);
 
-            const text = await Bun.file(`/home/dotracc/Downloads/developer-roadmap/src/data/roadmaps/ai-agents/content/${node}`).text()
-            const parsed = parseSkill(text)
-
-            console.log(parsed);
-
+            handleSkill(`/home/dotracc/Downloads/developer-roadmap/src/data/roadmaps/ai-agents/content/${node}`)
         }
     } catch (error) {
         console.error(error)
@@ -84,23 +81,34 @@ function parseSkill(input: string): Parsed {
     return {name: toolName, description, links: urls};
 }
 
-async function handleSkill(fileUrl: string, s3Client: S3Client) {
+async function handleSkill(fileUrl: string) {
     Bun.file(fileUrl).text().then(async (data) => {
         // data is a markdown file
 
         const parsed = parseSkill(data)
-        // upload to d1 s3 bucket
-        const json = JSON.stringify({
-            name: parsed.name,
-            content: parsed.description,
-            resources: parsed.links
-        })
-        const url = await uploadContentToS3({s3Client, title: parsed.name, content: json})
 
-        // upload to postgres
-        // add skill to postgres
-        console.log(json);
+        // upload to d1 s3 bucket
+        // const json = JSON.stringify({
+        //     name: parsed.name,
+        //     content: parsed.description,
+        //     resources: parsed.links
+        // })
+        // const url = await uploadContentToS3({s3Client, title: parsed.name, content: json})
+
+        addSkillToPostgres({
+            name: parsed.name,
+            blobUrl: "",
+            description: parsed.description,
+            machineName: parsed.name.toLowerCase().replace(/\s+/g, "-")
+        })
     })
+}
+
+async function addSkillToPostgres(skill: skill) {
+    await Bun.sql`
+        INSERT INTO skill (name, blob_url, description, machine_name)
+        VALUES (${skill.name}, ${skill.blobUrl}, ${skill.description}, ${skill.machineName})
+    `;
 }
 
 type addRoadmapParams = {
@@ -135,7 +143,7 @@ type uploadAllContentParams = {
 }
 
 async function uploadContentToS3(props: uploadAllContentParams): Promise<string> {
-    const { s3Client, title, content } = props;
+    const {s3Client, title, content} = props;
     await s3Client.write(`skills/${title}.json`, content);
 }
 
