@@ -1,8 +1,8 @@
-import { getAllPeopleWithDetails } from "./serverFunctions";
 import PeopleClient from "./PeopleClient";
+import getAllPeople from "@/lib/services/users/getAllPeople";
 
 export default async function PeoplePage() {
-	const people = await getAllPeopleWithDetails();
+	const people = await getAllPeople();
 
 	return (
 		<div className="container mx-auto py-8">

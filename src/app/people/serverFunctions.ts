@@ -7,6 +7,8 @@ import { getMemberDetails } from "@/lib/opshubClient";
 import { getKards } from "@/lib/opshubClient";
 import { TableClient, AzureNamedKeyCredential } from "@azure/data-tables";
 import { listUserEmails } from "@/db/repositories/users";
+import getAllPeople from "@/lib/services/users/getAllPeople";
+import type { PersonDto } from "@/types/PersonDto";
 
 // Type definitions
 export type PersonWithAccount = {
@@ -220,10 +222,10 @@ export async function getAllPeopleWithDetails(): Promise<PersonWithAccount[]> {
 // Search people by skill
 export async function searchPeopleBySkill(
 	skillName: string,
-): Promise<PersonWithAccount[]> {
+): Promise<PersonDto[]> {
 	try {
 		// Get all people with details first
-		const allPeople = await getAllPeopleWithDetails();
+		const allPeople = await getAllPeople();
 
 		// Get users who have the specified skill
 		const usersWithSkill = await db
@@ -253,11 +255,9 @@ export async function searchPeopleBySkill(
 
 		// Filter people who have the skill
 		return allPeople.filter((person) => {
-			const email = person.email.toLowerCase();
-
 			// Find if any user with this email has the skill
 			for (const [userId, userEmail] of userIdToEmailMap.entries()) {
-				if (userEmail === email && userIdsWithSkill.has(userId)) {
+				if (userIdsWithSkill.has(userId)) {
 					return true;
 				}
 			}
