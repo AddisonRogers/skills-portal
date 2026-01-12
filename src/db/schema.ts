@@ -6,33 +6,40 @@ import {
 	text,
 	timestamp,
 	unique,
-	foreignKey
+	foreignKey,
 } from "drizzle-orm/pg-core";
 
-export const user = pgTable("user", {
-	id: text("id").primaryKey(),
-	name: text("name").notNull(),
-	email: text("email").notNull().unique(),
-	emailVerified: boolean("email_verified")
-		.$defaultFn(() => false)
-		.notNull(),
-	locationId: integer("location_id").references(() => location.id, {onDelete: "set null"}),
-	reportsToUserId: text("reports_to_user_id"),
-	jobRoleId: integer("job_role_id").references(() => jobRole.id, {onDelete: "set null"}),
-	image: text("image"),
-	createdAt: timestamp("created_at")
-		.$defaultFn(() => /* @__PURE__ */ new Date())
-		.notNull(),
-	updatedAt: timestamp("updated_at")
-		.$defaultFn(() => /* @__PURE__ */ new Date())
-		.notNull(),
-},
-(t) => ({
-	reportsToFk: foreignKey({
-		columns: [t.reportsToUserId],
-		foreignColumns: [t.id],
-	}).onDelete("set null"),
-}));
+export const user = pgTable(
+	"user",
+	{
+		id: text("id").primaryKey(),
+		name: text("name").notNull(),
+		email: text("email").notNull().unique(),
+		emailVerified: boolean("email_verified")
+			.$defaultFn(() => false)
+			.notNull(),
+		locationId: integer("location_id").references(() => location.id, {
+			onDelete: "set null",
+		}),
+		reportsToUserId: text("reports_to_user_id"),
+		jobRoleId: integer("job_role_id").references(() => jobRole.id, {
+			onDelete: "set null",
+		}),
+		image: text("image"),
+		createdAt: timestamp("created_at")
+			.$defaultFn(() => /* @__PURE__ */ new Date())
+			.notNull(),
+		updatedAt: timestamp("updated_at")
+			.$defaultFn(() => /* @__PURE__ */ new Date())
+			.notNull(),
+	},
+	(t) => ({
+		reportsToFk: foreignKey({
+			columns: [t.reportsToUserId],
+			foreignColumns: [t.id],
+		}).onDelete("set null"),
+	}),
+);
 
 export const session = pgTable("session", {
 	id: text("id").primaryKey(),
@@ -262,10 +269,10 @@ export const capabilityUser = pgTable("capability_user", {
 export const location = pgTable("location", {
 	id: serial().primaryKey(),
 	name: text("name").notNull().unique(),
-})
+});
 
 export const jobRole = pgTable("job_role", {
 	id: serial().primaryKey(),
 	title: text("title").notNull().unique(),
 	description: text("description"),
-})
+});
