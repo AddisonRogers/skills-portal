@@ -1,4 +1,4 @@
 export type Capability = {
-	id: number | null,
+	id: number | null;
 	name: string | null;
 };

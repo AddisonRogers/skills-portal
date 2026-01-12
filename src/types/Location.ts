@@ -1,4 +1,4 @@
 export type Location = {
-    id: number | null,
-    name: string | null,
-}
+	id: number | null;
+	name: string | null;
+};
