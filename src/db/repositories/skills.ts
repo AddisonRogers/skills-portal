@@ -6,7 +6,7 @@ import { db } from "@/lib/db";
 import { PGSkillData, PGSkillDataUser, SkillNode } from "@/types/Roadmap";
 import { getUserByEmail } from "@/db/repositories/users";
 
-export async function getAllSkills() {
+export async function getSkills() {
 	try {
 		return db
 			.select({
