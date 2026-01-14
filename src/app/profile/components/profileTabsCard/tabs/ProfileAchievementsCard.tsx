@@ -7,14 +7,14 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Achievements } from "@/types/Achievements";
-import LevelBar from "../InfoAddOns/LevelBar";
-import Image, { type StaticImageData } from "next/image";
+import LevelBar from "../../../../../components/InfoAddOns/LevelBar";
+import Image from "next/image";
 
-import Placeholder from "../tabs/badgeImages/Placeholder Badge.png";
-import Bronze from "../tabs/badgeImages/Bronze Badge.png";
-import Silver from "../tabs/badgeImages/Silver Badge.png";
-import Gold from "../tabs/badgeImages/Gold Badge.png";
-import Diamond from "../tabs/badgeImages/Diamond Badge.png";
+const Placeholder = "/badgeImages/Placeholder Badge.png";
+const Bronze = "/badgeImages/Bronze Badge.png";
+const Silver = "/badgeImages/Silver Badge.png";
+const Gold = "/badgeImages/Gold Badge.png";
+const Diamond = "/badgeImages/Diamond Badge.png";
 
 const achievements: Achievements[] = [
 	{
@@ -68,7 +68,7 @@ const achievements: Achievements[] = [
 	},
 ];
 
-let badgeSelector = (achievement: Achievements): StaticImageData => {
+let badgeSelector = (achievement: Achievements): string => {
 	if (achievement.rank === 0) return Placeholder;
 	else if (achievement.rank === 1) return Bronze;
 	else if (achievement.rank === 2) return Silver;

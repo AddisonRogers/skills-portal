@@ -1,7 +1,7 @@
 "use client";
 
-import LevelBar from "./InfoAddOns/LevelBar";
-import SkillRadar from "./InfoAddOns/SkillRadar";
+import LevelBar from "../../../../components/InfoAddOns/LevelBar";
+import SkillRadar from "../../../../components/InfoAddOns/SkillRadar";
 import { Card } from "@/components/ui/card";
 import { Avatar } from "@/components/ui/avatar";
 import { UserSkill } from "@/types/skill";

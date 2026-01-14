@@ -8,7 +8,7 @@ import {
 	CardAction,
 } from "@/components/ui/card";
 import { UserGoals } from "@/types/Goals";
-import ProgressWheel from "../InfoAddOns/ProgressWheel";
+import ProgressWheel from "../../../../../components/InfoAddOns/ProgressWheel";
 
 const goals: UserGoals[] = [
 	{
