@@ -1,23 +1,11 @@
-import ProfileCard from "@/components/profile/ProfileCard";
-import ProfileTabsCard from "@/components/profile/profileTabsCard/ProfileTabsCard";
+import Page from "../page";
+import ProfileClient from "./ProfileClient";
 
-export default async function Profile() {
+export default async function ProfilePage() {
 	return (
-		<div className="w-full h-full mx-auto">
-			<div className="mb-6 mt-2 border-b-2">
-				<h1 className="text-2xl font-semibold ml-6">Profile</h1>
-				<p className="text-sm text-muted-foreground mb-2 ml-6">
-					View your skills, learning paths and projects
-				</p>
-			</div>
-			<div className="flex gap-6">
-				<div className="w-full max-w-md">
-					<ProfileCard />
-				</div>
-				<div className="w-full mx-10">
-					<ProfileTabsCard />
-				</div>
-			</div>
+		<div className="container mx-auto py-8">
+			<h1 className="text-3xl font-bold mb-6">Profile</h1>
+			<ProfileClient />
 		</div>
 	);
 }
