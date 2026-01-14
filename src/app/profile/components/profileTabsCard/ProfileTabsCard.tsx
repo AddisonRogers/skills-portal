@@ -9,13 +9,12 @@ import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-
 const tabs = [
 	{ id: "skills", label: "Skills" },
 	{ id: "learningPaths", label: "Learning Paths" },
 	{ id: "projects", label: "Projects" },
 	{ id: "goals", label: "Goals" },
-	{id: "achievements", label: "Achievements" },
+	{ id: "achievements", label: "Achievements" },
 ];
 
 export default function ProfileTabsCard() {
@@ -62,7 +61,7 @@ export default function ProfileTabsCard() {
 					</Button>
 					<Button
 						onClick={() =>
-							setSortBy(sortBy == "Proficiency" ? "Last used": "Proficiency")
+							setSortBy(sortBy == "Proficiency" ? "Last used" : "Proficiency")
 						}
 						className="gap-1 px-2 rounded-2xl mt-3 mb-1 ml-3 font-medium"
 					>

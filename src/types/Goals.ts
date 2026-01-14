@@ -1,7 +1,7 @@
 export type UserGoals = {
 	id: number;
 	goalName: string;
-    goalDescription: string;
+	goalDescription: string;
 	status: Proficiency;
 	due: Date;
 };
@@ -12,6 +12,6 @@ export type Tag = {
 };
 
 export type Proficiency = {
-    id: number;
-    label: string;
+	id: number;
+	label: string;
 };

@@ -1,7 +1,7 @@
 export type UserProjects = {
 	id: number;
 	projectName: string;
-    projectDescription: string;
+	projectDescription: string;
 	Status: Proficiency;
 	lastUpdated: Date;
 };
@@ -12,7 +12,7 @@ export type Tag = {
 };
 
 export type Proficiency = {
-    id: number;
-    value: number;
-    label: string;
+	id: number;
+	value: number;
+	label: string;
 };
