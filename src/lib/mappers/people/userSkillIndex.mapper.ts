@@ -10,8 +10,8 @@ export default function userSkillIndexMapper(skills: UserSkill[]) {
 }
 
 export function addSkillIndexToPerson(person: PersonDto): PersonWithSkillIndex {
-    return{
-        ...person,
-        skillIndex: userSkillIndexMapper(person.topSkills)
-    }
+	return {
+		...person,
+		skillIndex: userSkillIndexMapper(person.topSkills),
+	};
 }

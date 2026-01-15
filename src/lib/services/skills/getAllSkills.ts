@@ -3,5 +3,5 @@ import mapSkillToSkillDto from "@/lib/mappers/skills/skill.mapper";
 
 export default async function getAllSkills() {
 	const skills = await getSkills();
-    return mapSkillToSkillDto(skills);
+	return mapSkillToSkillDto(skills);
 }

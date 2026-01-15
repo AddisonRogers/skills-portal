@@ -40,7 +40,12 @@ import { SkillDto } from "@/types/skills/SkillDto";
 import { SearchCriteria } from "@/types/matchScore/SearchCriteria";
 import { skill } from "@/db/schema";
 
-type SortField = "relevance" | "person" | "skills" | "isAvailable" | "reportsTo";
+type SortField =
+	| "relevance"
+	| "person"
+	| "skills"
+	| "isAvailable"
+	| "reportsTo";
 type SortDirection = "asc" | "desc";
 
 interface PeopleClientProps {
@@ -52,22 +57,27 @@ export default function PeopleClient({
 	initialPeople = [],
 	initialSkills = [],
 }: PeopleClientProps) {
-	const [people, setPeople] = useState<PersonDto[] | RankedPerson[]>(initialPeople);
+	const [people, setPeople] = useState<PersonDto[] | RankedPerson[]>(
+		initialPeople,
+	);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [sortField, setSortField] = useState<SortField>("person");
 	const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
-	const [skillFilter, setSkillFilter] = useState<SearchCriteria>({requiredSkills: []});
+	const [skillFilter, setSkillFilter] = useState<SearchCriteria>({
+		requiredSkills: [],
+	});
 	const [currentSkillFilter, setCurrentSkillFilter] = useState<SkillDto>();
-	const [availableSkills, setAvailableSkills] = useState<SkillDto[]>(initialSkills);
+	const [availableSkills, setAvailableSkills] =
+		useState<SkillDto[]>(initialSkills);
 	const [isLoading, setIsLoading] = useState(false);
 
 	function toggleId(list: number[], id: number) {
-  		return list.includes(id) ? list.filter((x) => x !== id) : [...list, id];
+		return list.includes(id) ? list.filter((x) => x !== id) : [...list, id];
 	}
 
 	function isRankedPerson(p: PersonDto | RankedPerson): p is RankedPerson {
 		return typeof (p as RankedPerson).ScoringResult?.score === "number";
-		}
+	}
 
 	// // Fetch available skills for filtering
 	// useEffect(() => {
@@ -135,7 +145,7 @@ export default function PeopleClient({
 				person.role?.title,
 				person.capability?.name,
 				person.location?.name,
-				...person.topSkills?.map((s) => s.name) ?? [],
+				...(person.topSkills?.map((s) => s.name) ?? []),
 			]
 				.filter(Boolean)
 				.some((field) => field!.toLowerCase().includes(searchLower)),
@@ -236,7 +246,9 @@ export default function PeopleClient({
 						<Popover>
 							<PopoverTrigger asChild>
 								<Button variant="outline" className="w-full justify-between">
-									{skillFilter?.requiredSkills.length ? `${skillFilter.requiredSkills.length} selected` : "Filters"}
+									{skillFilter?.requiredSkills.length
+										? `${skillFilter.requiredSkills.length} selected`
+										: "Filters"}
 									<Filter className="ml-2 h-4 w-4" />
 								</Button>
 							</PopoverTrigger>
@@ -244,28 +256,34 @@ export default function PeopleClient({
 								<div className="p-2">
 									<div className="space-y-2">
 										{availableSkills.map((skill) => {
-											const isSelected = skillFilter?.requiredSkills.includes(skill.id);
-											return(
-											<div key={skill.id} className="flex items-center">
-												<Button
-													variant={isSelected ? "default" : "ghost"}
-													className="w-full justify-start"
-													onClick={() =>
-														setSkillFilter((prev) => ({
-															...prev,
-															requiredSkills: toggleId(prev.requiredSkills, skill.id)
-														}))
-													}
-												>
-													{skill.name}
-												</Button>
-											</div>
-										)})}
+											const isSelected = skillFilter?.requiredSkills.includes(
+												skill.id,
+											);
+											return (
+												<div key={skill.id} className="flex items-center">
+													<Button
+														variant={isSelected ? "default" : "ghost"}
+														className="w-full justify-start"
+														onClick={() =>
+															setSkillFilter((prev) => ({
+																...prev,
+																requiredSkills: toggleId(
+																	prev.requiredSkills,
+																	skill.id,
+																),
+															}))
+														}
+													>
+														{skill.name}
+													</Button>
+												</div>
+											);
+										})}
 										{skillFilter && (
 											<Button
 												variant="outline"
 												className="w-full mt-2"
-												onClick={() => setSkillFilter({requiredSkills: []})}
+												onClick={() => setSkillFilter({ requiredSkills: [] })}
 											>
 												Clear Filter
 											</Button>
@@ -351,7 +369,8 @@ export default function PeopleClient({
 									</TableRow>
 								</TableHeader>
 								<TableBody>
-									{filteredAndSortedPeople.length === 0 && skillFilter.requiredSkills.length === 0 ? (
+									{filteredAndSortedPeople.length === 0 &&
+									skillFilter.requiredSkills.length === 0 ? (
 										<TableRow>
 											<TableCell colSpan={5} className="text-center py-8">
 												{skillFilter.requiredSkills.length === 0 ? (
@@ -389,7 +408,10 @@ export default function PeopleClient({
 												</TableCell>
 												<TableCell>
 													{person.topSkills.slice(0, 3).map((skill) => (
-														<div className="justify-between font-light my-1.5" key={skill.id}>
+														<div
+															className="justify-between font-light my-1.5"
+															key={skill.id}
+														>
 															<span className="bg-gray-100 rounded-xl p-0.5">
 																<a className="px-1 mr-1">{skill.name}</a>
 																<a className="bg-gray-200 rounded-xl px-1">
@@ -451,7 +473,8 @@ export default function PeopleClient({
 							{skillFilter && (
 								<span>
 									{" "}
-									filtered by skills: <strong>{skillFilter.requiredSkills}</strong>
+									filtered by skills:{" "}
+									<strong>{skillFilter.requiredSkills}</strong>
 								</span>
 							)}
 						</div>

@@ -230,14 +230,21 @@ export async function searchPeopleBySkill(
 	try {
 		// Get all people with details first
 		const allPeople = await getAllPeople();
-		const peopleWithSkillIndex = allPeople.map((p) => addSkillIndexToPerson(p))
-		const skillIds = new Set(skillFilter.requiredSkills)
+		const peopleWithSkillIndex = allPeople.map((p) => addSkillIndexToPerson(p));
+		const skillIds = new Set(skillFilter.requiredSkills);
 
 		// Get users who have the specified skill
-		const usersWithSkill = peopleWithSkillIndex.filter(person => person.topSkills?.some(skill => skillIds.has(skill.id)) ?? false);
-		const rankedPeople = rankPeople(usersWithSkill, skillFilter, DefaultScoringWeights)
-		
-		return rankedPeople
+		const usersWithSkill = peopleWithSkillIndex.filter(
+			(person) =>
+				person.topSkills?.some((skill) => skillIds.has(skill.id)) ?? false,
+		);
+		const rankedPeople = rankPeople(
+			usersWithSkill,
+			skillFilter,
+			DefaultScoringWeights,
+		);
+
+		return rankedPeople;
 		// // Create a set of user IDs who have the skill
 		// const userIdsWithSkill = new Set(usersWithSkill.map((u) => u.id));
 

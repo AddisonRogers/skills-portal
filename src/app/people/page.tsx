@@ -4,7 +4,7 @@ import getAllPeople from "@/lib/services/users/getAllPeople";
 
 export default async function PeoplePage() {
 	const people = await getAllPeople();
-	const skills = await getAllSkills()
+	const skills = await getAllSkills();
 
 	return (
 		<div className="container mx-auto py-8">
