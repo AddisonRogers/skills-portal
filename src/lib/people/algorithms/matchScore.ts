@@ -1,7 +1,7 @@
 import { ScoringResult } from "@/types/matchScore/ScoringResult";
 import { ScoringWeights } from "@/types/matchScore/ScoringWeights";
 import { SearchCriteria } from "@/types/matchScore/SearchCriteria";
-import { PersonWithSkillIndex } from "@/types/PersonDto";
+import { PersonWithSkillIndex } from "@/types/users/PersonDto";
 import { DefaultScoringWeights } from "../constraints/DefaultScoringWeights";
 
 export default function matchScore(

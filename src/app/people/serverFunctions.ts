@@ -8,7 +8,11 @@ import { getKards } from "@/lib/opshubClient";
 import { TableClient, AzureNamedKeyCredential } from "@azure/data-tables";
 import { listUserEmails } from "@/db/repositories/users";
 import getAllPeople from "@/lib/services/users/getAllPeople";
-import type { PersonDto } from "@/types/PersonDto";
+import type { PersonDto, RankedPerson } from "@/types/users/PersonDto";
+import rankPeople from "@/lib/people/algorithms/rankPeople";
+import { SearchCriteria } from "@/types/matchScore/SearchCriteria";
+import { DefaultScoringWeights } from "@/lib/people/constraints/DefaultScoringWeights";
+import { addSkillIndexToPerson } from "@/lib/mappers/people/userSkillIndex.mapper";
 
 // Type definitions
 export type PersonWithAccount = {
@@ -221,49 +225,47 @@ export async function getAllPeopleWithDetails(): Promise<PersonWithAccount[]> {
 
 // Search people by skill
 export async function searchPeopleBySkill(
-	skillName: string,
-): Promise<PersonDto[]> {
+	skillFilter: SearchCriteria,
+): Promise<RankedPerson[]> {
 	try {
 		// Get all people with details first
 		const allPeople = await getAllPeople();
+		const peopleWithSkillIndex = allPeople.map((p) => addSkillIndexToPerson(p))
+		const skillIds = new Set(skillFilter.requiredSkills)
 
 		// Get users who have the specified skill
-		const usersWithSkill = await db
-			.select({
-				userId: userSkill.userId,
-			})
-			.from(userSkill)
-			.innerJoin(skill, eq(userSkill.skillId, skill.id))
-			.where(eq(skill.name, skillName));
+		const usersWithSkill = peopleWithSkillIndex.filter(person => person.topSkills?.some(skill => skillIds.has(skill.id)) ?? false);
+		const rankedPeople = rankPeople(usersWithSkill, skillFilter, DefaultScoringWeights)
+		
+		return rankedPeople
+		// // Create a set of user IDs who have the skill
+		// const userIdsWithSkill = new Set(usersWithSkill.map((u) => u.id));
 
-		// Create a set of user IDs who have the skill
-		const userIdsWithSkill = new Set(usersWithSkill.map((u) => u.userId));
+		// // Get all users to map IDs to emails
+		// const dbUsers = await db
+		// 	.select({
+		// 		id: user.id,
+		// 		email: user.email,
+		// 	})
+		// 	.from(user);
 
-		// Get all users to map IDs to emails
-		const dbUsers = await db
-			.select({
-				id: user.id,
-				email: user.email,
-			})
-			.from(user);
+		// // Create a map of user ID to email
+		// const userIdToEmailMap = new Map<string, string>();
+		// for (const dbUser of dbUsers) {
+		// 	userIdToEmailMap.set(dbUser.id, dbUser.email.toLowerCase());
+		// }
 
-		// Create a map of user ID to email
-		const userIdToEmailMap = new Map<string, string>();
-		for (const dbUser of dbUsers) {
-			userIdToEmailMap.set(dbUser.id, dbUser.email.toLowerCase());
-		}
+		// // Filter people who have the skill
+		// return allPeople.filter((person) => {
+		// 	// Find if any user with this email has the skill
+		// 	for (const [userId, userEmail] of userIdToEmailMap.entries()) {
+		// 		if (userIdsWithSkill.has(userId)) {
+		// 			return true;
+		// 		}
+		// 	}
 
-		// Filter people who have the skill
-		return allPeople.filter((person) => {
-			// Find if any user with this email has the skill
-			for (const [userId, userEmail] of userIdToEmailMap.entries()) {
-				if (userIdsWithSkill.has(userId)) {
-					return true;
-				}
-			}
-
-			return false;
-		});
+		// 	return false;
+		// });
 	} catch (error) {
 		console.error("Error searching people by skill:", error);
 		return [];

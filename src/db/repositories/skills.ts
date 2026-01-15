@@ -24,6 +24,7 @@ export async function getSkills() {
 			.from(skill);
 	} catch (e) {
 		console.error(e);
+		throw e
 	}
 }
 

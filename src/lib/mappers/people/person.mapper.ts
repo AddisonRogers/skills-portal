@@ -1,7 +1,6 @@
-import { jobRole } from "@/db/schema";
-import { PersonDto } from "@/types/PersonDto";
-import { UserRow } from "@/types/UserRow";
-import skillProficiencyMap from "./skillProficiency.mapper";
+import { PersonDto } from "@/types/users/PersonDto";
+import { UserRow } from "@/types/users/UserRow";
+import skillProficiencyMap from "./userSkillProficiency.mapper";
 
 export default function mapUsersToPeople(rows: UserRow[]): PersonDto[] {
 	const people = new Map<string, PersonDto>();
@@ -44,8 +43,8 @@ export default function mapUsersToPeople(rows: UserRow[]): PersonDto[] {
 			person.topSkills.push({
 				id: r.skillId,
 				name: r.skillName,
-				level: r.skillLevel,
-				proficiency: skillProficiencyMap(r.skillLevel),
+				level: r.skillLevel ?? 0,
+				proficiency: skillProficiencyMap(r.skillLevel ?? 0),
 			});
 			person.totalSkills += 1;
 		}

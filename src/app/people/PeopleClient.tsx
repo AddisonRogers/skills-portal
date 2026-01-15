@@ -34,56 +34,78 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { PersonDto } from "@/types/PersonDto";
+import { PersonDto, RankedPerson } from "@/types/users/PersonDto";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
+import { SkillDto } from "@/types/skills/SkillDto";
+import { SearchCriteria } from "@/types/matchScore/SearchCriteria";
+import { skill } from "@/db/schema";
 
-type SortField = "person" | "skills" | "isAvailable" | "reportsTo";
+type SortField = "relevance" | "person" | "skills" | "isAvailable" | "reportsTo";
 type SortDirection = "asc" | "desc";
 
 interface PeopleClientProps {
 	initialPeople: PersonDto[];
+	initialSkills: SkillDto[];
 }
 
 export default function PeopleClient({
 	initialPeople = [],
+	initialSkills = [],
 }: PeopleClientProps) {
-	const [people, setPeople] = useState<PersonDto[]>(initialPeople);
+	const [people, setPeople] = useState<PersonDto[] | RankedPerson[]>(initialPeople);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [sortField, setSortField] = useState<SortField>("person");
 	const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
-	const [skillFilter, setSkillFilter] = useState("");
-	const [availableSkills, setAvailableSkills] = useState<string[]>([]);
+	const [skillFilter, setSkillFilter] = useState<SearchCriteria>({requiredSkills: []});
+	const [currentSkillFilter, setCurrentSkillFilter] = useState<SkillDto>();
+	const [availableSkills, setAvailableSkills] = useState<SkillDto[]>(initialSkills);
 	const [isLoading, setIsLoading] = useState(false);
 
-	// Fetch available skills for filtering
-	useEffect(() => {
-		const fetchSkills = async () => {
-			try {
-				// This would typically be a server action, but for simplicity we're mocking it
-				// In a real implementation, you would fetch this from the server
-				setAvailableSkills([
-					"JavaScript",
-					"TypeScript",
-					"React",
-					"Next.js",
-					"Node.js",
-					"SQL",
-					"Python",
-				]);
-			} catch (error) {
-				console.error("Error fetching skills:", error);
-			}
-		};
+	function toggleId(list: number[], id: number) {
+  		return list.includes(id) ? list.filter((x) => x !== id) : [...list, id];
+	}
 
-		fetchSkills();
-	}, []);
+	function isRankedPerson(p: PersonDto | RankedPerson): p is RankedPerson {
+		return typeof (p as RankedPerson).ScoringResult?.score === "number";
+		}
+
+	// // Fetch available skills for filtering
+	// useEffect(() => {
+	// 	const fetchSkills = async () => {
+	// 		try {
+	// 			// This would typically be a server action, but for simplicity we're mocking it
+	// 			// In a real implementation, you would fetch this from the server
+	// 			setAvailableSkills([
+	// 				"JavaScript",
+	// 				"TypeScript",
+	// 				"React",
+	// 				"Next.js",
+	// 				"Node.js",
+	// 				"SQL",
+	// 				"Python",
+	// 			]);
+	// 		} catch (error) {
+	// 			console.error("Error fetching skills:", error);
+	// 		}
+	// 	};
+
+	// 	fetchSkills();
+	// }, []);
 
 	// Handle skill filter change
 	useEffect(() => {
 		const filterBySkill = async () => {
-			if (!skillFilter) {
+			if (skillFilter.requiredSkills.length === 0) {
 				setPeople(initialPeople);
 				return;
+			}
+
+			if (skillFilter.requiredSkills.length > 0) {
+				setSortField("relevance");
+				setSortDirection("desc");
+			} else {
+				setSortField("person");
+				setSortDirection("asc");
 			}
 
 			setIsLoading(true);
@@ -91,7 +113,7 @@ export default function PeopleClient({
 				// In a real implementation, this would call the server function
 				// For now, we'll simulate filtering by skill
 				const filtered = await searchPeopleBySkill(skillFilter);
-				setPeople(filtered.length > 0 ? filtered : initialPeople);
+				setPeople(filtered);
 			} catch (error) {
 				console.error("Error filtering by skill:", error);
 				setPeople(initialPeople);
@@ -106,13 +128,14 @@ export default function PeopleClient({
 	// Filter and sort people
 	const filteredAndSortedPeople = useMemo(() => {
 		// First filter by search term
-		const searchLower = searchTerm.toLocaleLowerCase();
+		const searchLower = searchTerm.trim().toLocaleLowerCase();
 		const filtered = people.filter((person) =>
 			[
 				person.name,
 				person.role?.title,
 				person.capability?.name,
 				person.location?.name,
+				...person.topSkills?.map((s) => s.name) ?? [],
 			]
 				.filter(Boolean)
 				.some((field) => field!.toLowerCase().includes(searchLower)),
@@ -123,14 +146,20 @@ export default function PeopleClient({
 			let comparison = 0;
 
 			switch (sortField) {
+				case "relevance": {
+					const scoreA = isRankedPerson(a) ? a.ScoringResult.score : 0;
+					const scoreB = isRankedPerson(b) ? b.ScoringResult.score : 0;
+					comparison = scoreA - scoreB;
+					break;
+				}
 				case "person": {
 					comparison = a.name.localeCompare(b.name);
 					break;
 				}
 				case "skills": {
-					const teamA = a.topSkills[0].name || "";
-					const teamB = b.topSkills[0].name || "";
-					comparison = teamA.localeCompare(teamB);
+					const skillsA = a.topSkills[0].name || "";
+					const skillsB = b.topSkills[0].name || "";
+					comparison = skillsA.localeCompare(skillsB);
 					break;
 				}
 				case "isAvailable": {
@@ -207,31 +236,36 @@ export default function PeopleClient({
 						<Popover>
 							<PopoverTrigger asChild>
 								<Button variant="outline" className="w-full justify-between">
-									{skillFilter || "Filters"}
+									{skillFilter?.requiredSkills.length ? `${skillFilter.requiredSkills.length} selected` : "Filters"}
 									<Filter className="ml-2 h-4 w-4" />
 								</Button>
 							</PopoverTrigger>
 							<PopoverContent className="w-56 p-0" align="end">
 								<div className="p-2">
 									<div className="space-y-2">
-										{availableSkills.map((skill) => (
-											<div key={skill} className="flex items-center">
+										{availableSkills.map((skill) => {
+											const isSelected = skillFilter?.requiredSkills.includes(skill.id);
+											return(
+											<div key={skill.id} className="flex items-center">
 												<Button
-													variant={skillFilter === skill ? "default" : "ghost"}
+													variant={isSelected ? "default" : "ghost"}
 													className="w-full justify-start"
 													onClick={() =>
-														setSkillFilter(skillFilter === skill ? "" : skill)
+														setSkillFilter((prev) => ({
+															...prev,
+															requiredSkills: toggleId(prev.requiredSkills, skill.id)
+														}))
 													}
 												>
-													{skill}
+													{skill.name}
 												</Button>
 											</div>
-										))}
+										)})}
 										{skillFilter && (
 											<Button
 												variant="outline"
 												className="w-full mt-2"
-												onClick={() => setSkillFilter("")}
+												onClick={() => setSkillFilter({requiredSkills: []})}
 											>
 												Clear Filter
 											</Button>
@@ -317,16 +351,16 @@ export default function PeopleClient({
 									</TableRow>
 								</TableHeader>
 								<TableBody>
-									{filteredAndSortedPeople.length === 0 ? (
+									{filteredAndSortedPeople.length === 0 && skillFilter.requiredSkills.length === 0 ? (
 										<TableRow>
 											<TableCell colSpan={5} className="text-center py-8">
-												{skillFilter ? (
-													<>
-														No people found with the skill:{" "}
-														<strong>{skillFilter}</strong>
-													</>
-												) : (
+												{skillFilter.requiredSkills.length === 0 ? (
 													<>No people found matching your search criteria.</>
+												) : (
+													<>
+														No people found with the skills:{" "}
+														<strong>{skillFilter.requiredSkills}</strong>
+													</>
 												)}
 											</TableCell>
 										</TableRow>
@@ -353,9 +387,9 @@ export default function PeopleClient({
 														</div>
 													</div>
 												</TableCell>
-												<TableCell className="">
+												<TableCell>
 													{person.topSkills.slice(0, 3).map((skill) => (
-														<div className="justify-between font-light my-1.5">
+														<div className="justify-between font-light my-1.5" key={skill.id}>
 															<span className="bg-gray-100 rounded-xl p-0.5">
 																<a className="px-1 mr-1">{skill.name}</a>
 																<a className="bg-gray-200 rounded-xl px-1">
@@ -417,7 +451,7 @@ export default function PeopleClient({
 							{skillFilter && (
 								<span>
 									{" "}
-									filtered by skill: <strong>{skillFilter}</strong>
+									filtered by skills: <strong>{skillFilter.requiredSkills}</strong>
 								</span>
 							)}
 						</div>

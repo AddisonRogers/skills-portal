@@ -1,6 +1,6 @@
 import { ScoringWeights } from "@/types/matchScore/ScoringWeights";
 import { SearchCriteria } from "@/types/matchScore/SearchCriteria";
-import { PersonWithSkillIndex, RankedPerson } from "@/types/PersonDto";
+import { PersonWithSkillIndex, RankedPerson } from "@/types/users/PersonDto";
 import matchScore from "./matchScore";
 
 export default function rankPeople(
