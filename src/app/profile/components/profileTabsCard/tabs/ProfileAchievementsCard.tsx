@@ -9,6 +9,9 @@ import {
 import { Achievements } from "@/types/Achievements";
 import LevelBar from "../../../../../components/InfoAddOns/LevelBar";
 import Image from "next/image";
+import { useState } from "react";
+import  AchievementShow , {AchievementShowOptions} from "./achievementFilters/AchievementShow";
+import  AchievementSort  from "./achievementFilters/AchievementSorting";
 
 const Placeholder = "/badgeImages/Placeholder Badge.png";
 const Bronze = "/badgeImages/Bronze Badge.png";
@@ -78,44 +81,77 @@ let badgeSelector = (achievement: Achievements): string => {
 };
 
 export default function ProfileAchievementsCard() {
+
+	const [showFilter, setShowFilter] = useState<AchievementShowOptions>("All");
+	const [sortBy, setSortBy] = useState("highest-lowest");
+	const AchievementSortAny = AchievementSort as any;
+
+	let filteredAchievements: Achievements[] = [...achievements];
+
+	if (showFilter === "Bronze"){
+		filteredAchievements = filteredAchievements.filter(achievement => achievement.rank === 1);
+	} else if (showFilter === "Silver"){
+		filteredAchievements = filteredAchievements.filter(achievement => achievement.rank === 2);
+	} else if (showFilter === "Gold"){
+		filteredAchievements = filteredAchievements.filter(achievement => achievement.rank === 3);
+	} else if (showFilter === "Diamond"){
+		filteredAchievements = filteredAchievements.filter(achievement => achievement.rank === 4);
+	} else if (showFilter === "Unknown"){
+		filteredAchievements = filteredAchievements.filter(achievement => achievement.rank === 0);
+	}else if (showFilter === "All"){
+		// No filtering needed, show all achievements
+	}
+
+	if (sortBy === "highest-lowest"){
+		filteredAchievements.sort((a, b) => b.rank - a.rank);
+	} else if (sortBy === "lowest-highest"){
+		filteredAchievements.sort((a, b) => a.rank - b.rank);
+	}
+
 	return (
 		<div>
-			{achievements.map((achievement) => (
-				<Card key={achievement.id} className="mx-2 my-2 p-4 relative">
-					<CardHeader className="gap-0">
-						<div className="flex items-center gap-3">
-							<div className="flex-1 min-w-0 pr-4">
-								<CardTitle className="flex items-center mb-0">
-									<a className="mr-3">{achievement.achievement}</a>
-								</CardTitle>
-								<CardDescription className="mt-1 opacity-80 mr-0.5">
-									{achievement.achievementDescription}
-								</CardDescription>
-								<LevelBar
-									currentXP={achievement.currentLevel}
-									length="100%"
-									minXP={achievement.baseLevel}
-									maxXP={achievement.nextLevel}
-									baseLevel={achievement.baseLevel}
-									nextLevel={achievement.nextLevel}
-									text={false}
-								/>
-							</div>
-							<div className="shrink-0 w-20 flex items-center justify-center overflow-visible">
-								<CardDescription>
-									<Image
-										src={badgeSelector(achievement)}
-										alt="Badge Image"
-										width={64}
-										height={64}
-										className="w-16 h-16"
+			<div className="flex flex-row justify-start">
+				<AchievementShow showFilter={showFilter} setShowFilter={setShowFilter} />
+				<AchievementSortAny sortBy={sortBy} setSortBy={setSortBy} />
+			</div>
+			<div>
+				{filteredAchievements.map((achievement) => (
+					<Card key={achievement.id} className="mx-2 my-2 p-4 relative">
+						<CardHeader className="gap-0">
+							<div className="flex items-center gap-3">
+								<div className="flex-1 min-w-0 pr-4">
+									<CardTitle className="flex items-center mb-0">
+										<a className="mr-3">{achievement.achievement}</a>
+									</CardTitle>
+									<CardDescription className="mt-1 opacity-80 mr-0.5">
+										{achievement.achievementDescription}
+									</CardDescription>
+									<LevelBar
+										currentXP={achievement.currentLevel}
+										length="100%"
+										minXP={achievement.baseLevel}
+										maxXP={achievement.nextLevel}
+										baseLevel={achievement.baseLevel}
+										nextLevel={achievement.nextLevel}
+										text={false}
 									/>
-								</CardDescription>
+								</div>
+								<div className="shrink-0 w-20 flex items-center justify-center overflow-visible">
+									<CardDescription>
+										<Image
+											src={badgeSelector(achievement)}
+											alt="Badge Image"
+											width={64}
+											height={64}
+											className="w-16 h-16"
+										/>
+									</CardDescription>
+								</div>
 							</div>
-						</div>
-					</CardHeader>
-				</Card>
-			))}
+						</CardHeader>
+					</Card>
+				))}
+			</div>
 		</div>
 	);
 }

@@ -7,7 +7,6 @@ import ProfileGoalsCard from "./tabs/ProfileGoalsCard";
 import ProfileAchievementsCard from "./tabs/ProfileAchievementsCard";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
 const tabs = [
 	{ id: "skills", label: "Skills" },
@@ -19,8 +18,6 @@ const tabs = [
 
 export default function ProfileTabsCard() {
 	const [activeTab, setActiveTab] = useState("skills");
-	const [showFilter, setShowFilter] = useState("All");
-	const [sortBy, setSortBy] = useState("Proficiency");
 
 	const tabContent: Record<string, React.ReactNode> = {
 		skills: <ProfileSkillsCard />,
@@ -50,27 +47,6 @@ export default function ProfileTabsCard() {
 						))}
 					</div>
 				</nav>
-				<div className="flex flex-row justify-start">
-					<Button
-						onClick={() =>
-							setShowFilter(showFilter == "All" ? "Recent" : "All")
-						}
-						className="gap-1 px-2 rounded-2xl mt-3 mb-1 ml-3 font-medium"
-					>
-						Show:<a className="font-bold">{showFilter}</a>
-					</Button>
-					<Button
-						onClick={() =>
-							setSortBy(sortBy == "Proficiency" ? "Last used" : "Proficiency")
-						}
-						className="gap-1 px-2 rounded-2xl mt-3 mb-1 ml-3 font-medium"
-					>
-						Sort by:<a className="font-bold">{sortBy}</a>
-					</Button>
-					{/* <Button className="gap-1 px-2 rounded-2xl mt-3 mb-1 ml-auto mr-3 font-bold">
-						Manage Skills
-					</Button> */}
-				</div>
 				<div>{tabContent[activeTab]}</div>
 			</Card>
 		</div>

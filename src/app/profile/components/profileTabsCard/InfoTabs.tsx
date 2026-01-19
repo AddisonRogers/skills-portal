@@ -5,27 +5,28 @@ import SkillRadar from "../../../../components/InfoAddOns/SkillRadar";
 import { Card } from "@/components/ui/card";
 import { Avatar } from "@/components/ui/avatar";
 import { UserSkill } from "@/types/skill";
+import { skill } from "@/db/schema";
 
 const skills: UserSkill[] = [
 	{
 		id: 0,
 		skillName: "React",
-		proficiency: { id: 0, value: 4, label: "Advanced" },
-		lastUsed: new Date(),
+		proficiency: { id: 0, value: 2, label: "Novice" },
+		lastUsed: new Date("2025-10-01"),
 		tags: [{ id: 0, label: "Frontend" }],
 	},
 	{
 		id: 1,
 		skillName: "C#",
 		proficiency: { id: 0, value: 4, label: "Advanced" },
-		lastUsed: new Date(),
+		lastUsed: new Date("2025-09-15"),
 		tags: [{ id: 0, label: "Backend" }],
 	},
 	{
 		id: 2,
 		skillName: "Bicep",
 		proficiency: { id: 0, value: 3, label: "Intermediate" },
-		lastUsed: new Date(),
+		lastUsed: new Date("2026-08-01"),
 		tags: [{ id: 0, label: "DevOps" }],
 	},
 	{
@@ -35,7 +36,15 @@ const skills: UserSkill[] = [
 		lastUsed: new Date(),
 		tags: [{ id: 0, label: "Soft Skill" }],
 	},
+	{
+		id: 4,
+		skillName: "Azure",
+		proficiency: { id: 0, value: 1, label: "Beginner" },
+		lastUsed: new Date("2024-09-15"),
+		tags: [{ id: 0, label: "Backend" }],
+	},
 ];
+
 
 export default function InfoTabs() {
 	const userImg = `https://ui-avatars.com/api/?name=John+Doe&background=0D8ABC&color=fff`;
@@ -90,18 +99,16 @@ export default function InfoTabs() {
 							A summary of your primary skills and areas of expertise.
 						</p>
 						<div className="flex items-center flex-wrap gap-2 ml-4">
-							{skills.flatMap((skill) =>
-								skill.proficiency.value >= 4
-									? skill.tags.map((tag) => (
-											<a
-												key={`${skill.id}-${tag.id}`}
-												className="border-2 rounded-2xl px-1.5 bg-gray-200 font-semibold text-gray-700"
-											>
-												{tag.label}
-											</a>
-										))
-									: [],
-							)}
+							{skills
+								.filter((skill) => skill.proficiency.value >= 4)
+								.map((skill) => (
+									<a
+										key={skill.id}
+										className="border-2 rounded-2xl px-1.5 bg-gray-200 font-semibold text-gray-700"
+									>
+										{skill.skillName}
+									</a>
+								))}
 						</div>
 					</div>
 				</div>
@@ -120,7 +127,7 @@ export default function InfoTabs() {
 								{ label: "Backend", value: 70 },
 								{ label: "DevOps", value: 100 },
 								{ label: "Soft Skills", value: 90 },
-								{ label: "Databases", value: 50 },
+								{ label: "Azure", value: 50 },
 							]}
 						/>
 					</div>
