@@ -69,8 +69,8 @@ vi.mock("@/db/repositories/users", () => ({
 			skillName: "Kubernetes",
 			skillLevel: 3,
 		},
-	])
-}))
+	]),
+}));
 
 import getAllPeople from "./getAllPeople";
 import { getUsers } from "@/db/repositories/users";
@@ -81,12 +81,12 @@ describe("getAllPeople", () => {
 
 		expect(people).toHaveLength(2);
 
-		const jon = people.find(p => p.id === "user-001")!;
-		expect(jon.topSkills.map(s => s.id).sort()).toEqual([101, 102]);
+		const jon = people.find((p) => p.id === "user-001")!;
+		expect(jon.topSkills.map((s) => s.id).sort()).toEqual([101, 102]);
 		expect(jon.totalSkills).toBe(2);
 
-		const alice = people.find(p => p.id === "user-002")!;
-		expect(alice.topSkills.map(s => s.id)).toEqual([103]);
+		const alice = people.find((p) => p.id === "user-002")!;
+		expect(alice.topSkills.map((s) => s.id)).toEqual([103]);
 		expect(alice.totalSkills).toBe(1);
 	});
 });

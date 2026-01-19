@@ -32,11 +32,12 @@ export const personWithSkillIndex: PersonWithSkillIndex = {
 	]),
 };
 
-export const createPersonWithSkillIndex = (overrides?: Partial<PersonWithSkillIndex>): PersonWithSkillIndex => ({
-    ...personWithSkillIndex,
-    ...overrides,
-    skillIndex: overrides?.skillIndex
-        ? new Map(overrides.skillIndex)
-        : new Map(personWithSkillIndex.skillIndex),
+export const createPersonWithSkillIndex = (
+	overrides?: Partial<PersonWithSkillIndex>,
+): PersonWithSkillIndex => ({
+	...personWithSkillIndex,
+	...overrides,
+	skillIndex: overrides?.skillIndex
+		? new Map(overrides.skillIndex)
+		: new Map(personWithSkillIndex.skillIndex),
 });
-

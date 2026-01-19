@@ -37,11 +37,13 @@ export default function matchScore(
 	}
 
 	const matchedCount = matchedSkillIds.length;
-	const coverageScore = (matchedCount === 0 ? 0 : (matchedCount / requiredSkills.length) * 100);
+	const coverageScore =
+		matchedCount === 0 ? 0 : (matchedCount / requiredSkills.length) * 100;
 
 	const maxProf = 5;
 	const averageProf = profSum / matchedCount;
-	const proficiencyScore = (matchedCount === 0 ? 0 : (averageProf / maxProf) * 100);
+	const proficiencyScore =
+		matchedCount === 0 ? 0 : (averageProf / maxProf) * 100;
 
 	const score =
 		coverageScore * weights.coverage + proficiencyScore * weights.proficiency;

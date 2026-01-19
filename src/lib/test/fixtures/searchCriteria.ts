@@ -5,7 +5,9 @@ export const searchCriteriaBasic: SearchCriteria = {
 	minProficiency: 3,
 };
 
-export const createSearchCriteria = (overrides?: Partial<SearchCriteria>): SearchCriteria => ({
-    ...searchCriteriaBasic,
-    ...overrides,
-})
+export const createSearchCriteria = (
+	overrides?: Partial<SearchCriteria>,
+): SearchCriteria => ({
+	...searchCriteriaBasic,
+	...overrides,
+});
