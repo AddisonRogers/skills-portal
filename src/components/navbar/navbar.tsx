@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import AvatarOrLogin from "@/components/navbar/avatarOrLogin/avatarOrLogin";
+import { ThemeToggle } from "../ThemeToggle";
 
 const navLinks = [
 	{ name: "Home", href: "/" },
@@ -8,6 +9,7 @@ const navLinks = [
 	{ name: "Skills", href: "/skills" },
 	{ name: "Projects", href: "/projects" },
 	{ name: "People", href: "/people" },
+	{ name: "Profile", href: "/profile" },
 	{ name: "AI", href: "/ai" },
 	{ name: "Admin Panel", href: "/admin" },
 ];
@@ -21,7 +23,7 @@ export default async function Navbar() {
 						key={link.name}
 						href={link.href}
 						className={cn(
-							"inline-block px-4 py-2 font-medium text-black transition-colors duration-150 relative",
+							"inline-block px-4 py-2 font-medium transition-colors duration-150 relative",
 							"hover:text-primary hover:font-semibold" +
 								" focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
 							"after:content-[''] after:block after:h-[2px] after:bg-primary after:scale-x-0 after:transition-transform after:duration-200 after:absolute after:left-0 after:right-0 after:-bottom-1 hover:after:scale-x-100",
@@ -30,6 +32,10 @@ export default async function Navbar() {
 						{link.name}
 					</Link>
 				))}
+			</div>
+
+			<div className="inline-block">
+				<ThemeToggle />
 			</div>
 
 			<div className="inline-block px-4 py-2 font-medium text-black mt-1">
