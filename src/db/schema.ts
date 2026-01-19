@@ -6,6 +6,7 @@ import {
 	text,
 	timestamp,
 	unique,
+	uniqueIndex,
 	foreignKey,
 } from "drizzle-orm/pg-core";
 
@@ -159,20 +160,13 @@ export const client = pgTable("client", {
 
 export const project = pgTable("project", {
 	id: serial().primaryKey(),
+	clientId: integer("client_id")
+		.notNull()
+		.references(() => client.id, {onDelete: "restrict"}),
 	name: text("name").notNull(),
 	description: text("description"),
 	startedAt: timestamp("started_at"),
 	endedAt: timestamp("ended_at"),
-});
-
-export const clientProject = pgTable("client_project", {
-	id: serial().primaryKey(),
-	clientId: integer("client_id")
-		.notNull()
-		.references(() => client.id, { onDelete: "cascade" }),
-	projectId: integer("project_id")
-		.notNull()
-		.references(() => project.id, { onDelete: "cascade" }),
 });
 
 export const projectUser = pgTable("project_user", {
@@ -186,7 +180,10 @@ export const projectUser = pgTable("project_user", {
 	roleId: integer("role_id").references(() => role.id, {
 		onDelete: "set null",
 	}),
-});
+},
+(t) => ({
+	uqProjectUser: uniqueIndex("uq_project_user").on(t.projectId, t.userId)
+}));
 
 export const roadmap = pgTable("roadmap", {
 	id: text("id").primaryKey(),
