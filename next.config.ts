@@ -4,7 +4,10 @@ const nextConfig: NextConfig = {
   /* config options here */
   output: "standalone",
   compress: true,
-  optimizePackageImports: ["@radix-ui", "lucide-react"],
+  experimental: {
+    optimizePackageImports: ["@radix-ui", "lucide-react"],
+  },
+  
   images: {
     remotePatterns: [
       {

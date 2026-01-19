@@ -27,58 +27,95 @@ import {
 	ArrowUpDown,
 	Search,
 	Filter,
+	MapPin,
 } from "lucide-react";
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
+import { PersonDto, RankedPerson } from "@/types/users/PersonDto";
+import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
+import { SkillDto } from "@/types/skills/SkillDto";
+import { SearchCriteria } from "@/types/matchScore/SearchCriteria";
+import { skill } from "@/db/schema";
 
-type SortField = "name" | "team" | "hasAccount" | "timeRemaining" | "xp";
+type SortField =
+	| "relevance"
+	| "person"
+	| "skills"
+	| "isAvailable"
+	| "reportsTo";
 type SortDirection = "asc" | "desc";
 
 interface PeopleClientProps {
-	initialPeople: PersonWithAccount[];
+	initialPeople: PersonDto[];
+	initialSkills: SkillDto[];
 }
 
-export default function PeopleClient({ initialPeople }: PeopleClientProps) {
-	const [people, setPeople] = useState<PersonWithAccount[]>(initialPeople);
+export default function PeopleClient({
+	initialPeople = [],
+	initialSkills = [],
+}: PeopleClientProps) {
+	const [people, setPeople] = useState<PersonDto[] | RankedPerson[]>(
+		initialPeople,
+	);
 	const [searchTerm, setSearchTerm] = useState("");
-	const [sortField, setSortField] = useState<SortField>("name");
+	const [sortField, setSortField] = useState<SortField>("person");
 	const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
-	const [skillFilter, setSkillFilter] = useState("");
-	const [availableSkills, setAvailableSkills] = useState<string[]>([]);
+	const [skillFilter, setSkillFilter] = useState<SearchCriteria>({
+		requiredSkills: [],
+	});
+	const [currentSkillFilter, setCurrentSkillFilter] = useState<SkillDto>();
+	const [availableSkills, setAvailableSkills] =
+		useState<SkillDto[]>(initialSkills);
 	const [isLoading, setIsLoading] = useState(false);
 
-	// Fetch available skills for filtering
-	useEffect(() => {
-		const fetchSkills = async () => {
-			try {
-				// This would typically be a server action, but for simplicity we're mocking it
-				// In a real implementation, you would fetch this from the server
-				setAvailableSkills([
-					"JavaScript",
-					"TypeScript",
-					"React",
-					"Next.js",
-					"Node.js",
-					"SQL",
-					"Python",
-				]);
-			} catch (error) {
-				console.error("Error fetching skills:", error);
-			}
-		};
+	function toggleId(list: number[], id: number) {
+		return list.includes(id) ? list.filter((x) => x !== id) : [...list, id];
+	}
 
-		fetchSkills();
-	}, []);
+	function isRankedPerson(p: PersonDto | RankedPerson): p is RankedPerson {
+		return typeof (p as RankedPerson).ScoringResult?.score === "number";
+	}
+
+	// // Fetch available skills for filtering
+	// useEffect(() => {
+	// 	const fetchSkills = async () => {
+	// 		try {
+	// 			// This would typically be a server action, but for simplicity we're mocking it
+	// 			// In a real implementation, you would fetch this from the server
+	// 			setAvailableSkills([
+	// 				"JavaScript",
+	// 				"TypeScript",
+	// 				"React",
+	// 				"Next.js",
+	// 				"Node.js",
+	// 				"SQL",
+	// 				"Python",
+	// 			]);
+	// 		} catch (error) {
+	// 			console.error("Error fetching skills:", error);
+	// 		}
+	// 	};
+
+	// 	fetchSkills();
+	// }, []);
 
 	// Handle skill filter change
 	useEffect(() => {
 		const filterBySkill = async () => {
-			if (!skillFilter) {
+			if (skillFilter.requiredSkills.length === 0) {
 				setPeople(initialPeople);
 				return;
+			}
+
+			if (skillFilter.requiredSkills.length > 0) {
+				setSortField("relevance");
+				setSortDirection("desc");
+			} else {
+				setSortField("person");
+				setSortDirection("asc");
 			}
 
 			setIsLoading(true);
@@ -86,7 +123,7 @@ export default function PeopleClient({ initialPeople }: PeopleClientProps) {
 				// In a real implementation, this would call the server function
 				// For now, we'll simulate filtering by skill
 				const filtered = await searchPeopleBySkill(skillFilter);
-				setPeople(filtered.length > 0 ? filtered : initialPeople);
+				setPeople(filtered);
 			} catch (error) {
 				console.error("Error filtering by skill:", error);
 				setPeople(initialPeople);
@@ -101,44 +138,58 @@ export default function PeopleClient({ initialPeople }: PeopleClientProps) {
 	// Filter and sort people
 	const filteredAndSortedPeople = useMemo(() => {
 		// First filter by search term
-		let filtered = people.filter((person) => {
-			const searchLower = searchTerm.toLowerCase();
-			return (
-				person.name.toLowerCase().includes(searchLower) ||
-				(person.team && person.team.toLowerCase().includes(searchLower)) ||
-				person.email.toLowerCase().includes(searchLower)
-			);
-		});
+		const searchLower = searchTerm.trim().toLocaleLowerCase();
+		const filtered = people.filter((person) =>
+			[
+				person.name,
+				person.role?.title,
+				person.capability?.name,
+				person.location?.name,
+				...(person.topSkills?.map((s) => s.name) ?? []),
+			]
+				.filter(Boolean)
+				.some((field) => field!.toLowerCase().includes(searchLower)),
+		);
 
 		// Sort by selected field
 		filtered.sort((a, b) => {
 			let comparison = 0;
 
 			switch (sortField) {
-				case "name": {
+				case "relevance": {
+					const scoreA = isRankedPerson(a) ? a.ScoringResult.score : 0;
+					const scoreB = isRankedPerson(b) ? b.ScoringResult.score : 0;
+					comparison = scoreA - scoreB;
+					break;
+				}
+				case "person": {
 					comparison = a.name.localeCompare(b.name);
 					break;
 				}
-				case "team": {
-					const teamA = a.team || "";
-					const teamB = b.team || "";
-					comparison = teamA.localeCompare(teamB);
+				case "skills": {
+					const skillsA = a.topSkills[0].name || "";
+					const skillsB = b.topSkills[0].name || "";
+					comparison = skillsA.localeCompare(skillsB);
 					break;
 				}
-				case "hasAccount": {
-					comparison = Number(a.hasAccount) - Number(b.hasAccount);
+				case "isAvailable": {
+					comparison = Number(a.isAvailable) - Number(b.isAvailable);
 					break;
 				}
-				case "timeRemaining": {
-					const timeA = a.timeRemaining || 0;
-					const timeB = b.timeRemaining || 0;
-					comparison = timeA - timeB;
-					break;
-				}
-				case "xp": {
-					comparison = a.xp - b.xp;
-					break;
-				}
+				// case "hasAccount": {
+				// 	comparison = Number(a.hasAccount) - Number(b.hasAccount);
+				// // 	break;
+				// }
+				// case "timeRemaining": {
+				// 	const timeA = a.timeRemaining || 0;
+				// 	const timeB = b.timeRemaining || 0;
+				// 	comparison = timeA - timeB;
+				// 	break;
+				// }
+				// case "xp": {
+				// 	comparison = a.xp - b.xp;
+				// 	break;
+				// }
 			}
 
 			// Reverse if descending
@@ -159,20 +210,20 @@ export default function PeopleClient({ initialPeople }: PeopleClientProps) {
 	};
 
 	// Format time remaining to hours and minutes
-	const formatTimeRemaining = (hours?: number) => {
-		if (hours === undefined) return "N/A";
+	// const formatTimeRemaining = (hours?: number) => {
+	// 	if (hours === undefined) return "N/A";
 
-		const wholeHours = Math.floor(hours);
-		const minutes = Math.round((hours - wholeHours) * 60);
+	// 	const wholeHours = Math.floor(hours);
+	// 	const minutes = Math.round((hours - wholeHours) * 60);
 
-		if (wholeHours === 0) {
-			return `${minutes}m`;
-		} else if (minutes === 0) {
-			return `${wholeHours}h`;
-		} else {
-			return `${wholeHours}h ${minutes}m`;
-		}
-	};
+	// 	if (wholeHours === 0) {
+	// 		return `${minutes}m`;
+	// 	} else if (minutes === 0) {
+	// 		return `${wholeHours}h`;
+	// 	} else {
+	// 		return `${wholeHours}h ${minutes}m`;
+	// 	}
+	// };
 
 	return (
 		<Card>
@@ -183,7 +234,7 @@ export default function PeopleClient({ initialPeople }: PeopleClientProps) {
 						<div className="relative">
 							<Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
 							<Input
-								placeholder="Search by name, team, or email..."
+								placeholder="Search by name, capability or skill..."
 								value={searchTerm}
 								onChange={(e) => setSearchTerm(e.target.value)}
 								className="w-full pl-8"
@@ -195,31 +246,44 @@ export default function PeopleClient({ initialPeople }: PeopleClientProps) {
 						<Popover>
 							<PopoverTrigger asChild>
 								<Button variant="outline" className="w-full justify-between">
-									{skillFilter || "Filter by Skill"}
+									{skillFilter?.requiredSkills.length
+										? `${skillFilter.requiredSkills.length} selected`
+										: "Filters"}
 									<Filter className="ml-2 h-4 w-4" />
 								</Button>
 							</PopoverTrigger>
 							<PopoverContent className="w-56 p-0" align="end">
 								<div className="p-2">
 									<div className="space-y-2">
-										{availableSkills.map((skill) => (
-											<div key={skill} className="flex items-center">
-												<Button
-													variant={skillFilter === skill ? "default" : "ghost"}
-													className="w-full justify-start"
-													onClick={() =>
-														setSkillFilter(skillFilter === skill ? "" : skill)
-													}
-												>
-													{skill}
-												</Button>
-											</div>
-										))}
+										{availableSkills.map((skill) => {
+											const isSelected = skillFilter?.requiredSkills.includes(
+												skill.id,
+											);
+											return (
+												<div key={skill.id} className="flex items-center">
+													<Button
+														variant={isSelected ? "default" : "ghost"}
+														className="w-full justify-start"
+														onClick={() =>
+															setSkillFilter((prev) => ({
+																...prev,
+																requiredSkills: toggleId(
+																	prev.requiredSkills,
+																	skill.id,
+																),
+															}))
+														}
+													>
+														{skill.name}
+													</Button>
+												</div>
+											);
+										})}
 										{skillFilter && (
 											<Button
 												variant="outline"
 												className="w-full mt-2"
-												onClick={() => setSkillFilter("")}
+												onClick={() => setSkillFilter({ requiredSkills: [] })}
 											>
 												Clear Filter
 											</Button>
@@ -239,11 +303,10 @@ export default function PeopleClient({ initialPeople }: PeopleClientProps) {
 								<SelectValue placeholder="Sort by" />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectItem value="name">Name</SelectItem>
-								<SelectItem value="team">Team</SelectItem>
-								<SelectItem value="hasAccount">Has Account</SelectItem>
-								<SelectItem value="timeRemaining">Time Remaining</SelectItem>
-								<SelectItem value="xp">XP</SelectItem>
+								<SelectItem value="person">Person</SelectItem>
+								<SelectItem value="skills">Top Skills</SelectItem>
+								<SelectItem value="isAvailable">Is Available</SelectItem>
+								<SelectItem value="reportsTo">Reports To</SelectItem>
 							</SelectContent>
 						</Select>
 					</div>
@@ -273,69 +336,96 @@ export default function PeopleClient({ initialPeople }: PeopleClientProps) {
 									<TableRow>
 										<TableHead
 											className="w-[200px] cursor-pointer"
-											onClick={() => handleSort("name")}
+											onClick={() => handleSort("person")}
 										>
-											Name{" "}
-											{sortField === "name" &&
+											Person{" "}
+											{sortField === "person" &&
 												(sortDirection === "asc" ? "↑" : "↓")}
 										</TableHead>
 										<TableHead
 											className="cursor-pointer"
-											onClick={() => handleSort("team")}
+											onClick={() => handleSort("skills")}
 										>
-											Team{" "}
-											{sortField === "team" &&
+											Top Skills{" "}
+											{sortField === "skills" &&
 												(sortDirection === "asc" ? "↑" : "↓")}
 										</TableHead>
 										<TableHead
 											className="cursor-pointer"
-											onClick={() => handleSort("hasAccount")}
+											onClick={() => handleSort("isAvailable")}
 										>
-											Has Account{" "}
-											{sortField === "hasAccount" &&
+											Availability{" "}
+											{sortField === "isAvailable" &&
 												(sortDirection === "asc" ? "↑" : "↓")}
 										</TableHead>
 										<TableHead
 											className="cursor-pointer"
-											onClick={() => handleSort("timeRemaining")}
+											onClick={() => handleSort("reportsTo")}
 										>
-											Time Remaining{" "}
-											{sortField === "timeRemaining" &&
-												(sortDirection === "asc" ? "↑" : "↓")}
-										</TableHead>
-										<TableHead
-											className="cursor-pointer"
-											onClick={() => handleSort("xp")}
-										>
-											XP{" "}
-											{sortField === "xp" &&
+											Reports To{" "}
+											{sortField === "reportsTo" &&
 												(sortDirection === "asc" ? "↑" : "↓")}
 										</TableHead>
 									</TableRow>
 								</TableHeader>
 								<TableBody>
-									{filteredAndSortedPeople.length === 0 ? (
+									{filteredAndSortedPeople.length === 0 &&
+									skillFilter.requiredSkills.length === 0 ? (
 										<TableRow>
 											<TableCell colSpan={5} className="text-center py-8">
-												{skillFilter ? (
-													<>
-														No people found with the skill:{" "}
-														<strong>{skillFilter}</strong>
-													</>
-												) : (
+												{skillFilter.requiredSkills.length === 0 ? (
 													<>No people found matching your search criteria.</>
+												) : (
+													<>
+														No people found with the skills:{" "}
+														<strong>{skillFilter.requiredSkills}</strong>
+													</>
 												)}
 											</TableCell>
 										</TableRow>
 									) : (
 										filteredAndSortedPeople.map((person) => (
 											<TableRow key={person.id}>
-												<TableCell className="font-medium">
-													{person.name}
+												<TableCell className="align-middle">
+													<div className="inline-flex items-center gap-3">
+														<Avatar className="h-10 w-10">
+															<AvatarImage
+																src={person.image}
+																className="rounded-full size-10"
+															/>
+														</Avatar>
+														<div className="flex flex-col">
+															<a className="font-semibold text-xl">
+																{person.name}
+															</a>
+															<a>{person.role.title}</a>
+															<div className="inline-flex items-center">
+																<MapPin className="size-3.5 mr-1" />
+																<a>{person.location.name}</a>
+															</div>
+														</div>
+													</div>
 												</TableCell>
-												<TableCell>{person.team || "—"}</TableCell>
 												<TableCell>
-													{person.hasAccount ? (
+													{person.topSkills.slice(0, 3).map((skill) => (
+														<div
+															className="justify-between font-light my-1.5"
+															key={skill.id}
+														>
+															<span className="bg-gray-100 rounded-xl p-0.5">
+																<a className="px-1 mr-1">{skill.name}</a>
+																<a className="bg-gray-200 rounded-xl px-1">
+																	{skill.proficiency}
+																</a>
+															</span>
+														</div>
+													)) || "—"}
+													<a className="bg-gray-300 rounded-lg py-1 px-1.5">
+														+{person.totalSkills - 3}
+													</a>
+												</TableCell>
+												<TableCell>
+													{person.isAvailable ? (
 														<Badge
 															variant="success"
 															className="bg-green-100 text-green-800 flex items-center w-fit"
@@ -351,10 +441,26 @@ export default function PeopleClient({ initialPeople }: PeopleClientProps) {
 														</Badge>
 													)}
 												</TableCell>
-												<TableCell>
-													{formatTimeRemaining(person.timeRemaining)}
+												<TableCell className="align-middle">
+													<div className="inline-flex items-center gap-3">
+														<Avatar className="h-10 w-10">
+															<AvatarImage
+																src={person.reportsTo.image}
+																className="rounded-full size-10"
+															/>
+														</Avatar>
+														<div className="flex flex-col">
+															<a className="font-semibold text-xl">
+																{person.reportsTo.name}
+															</a>
+															<a>{person.reportsTo.role.title}</a>
+															<div className="inline-flex items-center">
+																<MapPin className="size-3.5 mr-1" />
+																<a>{person.reportsTo.location.name}</a>
+															</div>
+														</div>
+													</div>
 												</TableCell>
-												<TableCell>{person.xp}</TableCell>
 											</TableRow>
 										))
 									)}
@@ -367,7 +473,8 @@ export default function PeopleClient({ initialPeople }: PeopleClientProps) {
 							{skillFilter && (
 								<span>
 									{" "}
-									filtered by skill: <strong>{skillFilter}</strong>
+									filtered by skills:{" "}
+									<strong>{skillFilter.requiredSkills}</strong>
 								</span>
 							)}
 						</div>

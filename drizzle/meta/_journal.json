@@ -8,6 +8,27 @@
       "when": 1752845888389,
       "tag": "0000_lethal_senator_kelly",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1767802302069,
+      "tag": "0001_numerous_sentinel",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1767802710328,
+      "tag": "0002_chemical_darkhawk",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1767868902262,
+      "tag": "0003_dusty_lake",
+      "breakpoints": true
     }
   ]
 }
