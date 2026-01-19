@@ -45,7 +45,6 @@ const skills: UserSkill[] = [
 	},
 ];
 
-
 export default function InfoTabs() {
 	const userImg = `https://ui-avatars.com/api/?name=John+Doe&background=0D8ABC&color=fff`;
 

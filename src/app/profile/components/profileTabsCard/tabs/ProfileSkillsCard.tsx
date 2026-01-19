@@ -60,7 +60,7 @@ const proficiencyColors: Record<string, string> = {
 	Expert: "bg-[#E698FF] text-[#A21CAF]",
 };
 
-export default function ProfileSkillsCard(){
+export default function ProfileSkillsCard() {
 	const [showFilter, setShowFilter] = useState<ShowFilterOption>("All");
 	const [sortBy, setSortBy] = useState("Proficiency");
 	const SortOptionsAny = SortOptions as any;
@@ -68,23 +68,31 @@ export default function ProfileSkillsCard(){
 	// Apply filter first, then sort the filtered list so both work together.
 	let filteredSkills: UserSkill[] = [...skills];
 
-	if (showFilter === "Frontend"){
-		filteredSkills = filteredSkills.filter(skill => skill.tags.some(tag => tag.label === "Frontend"));
-	} else if (showFilter === "Backend"){
-		filteredSkills = filteredSkills.filter(skill => skill.tags.some(tag => tag.label === "Backend"));
-	} else if (showFilter === "DevOps"){
-		filteredSkills = filteredSkills.filter(skill => skill.tags.some(tag => tag.label === "DevOps"));
-	} else if (showFilter === "Soft Skill"){
-		filteredSkills = filteredSkills.filter(skill => skill.tags.some(tag => tag.label === "Soft Skill"));
+	if (showFilter === "Frontend") {
+		filteredSkills = filteredSkills.filter((skill) =>
+			skill.tags.some((tag) => tag.label === "Frontend"),
+		);
+	} else if (showFilter === "Backend") {
+		filteredSkills = filteredSkills.filter((skill) =>
+			skill.tags.some((tag) => tag.label === "Backend"),
+		);
+	} else if (showFilter === "DevOps") {
+		filteredSkills = filteredSkills.filter((skill) =>
+			skill.tags.some((tag) => tag.label === "DevOps"),
+		);
+	} else if (showFilter === "Soft Skill") {
+		filteredSkills = filteredSkills.filter((skill) =>
+			skill.tags.some((tag) => tag.label === "Soft Skill"),
+		);
 	}
 
 	const sortedSkills: UserSkill[] = [...filteredSkills];
 
-	if (sortBy === "Proficiency"){
+	if (sortBy === "Proficiency") {
 		sortedSkills.sort((a, b) => b.proficiency.value - a.proficiency.value);
-	} else if (sortBy === "Alphabetical"){
+	} else if (sortBy === "Alphabetical") {
 		sortedSkills.sort((a, b) => a.skillName.localeCompare(b.skillName));
-	} else if (sortBy === "Recent"){
+	} else if (sortBy === "Recent") {
 		sortedSkills.sort((a, b) => b.lastUsed.getTime() - a.lastUsed.getTime());
 	}
 

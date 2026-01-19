@@ -10,8 +10,10 @@ import { Achievements } from "@/types/Achievements";
 import LevelBar from "../../../../../components/InfoAddOns/LevelBar";
 import Image from "next/image";
 import { useState } from "react";
-import  AchievementShow , {AchievementShowOptions} from "./achievementFilters/AchievementShow";
-import  AchievementSort  from "./achievementFilters/AchievementSorting";
+import AchievementShow, {
+	AchievementShowOptions,
+} from "./achievementFilters/AchievementShow";
+import AchievementSort from "./achievementFilters/AchievementSorting";
 
 const Placeholder = "/badgeImages/Placeholder Badge.png";
 const Bronze = "/badgeImages/Bronze Badge.png";
@@ -81,37 +83,49 @@ let badgeSelector = (achievement: Achievements): string => {
 };
 
 export default function ProfileAchievementsCard() {
-
 	const [showFilter, setShowFilter] = useState<AchievementShowOptions>("All");
 	const [sortBy, setSortBy] = useState("highest-lowest");
 	const AchievementSortAny = AchievementSort as any;
 
 	let filteredAchievements: Achievements[] = [...achievements];
 
-	if (showFilter === "Bronze"){
-		filteredAchievements = filteredAchievements.filter(achievement => achievement.rank === 1);
-	} else if (showFilter === "Silver"){
-		filteredAchievements = filteredAchievements.filter(achievement => achievement.rank === 2);
-	} else if (showFilter === "Gold"){
-		filteredAchievements = filteredAchievements.filter(achievement => achievement.rank === 3);
-	} else if (showFilter === "Diamond"){
-		filteredAchievements = filteredAchievements.filter(achievement => achievement.rank === 4);
-	} else if (showFilter === "Unknown"){
-		filteredAchievements = filteredAchievements.filter(achievement => achievement.rank === 0);
-	}else if (showFilter === "All"){
+	if (showFilter === "Bronze") {
+		filteredAchievements = filteredAchievements.filter(
+			(achievement) => achievement.rank === 1,
+		);
+	} else if (showFilter === "Silver") {
+		filteredAchievements = filteredAchievements.filter(
+			(achievement) => achievement.rank === 2,
+		);
+	} else if (showFilter === "Gold") {
+		filteredAchievements = filteredAchievements.filter(
+			(achievement) => achievement.rank === 3,
+		);
+	} else if (showFilter === "Diamond") {
+		filteredAchievements = filteredAchievements.filter(
+			(achievement) => achievement.rank === 4,
+		);
+	} else if (showFilter === "Unknown") {
+		filteredAchievements = filteredAchievements.filter(
+			(achievement) => achievement.rank === 0,
+		);
+	} else if (showFilter === "All") {
 		// No filtering needed, show all achievements
 	}
 
-	if (sortBy === "highest-lowest"){
+	if (sortBy === "highest-lowest") {
 		filteredAchievements.sort((a, b) => b.rank - a.rank);
-	} else if (sortBy === "lowest-highest"){
+	} else if (sortBy === "lowest-highest") {
 		filteredAchievements.sort((a, b) => a.rank - b.rank);
 	}
 
 	return (
 		<div>
 			<div className="flex flex-row justify-start">
-				<AchievementShow showFilter={showFilter} setShowFilter={setShowFilter} />
+				<AchievementShow
+					showFilter={showFilter}
+					setShowFilter={setShowFilter}
+				/>
 				<AchievementSortAny sortBy={sortBy} setSortBy={setSortBy} />
 			</div>
 			<div>
