@@ -66,11 +66,11 @@ export default async function PathwayPage({
 	const pathway = (await params).pathway;
 
 	// Fetch all needed data at once
-	const [valid, skillNodes, links] = await Promise.all([
+	const [valid, skillNodes] = await Promise.all([
 		//getRoadmap(pathway),
 		checkPathwayValid(pathway),
 		getSkillNodes(pathway),
-		getLinks(pathway),
+		//getLinks(pathway),
 	]);
 
 	if (
@@ -86,16 +86,16 @@ export default async function PathwayPage({
 	const flowSkillNodes = await convertToSkillNodes(skillNodes);
 
 	// Convert initialLinks to the format expected by ReactFlow
-	const convertedEdges = links.map((link) => ({
-		id: `${link.source}-${link.target}`,
-		source: link.source,
-		target: link.target,
-		type: "default",
-	}));
+	// const convertedEdges = links.map((link) => ({
+	// 	id: `${link.source}-${link.target}`,
+	// 	source: link.source,
+	// 	target: link.target,
+	// 	type: "default",
+	// }));
 
 	const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
 		flowSkillNodes,
-		convertedEdges,
+		[{}],
 	);
 
 	return (

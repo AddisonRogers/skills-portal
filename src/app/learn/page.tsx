@@ -1,20 +1,16 @@
 import SuggestedRoadmapsSection from "@/app/learn/SuggestedRoadmapsSection";
 import AllRoadmapsSection from "@/app/learn/AllRoadmapsSection";
-import {
-	getAllRoadmaps,
-	getSuggestedRoadmaps,
-} from "@/db/repositories/roadmap";
+import { getAllRoadmaps } from "@/db/repositories/roadmap";
+import { fetchUserAndGetSuggestedRoadmaps } from "@/app/learn/serverFunctions.ts";
 import { getAllCapabilities } from "@/db/repositories/capabilities";
-import { isSignedIn, useSession } from "@/lib/auth-client";
+import { Suspense } from "react";
 
 export default async function LearnPage() {
-	if (!(await isSignedIn)) {
-		// TODO redirect to the login page
-	}
+	// if (!(await isSignedIn)) {
+	// 	// TODO redirect to the login page
+	// }
 
-	const userEmail = "addisonrogers@protonmail.com";
-
-	const suggestedRoadmaps = getSuggestedRoadmaps(userEmail);
+	const suggestedRoadmaps = fetchUserAndGetSuggestedRoadmaps();
 	const allRoadmapsData = getAllRoadmaps();
 	const capabilities = getAllCapabilities();
 
@@ -28,14 +24,33 @@ export default async function LearnPage() {
 			{/*<ContinueLearningSection currentRoadmap={currentRoadmap} />*/}
 
 			{/* Suggested Roadmaps Section */}
-			{suggestedRoadmaps && suggestedRoadmaps.length > 0 && (
-				<SuggestedRoadmapsSection suggestedRoadmaps={suggestedRoadmaps} />
-			)}
 
-			<AllRoadmapsSection
-				allRoadmapsData={allRoadmapsData}
-				allCapabilitiesData={capabilities}
-			/>
+			<Suspense fallback={<div>Loading suggested roadmaps...</div>}>
+				<SuggestedRoadmapsSectionWrapper
+					suggestedRoadmapsPromise={suggestedRoadmaps}
+				/>
+			</Suspense>
+
+			<Suspense fallback={<div>Loading roadmaps...</div>}>
+				<AllRoadmapsSection
+					allRoadmapsData={allRoadmapsData}
+					allCapabilitiesData={capabilities}
+				/>
+			</Suspense>
 		</main>
 	);
+}
+
+async function SuggestedRoadmapsSectionWrapper({
+	suggestedRoadmapsPromise,
+}: {
+	suggestedRoadmapsPromise: Promise<any[]>;
+}) {
+	const suggestedRoadmaps = await suggestedRoadmapsPromise;
+
+	if (!suggestedRoadmaps?.length) {
+		return null;
+	}
+
+	return <SuggestedRoadmapsSection suggestedRoadmaps={suggestedRoadmaps} />;
 }
