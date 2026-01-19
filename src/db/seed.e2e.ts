@@ -45,24 +45,34 @@ async function seedE2E() {
 
 	const [engineeringManagerRole] = await db
 		.insert(jobRole)
-		.values({ title: "Engineering Manager", description: "Manages an engineering team." })
+		.values({
+			title: "Engineering Manager",
+			description: "Manages an engineering team.",
+		})
 		.returning();
 
 	const [seniorCloudEngineerRole] = await db
 		.insert(jobRole)
-		.values({ title: "Senior Cloud Engineer", description: "Builds and maintains cloud platforms and services." })
+		.values({
+			title: "Senior Cloud Engineer",
+			description: "Builds and maintains cloud platforms and services.",
+		})
 		.returning();
 
 	const [platformEngineerRole] = await db
 		.insert(jobRole)
-		.values({ title: "Platform Engineer", description: "Builds internal platforms, tooling, and CI/CD." })
+		.values({
+			title: "Platform Engineer",
+			description: "Builds internal platforms, tooling, and CI/CD.",
+		})
 		.returning();
 
 	const [cloudEngineeringCapability] = await db
 		.insert(capabilities)
 		.values({
 			name: "Cloud Engineering",
-			description: "Cloud infrastructure, platform services, and reliability engineering.",
+			description:
+				"Cloud infrastructure, platform services, and reliability engineering.",
 		})
 		.returning();
 
