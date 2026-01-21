@@ -33,9 +33,9 @@ export default function ShowFilters({ showFilter, setShowFilter }: Props) {
 	return (
 		<Button
 			onClick={toggle}
-			className="gap-1 px-2 rounded-2xl mt-3 mb-1 ml-3 font-medium"
+			className="gap-1 px-2 rounded-2xl mt-3 mb-1 ml-3 font-medium text-white hover:scale-105"
 		>
-			Show:<a className="font-bold">{showFilter}</a>
+			Show:<a className="font-bold ">{showFilter}</a>
 		</Button>
 	);
 }

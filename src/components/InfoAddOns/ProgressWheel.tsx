@@ -21,10 +21,16 @@ const PercentageText = ({
 		fontWeight: "middle",
 		dominantBaseline: "middle",
 		textAnchor: "middle",
-		fill: "#000000",
+		fill: "currentColor",
 	};
 	return (
-		<text x="52%" y="52%" style={textStyle}>
+		<text
+			x="52%"
+			y="52%"
+			style={textStyle}
+			className="text-foreground"
+			fill="currentColor"
+		>
 			{`${progress}%`}
 		</text>
 	);

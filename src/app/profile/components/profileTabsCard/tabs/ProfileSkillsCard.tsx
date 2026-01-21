@@ -136,7 +136,7 @@ export default function ProfileSkillsCard() {
 								</CardDescription>
 								<CardDescription className="flex flex-col items-center leading-none">
 									<a className="mb-1">Proficiency</a>
-									<a className="font-bold text-black text-lg">
+									<a className="font-bold text-foreground text-lg">
 										{skill.proficiency.value}
 									</a>
 								</CardDescription>

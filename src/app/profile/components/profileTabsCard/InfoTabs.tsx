@@ -48,6 +48,10 @@ const skills: UserSkill[] = [
 export default function InfoTabs() {
 	const userImg = `https://ui-avatars.com/api/?name=John+Doe&background=0D8ABC&color=fff`;
 
+	const toggleSkillFocus = () => {
+		// Placeholder for toggling skill focus functionality
+	};
+
 	return (
 		<div className="w-full">
 			<Card className="p-0 w-full gap-0">
@@ -81,7 +85,7 @@ export default function InfoTabs() {
 					</div>
 				</div>
 				<div className="flex justify-center w-full p-4">
-					<button className="px-6 py-2 bg-primary text-white rounded-2xl hover:bg-primary/80 transition">
+					<button className="px-6 py-2 bg-primary text-white rounded-2xl hover:bg-primary/80 hover:scale-105 transition">
 						Edit Profile
 					</button>
 				</div>
@@ -89,7 +93,10 @@ export default function InfoTabs() {
 					<div className="flex flex-col items-start mb-4">
 						<nav className="flex w-full px-4 backdrop-blur border-b border-gray-200 shadow-sm sticky justify-between items-center rounded-t-2xl mt-3 pb-2">
 							<div className="flex items-start justify-baseline">
-								<a className="inline-block px-4 py-2 font-semibold text-lg transition-colors duration-150 relative">
+								<a
+									className="inline-block px-4 py-2 font-semibold text-lg transition-colors duration-150 relative"
+									onClick={toggleSkillFocus}
+								>
 									Skill Focus
 								</a>
 							</div>

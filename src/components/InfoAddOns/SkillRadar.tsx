@@ -86,7 +86,8 @@ export default function SkillRadar({ skills, size = 300 }: SkillRadarProps) {
 							textAnchor="middle"
 							dominantBaseline="middle"
 							fontSize={12}
-							fill="#374151"
+							className="text-foreground"
+							fill="currentColor"
 						>
 							{skill.label}
 						</text>
