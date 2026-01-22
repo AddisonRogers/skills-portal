@@ -4,4 +4,4 @@ export interface SearchCriteria {
 
 export interface SearchCriteriaSkills extends SearchCriteria {
 	minProficiency?: number;
-};
+}

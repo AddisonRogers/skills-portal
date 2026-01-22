@@ -1,11 +1,28 @@
-'use client'
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "@/components/ui/table";
 import { client } from "@/db/schema";
 import { ClientDto } from "@/types/client/ClientDto";
 import { SearchCriteria } from "@/types/matchScore/SearchCriteria";
@@ -16,21 +33,22 @@ import { useEffect, useMemo } from "react";
 import { useState } from "react";
 
 interface ProjectClientProps {
-    allProjects: ProjectDto[];
+	allProjects: ProjectDto[];
 	clients: ClientDto[];
 }
 
-type SortField =
-	| "relevance"
-	| "project"
-	| "client"
-	| "status";
+type SortField = "relevance" | "project" | "client" | "status";
 
-export default function ProjectsClient({allProjects = [], clients = []}: ProjectClientProps) {
+export default function ProjectsClient({
+	allProjects = [],
+	clients = [],
+}: ProjectClientProps) {
 	const router = useRouter();
-    const [projects, setProjects] = useState<ProjectDto[]>(allProjects);
-    const [allProjectsScope, setAllProjectsScope] = useState(true);
-const [clientFilter, setClientFilter] = useState<SearchCriteria>({requiredIds: []});
+	const [projects, setProjects] = useState<ProjectDto[]>(allProjects);
+	const [allProjectsScope, setAllProjectsScope] = useState(true);
+	const [clientFilter, setClientFilter] = useState<SearchCriteria>({
+		requiredIds: [],
+	});
 	const [searchTerm, setSearchTerm] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [sortField, setSortField] = useState<SortField>("project");
@@ -51,7 +69,7 @@ const [clientFilter, setClientFilter] = useState<SearchCriteria>({requiredIds: [
 
 		const res = await fetch("/api/projects/your");
 
-		if(res.status === 401) {
+		if (res.status === 401) {
 			router.push("/login?redirect=/projects");
 			return;
 		}
@@ -68,98 +86,108 @@ const [clientFilter, setClientFilter] = useState<SearchCriteria>({requiredIds: [
 	}
 
 	// Handle client filter change
-		useEffect(() => {
-			const filterByClient = async () => {
-				if (clientFilter.requiredIds.length === 0) {
-					setProjects(allProjects);
-					return;
-				}
+	useEffect(() => {
+		const filterByClient = async () => {
+			if (clientFilter.requiredIds.length === 0) {
+				setProjects(allProjects);
+				return;
+			}
 
-				if (clientFilter.requiredIds.length > 0) {
-					setSortField("relevance");
-					setSortDirection("desc");
-				} else {
-					setSortField("project");
-					setSortDirection("asc");
-				}
-	
-				setLoading(true);
-				try {
-					const filtered = allProjects.filter((project) =>
-						clientFilter.requiredIds.includes(project.client.id),
-					);
-					setProjects(filtered);
-				} catch (error) {
-					console.error("Error filtering by client:", error);
-					setProjects(allProjects);
-				} finally {
-					setLoading(false);
-				}
-			};
+			if (clientFilter.requiredIds.length > 0) {
+				setSortField("relevance");
+				setSortDirection("desc");
+			} else {
+				setSortField("project");
+				setSortDirection("asc");
+			}
 
-			filterByClient();
-		}, [clientFilter, allProjects]);
-
-		// Filter and sort projects
-			const filteredAndSortedProjects = useMemo(() => {
-				// First filter by search term
-				const searchLower = searchTerm.trim().toLocaleLowerCase();
-				const filtered = projects.filter((project) =>
-					[
-						project.name,
-						project.description,
-						project.client?.name,	
-					]
-						.filter(Boolean)
-						.some((field) => field!.toLowerCase().includes(searchLower)),
+			setLoading(true);
+			try {
+				const filtered = allProjects.filter((project) =>
+					clientFilter.requiredIds.includes(project.client.id),
 				);
+				setProjects(filtered);
+			} catch (error) {
+				console.error("Error filtering by client:", error);
+				setProjects(allProjects);
+			} finally {
+				setLoading(false);
+			}
+		};
 
-				// Then sort based on sortField and sortDirection
-				const sorted = [...filtered].sort((a, b) => {
-					let compareA: string = "";
-					let compareB: string = "";
+		filterByClient();
+	}, [clientFilter, allProjects]);
 
-					switch (sortField) {
-						case "project":
-							compareA = a.name;
-							compareB = b.name;
-							break;
-						case "client":
-							compareA = a.client?.name || "";
-							compareB = b.client?.name || "";
-							break;
-						case "status":
-							compareA = a.status || "";
-							compareB = b.status || "";
-							break;
-						default:
-							compareA = a.name;
-							compareB = b.name;
-					}
-						return sortDirection === "asc" ? compareA.localeCompare(compareB) : compareB.localeCompare(compareA);
-				});
-				return sorted;
-			}, [projects, searchTerm, sortField, sortDirection]);
+	// Filter and sort projects
+	const filteredAndSortedProjects = useMemo(() => {
+		// First filter by search term
+		const searchLower = searchTerm.trim().toLocaleLowerCase();
+		const filtered = projects.filter((project) =>
+			[project.name, project.description, project.client?.name]
+				.filter(Boolean)
+				.some((field) => field!.toLowerCase().includes(searchLower)),
+		);
 
-			const handleSort = (field: SortField) => {
-				if (field === sortField) {
-					setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-				} else {
-					setSortField(field);
-					setSortDirection("asc");
-				}
-			};
+		// Then sort based on sortField and sortDirection
+		const sorted = [...filtered].sort((a, b) => {
+			let compareA: string = "";
+			let compareB: string = "";
 
-    return (
-        <Card>
+			switch (sortField) {
+				case "project":
+					compareA = a.name;
+					compareB = b.name;
+					break;
+				case "client":
+					compareA = a.client?.name || "";
+					compareB = b.client?.name || "";
+					break;
+				case "status":
+					compareA = a.status || "";
+					compareB = b.status || "";
+					break;
+				default:
+					compareA = a.name;
+					compareB = b.name;
+			}
+			return sortDirection === "asc"
+				? compareA.localeCompare(compareB)
+				: compareB.localeCompare(compareA);
+		});
+		return sorted;
+	}, [projects, searchTerm, sortField, sortDirection]);
+
+	const handleSort = (field: SortField) => {
+		if (field === sortField) {
+			setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+		} else {
+			setSortField(field);
+			setSortDirection("asc");
+		}
+	};
+
+	return (
+		<Card>
 			<CardHeader>
-                <div className="inline-flex justify-between align-middle">
-                    <CardTitle>Projects Directory</CardTitle>
-                    <div>
-                        <Button variant="outline" className={`mr-0.5 ${allProjectsScope ? "bg-primary text-white" : "bg-white"}`} onClick={handleAllProjectsClick}>All projects</Button>
-                        <Button variant="outline" className={`ml-0.5 ${allProjectsScope ? "bg-white" : "bg-primary text-white"}`} onClick={handleYourProjectsClick}>Your projects</Button>
-                    </div>
-                </div>
+				<div className="inline-flex justify-between align-middle">
+					<CardTitle>Projects Directory</CardTitle>
+					<div>
+						<Button
+							variant="outline"
+							className={`mr-0.5 ${allProjectsScope ? "bg-primary text-white" : "bg-white"}`}
+							onClick={handleAllProjectsClick}
+						>
+							All projects
+						</Button>
+						<Button
+							variant="outline"
+							className={`ml-0.5 ${allProjectsScope ? "bg-white" : "bg-primary text-white"}`}
+							onClick={handleYourProjectsClick}
+						>
+							Your projects
+						</Button>
+					</div>
+				</div>
 				<div className="flex flex-col sm:flex-row gap-4 mt-4">
 					<div className="flex-1">
 						<div className="relative">
@@ -313,7 +341,7 @@ const [clientFilter, setClientFilter] = useState<SearchCriteria>({requiredIds: [
 															<a className="font-semibold text-xl">
 																{project.name}
 															</a>
-															<a>{project.description}</a> 
+															<a>{project.description}</a>
 														</div>
 													</div>
 												</TableCell>
@@ -323,17 +351,18 @@ const [clientFilter, setClientFilter] = useState<SearchCriteria>({requiredIds: [
 															<a className="font-semibold text-xl">
 																{project.client.name}
 															</a>
-															<a>{project.client.description}</a> 
+															<a>{project.client.description}</a>
 														</div>
 													</div>
 												</TableCell>
 												<TableCell>
-													<div className={`inline-flex items-center text-center rounded-2xl font-semibold py-0.5 px-3 ${statusColours[project.status]}`}>
+													<div
+														className={`inline-flex items-center text-center rounded-2xl font-semibold py-0.5 px-3 ${statusColours[project.status]}`}
+													>
 														<a>{project.status}</a>
 													</div>
 												</TableCell>
-												<TableCell className="align-middle">
-												</TableCell>
+												<TableCell className="align-middle"></TableCell>
 											</TableRow>
 										))
 									)}
@@ -341,18 +370,12 @@ const [clientFilter, setClientFilter] = useState<SearchCriteria>({requiredIds: [
 							</Table>
 						</div>
 						<div className="mt-4 text-sm text-gray-500">
-							Showing {projects.length} of {projects.length}{" "}
-							projects
-							{projects && (
-								<span>
-									{" "}
-									filtered by client:{" "}
-								</span>
-							)}
+							Showing {projects.length} of {projects.length} projects
+							{projects && <span> filtered by client: </span>}
 						</div>
 					</>
 				)}
 			</CardContent>
 		</Card>
-    )
+	);
 }

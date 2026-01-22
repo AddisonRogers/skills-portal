@@ -1,7 +1,7 @@
-import { JobRole } from "../JobRole"
+import { JobRole } from "../JobRole";
 
 export type ProjectUser = {
-    id: string,
-    name: string,
-    jobRole: JobRole
-}
+	id: string;
+	name: string;
+	jobRole: JobRole;
+};

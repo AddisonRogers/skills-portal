@@ -19,7 +19,7 @@ export async function getProjects() {
 
 			clientId: client.id,
 			clientName: client.name,
-			clientDescription: client.description
+			clientDescription: client.description,
 		})
 		.from(project)
 		.leftJoin(projectUser, eq(projectUser.projectId, project.id))
@@ -31,16 +31,17 @@ export async function getProjects() {
 //Get all projects for one user
 export async function getUserProjectsDb(userId: string) {
 	const userProjects = db
-		.select({projectId: projectUser.projectId})
+		.select({ projectId: projectUser.projectId })
 		.from(projectUser)
 		.where(eq(projectUser.userId, userId))
 		.as("user_projects");
 
-	const teamLink = alias(projectUser, "team_link")
+	const teamLink = alias(projectUser, "team_link");
 	const teamUser = alias(user, "team_user");
-	const teamJobRole = alias(jobRole, "team_job_role")
+	const teamJobRole = alias(jobRole, "team_job_role");
 
-	return db.select({
+	return db
+		.select({
 			projectId: project.id,
 			projectName: project.name,
 			projectDescription: project.description,
@@ -53,12 +54,12 @@ export async function getUserProjectsDb(userId: string) {
 
 			clientId: client.id,
 			clientName: client.name,
-			clientDescription: client.description
-	})
-	.from(userProjects)
-	.innerJoin(project, eq(project.id, userProjects.projectId))
-	.leftJoin(client, eq(project.clientId, client.id))
-	.innerJoin(teamLink, eq(teamLink.projectId, project.id))
-	.innerJoin(teamUser, eq(teamUser.id, teamLink.userId))
-	.leftJoin(teamJobRole, eq(teamJobRole.id, teamUser.jobRoleId))
+			clientDescription: client.description,
+		})
+		.from(userProjects)
+		.innerJoin(project, eq(project.id, userProjects.projectId))
+		.leftJoin(client, eq(project.clientId, client.id))
+		.innerJoin(teamLink, eq(teamLink.projectId, project.id))
+		.innerJoin(teamUser, eq(teamUser.id, teamLink.userId))
+		.leftJoin(teamJobRole, eq(teamJobRole.id, teamUser.jobRoleId));
 }

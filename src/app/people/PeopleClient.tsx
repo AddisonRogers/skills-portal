@@ -473,8 +473,7 @@ export default function PeopleClient({
 							{skillFilter && (
 								<span>
 									{" "}
-									filtered by skills:{" "}
-									<strong>{skillFilter.requiredIds}</strong>
+									filtered by skills: <strong>{skillFilter.requiredIds}</strong>
 								</span>
 							)}
 						</div>
