@@ -165,6 +165,7 @@ export const project = pgTable("project", {
 		.references(() => client.id, { onDelete: "restrict" }),
 	name: text("name").notNull(),
 	description: text("description"),
+	status: text("status").notNull().default("active"),
 	startedAt: timestamp("started_at"),
 	endedAt: timestamp("ended_at"),
 });

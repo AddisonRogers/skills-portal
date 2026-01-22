@@ -1,15 +1,15 @@
 import { ScoringResult } from "@/types/matchScore/ScoringResult";
 import { ScoringWeights } from "@/types/matchScore/ScoringWeights";
-import { SearchCriteria } from "@/types/matchScore/SearchCriteria";
+import { SearchCriteriaSkills } from "@/types/matchScore/SearchCriteria";
 import { PersonWithSkillIndex } from "@/types/users/PersonDto";
 import { DefaultScoringWeights } from "../constraints/DefaultScoringWeights";
 
 export default function matchScore(
 	person: PersonWithSkillIndex,
-	criteria: SearchCriteria,
+	criteria: SearchCriteriaSkills,
 	weights: ScoringWeights = DefaultScoringWeights,
 ): ScoringResult {
-	const requiredSkills = criteria.requiredSkills;
+	const requiredSkills = criteria.requiredIds;
 
 	if (requiredSkills.length === 0) {
 		return {

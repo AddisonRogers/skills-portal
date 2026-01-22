@@ -13,6 +13,9 @@ import { Button } from "@/components/ui/button";
 import SortOptions from "./skillFilters/SortOptions";
 import ShowFilters, { ShowFilterOption } from "./skillFilters/ShowFilters";
 import { useState } from "react";
+import getAllSkills from "@/lib/services/skills/getAllSkills";
+
+const skillsDb = getAllSkills()
 
 const skills: UserSkill[] = [
 	{

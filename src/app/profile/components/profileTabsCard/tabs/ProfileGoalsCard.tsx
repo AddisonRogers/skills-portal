@@ -60,7 +60,7 @@ export default function ProfileGoalsCard() {
 									<div>{goal.due.toDateString()}</div>
 								</CardDescription>
 							</div>
-							<ProgressWheel progress={23} />
+							<ProgressWheel progress={50} />
 						</div>
 					</CardHeader>
 				</Card>

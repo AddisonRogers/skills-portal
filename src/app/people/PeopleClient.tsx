@@ -37,7 +37,7 @@ import {
 import { PersonDto, RankedPerson } from "@/types/users/PersonDto";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { SkillDto } from "@/types/skills/SkillDto";
-import { SearchCriteria } from "@/types/matchScore/SearchCriteria";
+import { SearchCriteriaSkills } from "@/types/matchScore/SearchCriteria";
 import { skill } from "@/db/schema";
 
 type SortField =
@@ -63,8 +63,8 @@ export default function PeopleClient({
 	const [searchTerm, setSearchTerm] = useState("");
 	const [sortField, setSortField] = useState<SortField>("person");
 	const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
-	const [skillFilter, setSkillFilter] = useState<SearchCriteria>({
-		requiredSkills: [],
+	const [skillFilter, setSkillFilter] = useState<SearchCriteriaSkills>({
+		requiredIds: [],
 	});
 	const [currentSkillFilter, setCurrentSkillFilter] = useState<SkillDto>();
 	const [availableSkills, setAvailableSkills] =
@@ -105,12 +105,12 @@ export default function PeopleClient({
 	// Handle skill filter change
 	useEffect(() => {
 		const filterBySkill = async () => {
-			if (skillFilter.requiredSkills.length === 0) {
+			if (skillFilter.requiredIds.length === 0) {
 				setPeople(initialPeople);
 				return;
 			}
 
-			if (skillFilter.requiredSkills.length > 0) {
+			if (skillFilter.requiredIds.length > 0) {
 				setSortField("relevance");
 				setSortDirection("desc");
 			} else {
@@ -246,8 +246,8 @@ export default function PeopleClient({
 						<Popover>
 							<PopoverTrigger asChild>
 								<Button variant="outline" className="w-full justify-between">
-									{skillFilter?.requiredSkills.length
-										? `${skillFilter.requiredSkills.length} selected`
+									{skillFilter?.requiredIds.length
+										? `${skillFilter.requiredIds.length} selected`
 										: "Filters"}
 									<Filter className="ml-2 h-4 w-4" />
 								</Button>
@@ -256,7 +256,7 @@ export default function PeopleClient({
 								<div className="p-2">
 									<div className="space-y-2">
 										{availableSkills.map((skill) => {
-											const isSelected = skillFilter?.requiredSkills.includes(
+											const isSelected = skillFilter?.requiredIds.includes(
 												skill.id,
 											);
 											return (
@@ -267,8 +267,8 @@ export default function PeopleClient({
 														onClick={() =>
 															setSkillFilter((prev) => ({
 																...prev,
-																requiredSkills: toggleId(
-																	prev.requiredSkills,
+																requiredIds: toggleId(
+																	prev.requiredIds,
 																	skill.id,
 																),
 															}))
@@ -283,7 +283,7 @@ export default function PeopleClient({
 											<Button
 												variant="outline"
 												className="w-full mt-2"
-												onClick={() => setSkillFilter({ requiredSkills: [] })}
+												onClick={() => setSkillFilter({ requiredIds: [] })}
 											>
 												Clear Filter
 											</Button>
@@ -370,15 +370,15 @@ export default function PeopleClient({
 								</TableHeader>
 								<TableBody>
 									{filteredAndSortedPeople.length === 0 &&
-									skillFilter.requiredSkills.length === 0 ? (
+									skillFilter.requiredIds.length === 0 ? (
 										<TableRow>
 											<TableCell colSpan={5} className="text-center py-8">
-												{skillFilter.requiredSkills.length === 0 ? (
+												{skillFilter.requiredIds.length === 0 ? (
 													<>No people found matching your search criteria.</>
 												) : (
 													<>
 														No people found with the skills:{" "}
-														<strong>{skillFilter.requiredSkills}</strong>
+														<strong>{skillFilter.requiredIds}</strong>
 													</>
 												)}
 											</TableCell>
@@ -474,7 +474,7 @@ export default function PeopleClient({
 								<span>
 									{" "}
 									filtered by skills:{" "}
-									<strong>{skillFilter.requiredSkills}</strong>
+									<strong>{skillFilter.requiredIds}</strong>
 								</span>
 							)}
 						</div>

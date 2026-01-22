@@ -10,7 +10,7 @@ import { listUserEmails } from "@/db/repositories/users";
 import getAllPeople from "@/lib/services/users/getAllPeople";
 import type { PersonDto, RankedPerson } from "@/types/users/PersonDto";
 import rankPeople from "@/lib/people/algorithms/rankPeople";
-import { SearchCriteria } from "@/types/matchScore/SearchCriteria";
+import { SearchCriteriaSkills } from "@/types/matchScore/SearchCriteria";
 import { DefaultScoringWeights } from "@/lib/people/constraints/DefaultScoringWeights";
 import { addSkillIndexToPerson } from "@/lib/mappers/people/userSkillIndex.mapper";
 
@@ -225,13 +225,13 @@ export async function getAllPeopleWithDetails(): Promise<PersonWithAccount[]> {
 
 // Search people by skill
 export async function searchPeopleBySkill(
-	skillFilter: SearchCriteria,
+	skillFilter: SearchCriteriaSkills,
 ): Promise<RankedPerson[]> {
 	try {
 		// Get all people with details first
 		const allPeople = await getAllPeople();
 		const peopleWithSkillIndex = allPeople.map((p) => addSkillIndexToPerson(p));
-		const skillIds = new Set(skillFilter.requiredSkills);
+		const skillIds = new Set(skillFilter.requiredIds);
 
 		// Get users who have the specified skill
 		const usersWithSkill = peopleWithSkillIndex.filter(
