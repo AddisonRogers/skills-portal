@@ -1,5 +1,5 @@
-import { eq } from "drizzle-orm";
-import { user, project, client, jobRole, projectUser } from "@/db/schema";
+import { and, eq } from "drizzle-orm";
+import { user, project, client, jobRole, projectUser, projectUserSkill } from "@/db/schema";
 import { db } from "@/lib/db";
 import { alias } from "drizzle-orm/pg-core";
 
@@ -62,4 +62,54 @@ export async function getUserProjectsDb(userId: string) {
 		.innerJoin(teamLink, eq(teamLink.projectId, project.id))
 		.innerJoin(teamUser, eq(teamUser.id, teamLink.userId))
 		.leftJoin(teamJobRole, eq(teamJobRole.id, teamUser.jobRoleId));
+}
+
+//Upsert User Project with Skills
+export async function upsertUserProjectWithSkillsDb(userId: string, projectId: number, roleId: number, skillIds: number[]) {
+	const uniqueSkillIds = [...new Set(skillIds)];
+
+	return db.transaction(async (tx) => {
+		const inserted = await tx
+			.insert(projectUser)
+			.values({
+				userId: userId,
+				projectId: projectId,
+				roleId: roleId,
+			})
+			.onConflictDoNothing()
+			.returning();
+
+			const userProject = inserted[0] ?? await tx
+			.select()
+			.from(projectUser)
+			.where(
+				and(
+					eq(projectUser.userId, userId),
+					eq(projectUser.projectId, projectId),
+				),
+			).limit(1);
+
+	if(!inserted) {
+		await tx 
+		.update(projectUser)
+		.set({
+			roleId: roleId,
+		})
+		.where(eq(projectUser.id, userProject.id));
+	};
+
+	if(uniqueSkillIds.length) {
+		await tx
+		.insert(projectUserSkill)
+		.values(
+			uniqueSkillIds.map((skillId) => ({
+				projectUserId: userProject.id,
+				skillId: skillId,
+			})),
+		)
+		.onConflictDoNothing();
+	}
+
+	return userProject;
+	});
 }
