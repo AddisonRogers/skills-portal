@@ -189,18 +189,23 @@ export const projectUser = pgTable(
 	}),
 );
 
-export const projectUserSkill = pgTable("project_user_skill", {
-	id: serial().primaryKey(),
-	projectUserId: integer("project_user_id")
-		.notNull()
-		.references(() => projectUser.id, { onDelete: "cascade" }),
-	skillId: integer("skill_id")
-		.notNull()
-		.references(() => skill.id, { onDelete: "cascade" }),
+export const projectUserSkill = pgTable(
+	"project_user_skill",
+	{
+		id: serial().primaryKey(),
+		projectUserId: integer("project_user_id")
+			.notNull()
+			.references(() => projectUser.id, { onDelete: "cascade" }),
+		skillId: integer("skill_id")
+			.notNull()
+			.references(() => skill.id, { onDelete: "cascade" }),
 	},
 	(t) => ({
-    	uqProjectUserSkill: uniqueIndex("uq_project_user_skill").on(t.projectUserId, t.skillId),
-  	}),
+		uqProjectUserSkill: uniqueIndex("uq_project_user_skill").on(
+			t.projectUserId,
+			t.skillId,
+		),
+	}),
 );
 
 export const roadmap = pgTable("roadmap", {
