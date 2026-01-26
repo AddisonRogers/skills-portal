@@ -189,6 +189,16 @@ export const projectUser = pgTable(
 	}),
 );
 
+export const projectUserSkill = pgTable("project_user_skill", {
+	id: serial().primaryKey(),
+	projectUserId: integer("project_user_id")
+		.notNull()
+		.references(() => projectUser.id, { onDelete: "cascade" }),
+	skillId: integer("skill_id")
+		.notNull()
+		.references(() => skill.id, { onDelete: "cascade" }),
+});
+
 export const roadmap = pgTable("roadmap", {
 	id: text("id").primaryKey(),
 	name: text("name").notNull().unique(),
