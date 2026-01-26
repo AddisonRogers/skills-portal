@@ -197,7 +197,11 @@ export const projectUserSkill = pgTable("project_user_skill", {
 	skillId: integer("skill_id")
 		.notNull()
 		.references(() => skill.id, { onDelete: "cascade" }),
-});
+	},
+	(t) => ({
+    	uqProjectUserSkill: uniqueIndex("uq_project_user_skill").on(t.projectUserId, t.skillId),
+  	}),
+);
 
 export const roadmap = pgTable("roadmap", {
 	id: text("id").primaryKey(),
