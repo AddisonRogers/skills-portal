@@ -333,7 +333,7 @@ export default function ProjectsClient({
 											</TableCell>
 										</TableRow>
 									) : (
-										projects.map((project) => (
+										filteredAndSortedProjects.map((project) => (
 											<TableRow key={project.id}>
 												<TableCell className="align-middle">
 													<div className="inline-flex items-center gap-3">
