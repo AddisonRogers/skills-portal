@@ -1,7 +1,7 @@
 import type { SkillDto } from "../skills/SkillDto";
 import type { Location } from "../Location";
 import type { Capability } from "../Capability";
-import type { JobRole } from "../JobRole";
+import type { JobRole } from "../jobRoles/JobRole";
 import { ScoringResult } from "../matchScore/ScoringResult";
 import { UserSkill } from "../skills/UserSkill";
 

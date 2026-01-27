@@ -2,17 +2,17 @@
 // Need a drizzle repo where
 
 import { and, eq } from "drizzle-orm";
-import { role, user, userRoles as user_roles } from "@/db/schema";
+import { accessRole, user, userRoles as user_roles } from "@/db/schema";
 import { db } from "@/lib/db";
 
 export async function getRoles(userEmail: string) {
 	return db
 		.select({
-			name: role.name,
+			name: accessRole.name,
 		})
 		.from(user)
 		.innerJoin(user_roles, eq(user.id, user_roles.userId))
-		.innerJoin(role, eq(user_roles.roleId, role.id))
+		.innerJoin(accessRole, eq(user_roles.roleId, accessRole.id))
 		.where(eq(user.email, userEmail));
 }
 
@@ -31,8 +31,8 @@ export async function userHasRole(
 		.select()
 		.from(user)
 		.innerJoin(user_roles, eq(user.id, user_roles.userId))
-		.innerJoin(role, eq(user_roles.roleId, role.id))
-		.where(and(eq(user.email, userEmail), eq(role.name, roleName)))
+		.innerJoin(accessRole, eq(user_roles.roleId, accessRole.id))
+		.where(and(eq(user.email, userEmail), eq(accessRole.name, roleName)))
 		.limit(1);
 
 	return data.length > 0;
@@ -41,11 +41,11 @@ export async function userHasRole(
 export async function getRolesForUser(userEmail: string) {
 	const data = await db
 		.select({
-			name: role.name,
+			name: accessRole.name,
 		})
 		.from(user)
 		.innerJoin(user_roles, eq(user.id, user_roles.userId))
-		.innerJoin(role, eq(user_roles.roleId, role.id))
+		.innerJoin(accessRole, eq(user_roles.roleId, accessRole.id))
 		.where(and(eq(user.email, userEmail)));
 
 	return data;
@@ -65,10 +65,10 @@ export async function addRoleToSomeone(
 
 	const foundRole = await db
 		.select({
-			id: role.id,
+			id: accessRole.id,
 		})
-		.from(role)
-		.where(eq(role.name, roleName))
+		.from(accessRole)
+		.where(eq(accessRole.name, roleName))
 		.limit(1);
 
 	const result = await db.insert(user_roles).values({
@@ -93,10 +93,10 @@ export async function removeRoleFromSomeone(
 
 	const foundRole = await db
 		.select({
-			id: role.id,
+			id: accessRole.id,
 		})
-		.from(role)
-		.where(eq(role.name, roleName))
+		.from(accessRole)
+		.where(eq(accessRole.name, roleName))
 		.limit(1);
 
 	const result = await db
@@ -115,14 +115,16 @@ export async function addRole(
 	roleName: string,
 	roleDescription: string,
 ): Promise<void> {
-	const result = await db.insert(role).values({
+	const result = await db.insert(accessRole).values({
 		name: roleName,
 		description: roleDescription,
 	});
 }
 
 export async function removeRole(roleName: string): Promise<void> {
-	const result = await db.delete(role).where(eq(role.name, roleName));
+	const result = await db
+		.delete(accessRole)
+		.where(eq(accessRole.name, roleName));
 }
 
 // TODO fix ??
@@ -130,7 +132,7 @@ export async function updateRole(
 	roleName: string,
 	roleDescription: string,
 ): Promise<void> {
-	const result = await db.update(role).set({
+	const result = await db.update(accessRole).set({
 		name: roleName,
 		description: roleDescription,
 	});

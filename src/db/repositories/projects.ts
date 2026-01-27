@@ -86,7 +86,7 @@ export async function upsertUserProjectWithSkillsDb(
 			.values({
 				userId: userId,
 				projectId: projectId,
-				roleId: roleId,
+				projectRoleId: roleId,
 			})
 			.onConflictDoNothing()
 			.returning();
@@ -108,7 +108,7 @@ export async function upsertUserProjectWithSkillsDb(
 			await tx
 				.update(projectUser)
 				.set({
-					roleId: roleId,
+					projectRoleId: roleId,
 				})
 				.where(eq(projectUser.id, userProject.id));
 		}

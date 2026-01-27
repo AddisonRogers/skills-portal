@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
 	Popover,
@@ -23,7 +24,6 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { client } from "@/db/schema";
 import { ClientDto } from "@/types/client/ClientDto";
 import { SearchCriteria } from "@/types/matchScore/SearchCriteria";
 import { ProjectDto } from "@/types/projects/ProjectDto";
@@ -31,10 +31,16 @@ import { ArrowUpDown, Filter, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo } from "react";
 import { useState } from "react";
+import AddProjectForm from "./components/AddProjectForm";
+import { SkillDto } from "@/types/skills/SkillDto";
+import { ProjectRoleDto } from "@/types/projectRoles.ts/ProjectRoleDto";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 interface ProjectClientProps {
 	allProjects: ProjectDto[];
 	clients: ClientDto[];
+	projectRoles?: ProjectRoleDto[];
+	skills?: SkillDto[];
 }
 
 type SortField = "relevance" | "project" | "client" | "status";
@@ -42,6 +48,8 @@ type SortField = "relevance" | "project" | "client" | "status";
 export default function ProjectsClient({
 	allProjects = [],
 	clients = [],
+	projectRoles = [],
+	skills = [],
 }: ProjectClientProps) {
 	const router = useRouter();
 	const [projects, setProjects] = useState<ProjectDto[]>(allProjects);
@@ -53,6 +61,7 @@ export default function ProjectsClient({
 	const [loading, setLoading] = useState(false);
 	const [sortField, setSortField] = useState<SortField>("project");
 	const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+	const [open, setOpen] = useState(false);
 
 	const statusColours: Record<string, string> = {
 		UpComing: "bg-red-100 text-red-700",
@@ -83,6 +92,10 @@ export default function ProjectsClient({
 	function handleAllProjectsClick() {
 		setProjects(allProjects);
 		setAllProjectsScope(true);
+	}
+
+	function handleAddProjectsClick() {
+		router.push("/projects/add");
 	}
 
 	// Handle client filter change
@@ -169,23 +182,43 @@ export default function ProjectsClient({
 	return (
 		<Card>
 			<CardHeader>
-				<div className="inline-flex justify-between align-middle">
+				<div>
 					<CardTitle>Projects Directory</CardTitle>
-					<div>
-						<Button
-							variant="outline"
-							className={`mr-0.5 ${allProjectsScope ? "bg-primary text-white" : "bg-white"}`}
-							onClick={handleAllProjectsClick}
-						>
-							All projects
-						</Button>
-						<Button
-							variant="outline"
-							className={`ml-0.5 ${allProjectsScope ? "bg-white" : "bg-primary text-white"}`}
-							onClick={handleYourProjectsClick}
-						>
-							Your projects
-						</Button>
+					<div
+						className={`inline-flex justify-between pt-4 w-full ${allProjectsScope && "justify-end"}`}
+					>
+						{!allProjectsScope && (
+							<Dialog open={open} onOpenChange={setOpen}>
+								<DialogTrigger asChild>
+									<Button variant="outline">Add project +</Button>
+								</DialogTrigger>
+								<DialogContent>
+									<DialogTitle>Add a Project</DialogTitle>
+									<AddProjectForm
+										onSuccess={() => setOpen(false)}
+										projects={allProjects}
+										projectRoles={projectRoles}
+										skills={skills}
+									/>
+								</DialogContent>
+							</Dialog>
+						)}
+						<div>
+							<Button
+								variant="outline"
+								className={`mr-0.5 ${allProjectsScope ? "bg-primary text-white" : "bg-white"}`}
+								onClick={handleAllProjectsClick}
+							>
+								All projects
+							</Button>
+							<Button
+								variant="outline"
+								className={`ml-0.5 ${allProjectsScope ? "bg-white" : "bg-primary text-white"}`}
+								onClick={handleYourProjectsClick}
+							>
+								Your projects
+							</Button>
+						</div>
 					</div>
 				</div>
 				<div className="flex flex-col sm:flex-row gap-4 mt-4">
