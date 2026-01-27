@@ -136,7 +136,7 @@ export const userCertification = pgTable("user_certification", {
 	expiresAt: timestamp("expires_at"),
 });
 
-export const role = pgTable("role", {
+export const accessRole = pgTable("access_role", {
 	id: serial().primaryKey(),
 	name: text("name"),
 	description: text("description"),
@@ -149,7 +149,7 @@ export const userRoles = pgTable("user_role", {
 		.references(() => user.id, { onDelete: "cascade" }),
 	roleId: integer("role_id")
 		.notNull()
-		.references(() => role.id, { onDelete: "cascade" }),
+		.references(() => accessRole.id, { onDelete: "cascade" }),
 });
 
 export const client = pgTable("client", {
@@ -170,6 +170,12 @@ export const project = pgTable("project", {
 	endedAt: timestamp("ended_at"),
 });
 
+export const projectRole = pgTable("project_role", {
+	id: serial().primaryKey(),
+	name: text("name").notNull().unique(),
+	description: text("description"),
+});
+
 export const projectUser = pgTable(
 	"project_user",
 	{
@@ -180,7 +186,7 @@ export const projectUser = pgTable(
 		userId: text("user_id")
 			.notNull()
 			.references(() => user.id, { onDelete: "cascade" }),
-		roleId: integer("role_id").references(() => role.id, {
+		projectRoleId: integer("project_role_id").references(() => projectRole.id, {
 			onDelete: "set null",
 		}),
 	},
