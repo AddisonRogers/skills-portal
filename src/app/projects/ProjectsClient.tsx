@@ -35,6 +35,8 @@ import AddProjectForm from "./components/AddProjectForm";
 import { SkillDto } from "@/types/skills/SkillDto";
 import { ProjectRoleDto } from "@/types/projectRoles.ts/ProjectRoleDto";
 import { DialogTitle } from "@radix-ui/react-dialog";
+import { useYourProjects } from "@/lib/projects/projects.queries"
+import { Spinner } from "@/components/ui/spinner";
 
 interface ProjectClientProps {
 	allProjects: ProjectDto[];
@@ -62,6 +64,7 @@ export default function ProjectsClient({
 	const [sortField, setSortField] = useState<SortField>("project");
 	const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 	const [open, setOpen] = useState(false);
+	const {data, isLoading, error} = useYourProjects();
 
 	const statusColours: Record<string, string> = {
 		UpComing: "bg-red-100 text-red-700",
@@ -74,16 +77,13 @@ export default function ProjectsClient({
 	}
 
 	async function handleYourProjectsClick() {
-		setLoading(true);
-
-		const res = await fetch("/api/projects/your");
-
-		if (res.status === 401) {
-			router.push("/login?redirect=/projects");
+		if (isLoading) {
+			return <Spinner />
+		}
+		if (error) {
+			console.error("Error fetching your projects:", error);
 			return;
 		}
-
-		const data = await res.json();
 		setAllProjectsScope(false);
 		setProjects(data);
 		setLoading(false);
@@ -92,10 +92,6 @@ export default function ProjectsClient({
 	function handleAllProjectsClick() {
 		setProjects(allProjects);
 		setAllProjectsScope(true);
-	}
-
-	function handleAddProjectsClick() {
-		router.push("/projects/add");
 	}
 
 	// Handle client filter change

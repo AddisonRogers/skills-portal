@@ -2,10 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar/navbar";
-import { NuqsAdapter } from "nuqs/adapters/next/app";
-import { ThemeProvider } from "@/components/theme-context";
 import { getServerUser } from "@/lib/get-server-user";
 import { getUserTheme } from "@/lib/theme";
+import Providers from "./providers";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -35,12 +34,10 @@ export default async function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-svh`}
 			>
-				<ThemeProvider initialTheme={theme}>
-					<NuqsAdapter>
-						<Navbar />
-						{children}
-					</NuqsAdapter>
-				</ThemeProvider>
+				<Providers initialTheme={theme}>
+					<Navbar />
+					{children}
+				</Providers>
 			</body>
 		</html>
 	);
