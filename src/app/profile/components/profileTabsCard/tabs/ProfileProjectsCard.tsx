@@ -7,7 +7,7 @@ import {
 	CardTitle,
 	CardAction,
 } from "@/components/ui/card";
-import { UserProjects } from "@/types/Projects";
+import { UserProjects } from "@/types/projects/ProjectDto";
 import { cn } from "@/lib/utils";
 
 const projects: UserProjects[] = [

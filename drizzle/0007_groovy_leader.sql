@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "uq_project_user_skill" ON "project_user_skill" USING btree ("project_user_id","skill_id");

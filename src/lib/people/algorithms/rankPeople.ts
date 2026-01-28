@@ -1,12 +1,12 @@
 import { ScoringWeights } from "@/types/matchScore/ScoringWeights";
-import { SearchCriteria } from "@/types/matchScore/SearchCriteria";
+import { SearchCriteriaSkills } from "@/types/matchScore/SearchCriteria";
 import { PersonWithSkillIndex, RankedPerson } from "@/types/users/PersonDto";
 import matchScore from "./matchScore";
 import { DefaultScoringWeights } from "../constraints/DefaultScoringWeights";
 
 export default function rankPeople(
 	people: PersonWithSkillIndex[],
-	criteria: SearchCriteria,
+	criteria: SearchCriteriaSkills,
 	weights: ScoringWeights = DefaultScoringWeights,
 ): RankedPerson[] {
 	const ranked = people.map((p) => {

@@ -136,7 +136,7 @@ export const userCertification = pgTable("user_certification", {
 	expiresAt: timestamp("expires_at"),
 });
 
-export const role = pgTable("role", {
+export const accessRole = pgTable("access_role", {
 	id: serial().primaryKey(),
 	name: text("name"),
 	description: text("description"),
@@ -149,7 +149,7 @@ export const userRoles = pgTable("user_role", {
 		.references(() => user.id, { onDelete: "cascade" }),
 	roleId: integer("role_id")
 		.notNull()
-		.references(() => role.id, { onDelete: "cascade" }),
+		.references(() => accessRole.id, { onDelete: "cascade" }),
 });
 
 export const client = pgTable("client", {
@@ -165,8 +165,15 @@ export const project = pgTable("project", {
 		.references(() => client.id, { onDelete: "restrict" }),
 	name: text("name").notNull(),
 	description: text("description"),
+	status: text("status").notNull().default("active"),
 	startedAt: timestamp("started_at"),
 	endedAt: timestamp("ended_at"),
+});
+
+export const projectRole = pgTable("project_role", {
+	id: serial().primaryKey(),
+	name: text("name").notNull().unique(),
+	description: text("description"),
 });
 
 export const projectUser = pgTable(
@@ -179,12 +186,31 @@ export const projectUser = pgTable(
 		userId: text("user_id")
 			.notNull()
 			.references(() => user.id, { onDelete: "cascade" }),
-		roleId: integer("role_id").references(() => role.id, {
+		projectRoleId: integer("project_role_id").references(() => projectRole.id, {
 			onDelete: "set null",
 		}),
 	},
 	(t) => ({
 		uqProjectUser: uniqueIndex("uq_project_user").on(t.projectId, t.userId),
+	}),
+);
+
+export const projectUserSkill = pgTable(
+	"project_user_skill",
+	{
+		id: serial().primaryKey(),
+		projectUserId: integer("project_user_id")
+			.notNull()
+			.references(() => projectUser.id, { onDelete: "cascade" }),
+		skillId: integer("skill_id")
+			.notNull()
+			.references(() => skill.id, { onDelete: "cascade" }),
+	},
+	(t) => ({
+		uqProjectUserSkill: uniqueIndex("uq_project_user_skill").on(
+			t.projectUserId,
+			t.skillId,
+		),
 	}),
 );
 
