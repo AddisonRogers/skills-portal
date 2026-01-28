@@ -35,7 +35,7 @@ import AddProjectForm from "./components/AddProjectForm";
 import { SkillDto } from "@/types/skills/SkillDto";
 import { ProjectRoleDto } from "@/types/projectRoles.ts/ProjectRoleDto";
 import { DialogTitle } from "@radix-ui/react-dialog";
-import { useYourProjects } from "@/lib/projects/projects.queries"
+import { useYourProjects } from "@/lib/projects/projects.queries";
 import { Spinner } from "@/components/ui/spinner";
 
 interface ProjectClientProps {
@@ -64,7 +64,7 @@ export default function ProjectsClient({
 	const [sortField, setSortField] = useState<SortField>("project");
 	const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 	const [open, setOpen] = useState(false);
-	const {data, isLoading, error} = useYourProjects();
+	const { data, isLoading, error } = useYourProjects();
 
 	const statusColours: Record<string, string> = {
 		UpComing: "bg-red-100 text-red-700",
@@ -78,7 +78,7 @@ export default function ProjectsClient({
 
 	async function handleYourProjectsClick() {
 		if (isLoading) {
-			return <Spinner />
+			return <Spinner />;
 		}
 		if (error) {
 			console.error("Error fetching your projects:", error);
