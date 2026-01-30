@@ -51,3 +51,6 @@ node_modules/
 .vs
 .vscode
 .idea
+
+# Playwright
+/playwright/.auth/
