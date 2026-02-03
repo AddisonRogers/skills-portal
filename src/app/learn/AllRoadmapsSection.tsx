@@ -37,14 +37,14 @@ export default function AllRoadmapsSection({
 	const allRoadmaps = use<PGRoadmapData[]>(allRoadmapsData);
 	const allCapabilities = use<Capability[]>(allCapabilitiesData);
 
-	const allRoadmapsFiltered = allRoadmaps.filter((roadmap) => {
-		return (
-			(searchTerm === "" ||
-				roadmap.title.toLowerCase().includes(searchTerm.toLowerCase())) &&
-			(capability === "any" ||
-				roadmap.capability.toLowerCase().includes(capability.toLowerCase()))
-		);
-	});
+	// const allRoadmapsFiltered = allRoadmaps.filter((roadmap) => {
+	// 	return (
+	// 		(searchTerm === "" ||
+	// 			roadmap.title.toLowerCase().includes(searchTerm.toLowerCase())) &&
+	// 		(capability === "any" ||
+	// 			roadmap.capability.toLowerCase().includes(capability.toLowerCase()))
+	// 	);
+	// });
 
 	return (
 		<section>
@@ -68,7 +68,7 @@ export default function AllRoadmapsSection({
 
 					<Popover open={open} onOpenChange={setOpen}>
 						<PopoverTrigger asChild>
-							<Button
+							{/* <Button
 								variant="outline"
 								role="combobox"
 								aria-expanded={open}
@@ -80,7 +80,7 @@ export default function AllRoadmapsSection({
 										)
 									: "Select framework..."}
 								<ChevronsUpDown className="opacity-50" />
-							</Button>
+							</Button> */}
 						</PopoverTrigger>
 						<PopoverContent className="w-[200px] p-0">
 							<Command>
@@ -90,7 +90,7 @@ export default function AllRoadmapsSection({
 								/>
 								<CommandList>
 									<CommandEmpty>No framework found.</CommandEmpty>
-									<CommandGroup>
+									{/* <CommandGroup>
 										{allCapabilities.map((capabilityVal) => (
 											<CommandItem
 												key={capabilityVal}
@@ -113,7 +113,7 @@ export default function AllRoadmapsSection({
 												/>
 											</CommandItem>
 										))}
-									</CommandGroup>
+									</CommandGroup> */}
 								</CommandList>
 							</Command>
 						</PopoverContent>
@@ -122,7 +122,7 @@ export default function AllRoadmapsSection({
 			</div>
 
 			{/* Roadmaps Grid */}
-			{allRoadmapsFiltered.length > 0 ? (
+			{/* {allRoadmapsFiltered.length > 0 ? (
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 					{allRoadmapsFiltered.map((roadmap) => (
 						<RoadmapCard key={roadmap.id} {...roadmap} />
@@ -134,7 +134,7 @@ export default function AllRoadmapsSection({
 						No roadmaps found matching your criteria.
 					</p>
 				</div>
-			)}
+			)} */}
 		</section>
 	);
 }
