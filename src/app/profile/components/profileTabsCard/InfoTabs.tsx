@@ -49,6 +49,8 @@ const skills: UserSkill[] = [
 	},
 ];
 
+//Plan to make the email redundtant by fetching from user data in future
+//Plan to make the email on a higher level so it can be used across multiple components
 const teamsMessage = () => {
 	const email = "Harrison.Jeffreys@fsp.co";
 	window.open(
