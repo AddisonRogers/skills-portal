@@ -5,7 +5,11 @@ import SkillRadar from "../../../../components/InfoAddOns/SkillRadar";
 import { Card } from "@/components/ui/card";
 import { Avatar } from "@/components/ui/avatar";
 import { UserSkill } from "@/types/skill";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import {
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 const skills: UserSkill[] = [
 	{
@@ -48,8 +52,8 @@ const skills: UserSkill[] = [
 const teamsMessage = () => {
 	const email = "Harrison.Jeffreys@fsp.co";
 	window.open(
-		`https://teams.microsoft.com/l/chat/0/0?users=${email}`
-		, "_blank"
+		`https://teams.microsoft.com/l/chat/0/0?users=${email}`,
+		"_blank",
 	);
 };
 
@@ -61,10 +65,10 @@ const emailUser = () => {
 export default function InfoTabs() {
 	const userImg = `https://ui-avatars.com/api/?name=John+Doe&background=0D8ABC&color=fff`;
 	const hoverNav = "hover:text-primary hover:scale-102 hover:cursor-pointer";
-	const idleNav = "w-full backdrop-blur border-b border-gray-200 shadow-sm justify-between items-center rounded-t-2xl inline-block px-4 py-2 font-semibold text-lg transition-colors duration-150 relative "
+	const idleNav =
+		"w-full backdrop-blur border-b border-gray-200 shadow-sm justify-between items-center rounded-t-2xl inline-block px-4 py-2 font-semibold text-lg transition-colors duration-150 relative ";
 
 	return (
-
 		<Card className="p-0 w-full gap-0">
 			<Collapsible
 				defaultOpen
@@ -72,9 +76,7 @@ export default function InfoTabs() {
 				className="flex flex-col items-start mb-4 w-full"
 			>
 				<CollapsibleTrigger asChild>
-					<nav className={idleNav + hoverNav}>
-						Information
-					</nav>
+					<nav className={idleNav + hoverNav}>Information</nav>
 				</CollapsibleTrigger>
 				<CollapsibleContent className="flex flex-row justify-start items-center gap-4">
 					<div className="flex flex-col items-center m-4">
@@ -92,7 +94,8 @@ export default function InfoTabs() {
 						<a className="inline-block px-4 py-1 text-sm transition-colors duration-150 relative">
 							Senior Cloud Engineer
 						</a>
-						<a className="inline-block px-4 py-1 text-sm transition-colors duration-150 relative hover:underline cursor-pointer hover:text-primary" 
+						<a
+							className="inline-block px-4 py-1 text-sm transition-colors duration-150 relative hover:underline cursor-pointer hover:text-primary"
 							onClick={emailUser}
 						>
 							Email: test@fsp.co
@@ -108,16 +111,14 @@ export default function InfoTabs() {
 						/>
 					</div>
 				</CollapsibleContent>
-			</Collapsible>	
+			</Collapsible>
 			<Collapsible
 				defaultOpen
 				id="profile-links"
 				className="flex flex-col items-start mb-4 w-full"
 			>
 				<CollapsibleTrigger asChild>
-					<nav className={idleNav + hoverNav}>
-						Profile Links
-					</nav>
+					<nav className={idleNav + hoverNav}>Profile Links</nav>
 				</CollapsibleTrigger>
 				<CollapsibleContent>
 					<div>
@@ -129,7 +130,8 @@ export default function InfoTabs() {
 						>
 							LinkedIn
 						</a>
-						<button className="mt-3 ml-2 mr-2 px-4 py-2 bg-primary text-white rounded-2xl hover:bg-primary/80 hover:scale-105 transition w-auto"
+						<button
+							className="mt-3 ml-2 mr-2 px-4 py-2 bg-primary text-white rounded-2xl hover:bg-primary/80 hover:scale-105 transition w-auto"
 							onClick={teamsMessage}
 						>
 							Teams Message
@@ -151,13 +153,11 @@ export default function InfoTabs() {
 				className="flex flex-col items-start mb-4 w-full"
 			>
 				<CollapsibleTrigger asChild>
-					<nav className={idleNav + hoverNav}>
-						Skill Focus
-					</nav>
+					<nav className={idleNav + hoverNav}>Skill Focus</nav>
 				</CollapsibleTrigger>
 				<CollapsibleContent>
 					<p className="text-sm text-muted-foreground mb-2 ml-4">
-					A summary of your primary skills and areas of expertise.
+						A summary of your primary skills and areas of expertise.
 					</p>
 					<div className="flex items-center flex-wrap gap-2 ml-4">
 						{skills
@@ -173,28 +173,23 @@ export default function InfoTabs() {
 					</div>
 				</CollapsibleContent>
 			</Collapsible>
-			<Collapsible
-					defaultOpen
-					id="profile-links"
-				>
-					<CollapsibleTrigger asChild>
-						<nav className={idleNav + hoverNav}>
-							Skill Radar
-						</nav>
-					</CollapsibleTrigger>
-					<CollapsibleContent>
-						<div className="flex flex-col items-center w-full mb-4">
-							<SkillRadar
-								skills={[
-									{ label: "Frontend", value: 90 },
-									{ label: "Backend", value: 70 },
-									{ label: "DevOps", value: 100 },
-									{ label: "Soft Skills", value: 90 },
-									{ label: "Azure", value: 50 },
-								]}
-							/>
-						</div>
-					</CollapsibleContent>
+			<Collapsible defaultOpen id="profile-links">
+				<CollapsibleTrigger asChild>
+					<nav className={idleNav + hoverNav}>Skill Radar</nav>
+				</CollapsibleTrigger>
+				<CollapsibleContent>
+					<div className="flex flex-col items-center w-full mb-4">
+						<SkillRadar
+							skills={[
+								{ label: "Frontend", value: 90 },
+								{ label: "Backend", value: 70 },
+								{ label: "DevOps", value: 100 },
+								{ label: "Soft Skills", value: 90 },
+								{ label: "Azure", value: 50 },
+							]}
+						/>
+					</div>
+				</CollapsibleContent>
 			</Collapsible>
 		</Card>
 	);
