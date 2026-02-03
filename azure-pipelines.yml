@@ -16,7 +16,7 @@ stages:
           - checkout: self
           - task: NodeTool@0
             inputs:
-              versionSpec: '18.x'
+              versionSpec: '20.x'
             displayName: 'Install Node.js'
           - script: |
               corepack enable

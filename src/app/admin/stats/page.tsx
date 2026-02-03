@@ -3,9 +3,9 @@ import {
 	getProficiencyDistributionStats,
 	getSkillsOverTimeStats,
 } from "@/app/admin/stats/serverFunctions";
-import MostPopularSkillsChart from "@/app/admin/stats/MostPopularSkillsChart";
-import ProficiencyDistributionChart from "@/app/admin/stats/ProficiencyDistributionChart";
-import SkillsOverTimeChart from "@/app/admin/stats/SkillsOverTimeChart";
+// import MostPopularSkillsChart from "@/app/admin/stats/MostPopularSkillsChart";
+// import ProficiencyDistributionChart from "@/app/admin/stats/ProficiencyDistributionChart";
+// import SkillsOverTimeChart from "@/app/admin/stats/SkillsOverTimeChart";
 
 export default async function StatsPage() {
 	// Get skills by popularity (most acquired)
@@ -18,12 +18,12 @@ export default async function StatsPage() {
 			<h2 className="text-2xl font-bold mb-6">Statistics & Analytics</h2>
 
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-				<MostPopularSkillsChart {...popularSkillsData} />
+				{/* <MostPopularSkillsChart {...popularSkillsData} /> */}
 
-				<ProficiencyDistributionChart {...proficiencyData} />
+				{/* <ProficiencyDistributionChart {...proficiencyData} /> */}
 			</div>
 
-			<SkillsOverTimeChart {...getAllStatsData} />
+			{/* <SkillsOverTimeChart {...getAllStatsData} /> */}
 		</div>
 	);
 }

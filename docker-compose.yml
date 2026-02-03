@@ -13,13 +13,24 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  redis:
+    image: redis:latest
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: ["redis-server", "--appendonly", "yes"]
+
   app:
     build: .
     depends_on:
       - db
+      - redis
     environment:
       # Connection string for your Node.js app
       DATABASE_URL: postgres://postgres@db:5432/postgres
+      REDIS_URL: redis://redis:6379
       NODE_ENV: production
       # Add other environment variables like NEXT_PUBLIC_* if needed
     ports:
@@ -27,3 +38,4 @@ services:
 
 volumes:
   postgres_data:
+  redis_data:

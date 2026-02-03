@@ -1,0 +1,32 @@
+# dependencies
+node_modules
+.pnpm-store
+.yarn
+.yarn-cache
+
+# next build output
+.next
+out
+
+# tooling / caches
+.turbo
+dist
+build
+coverage
+.vscode
+.idea
+
+# env/secrets
+.env
+.env.*
+*.local
+
+# git (already excluded but keep it explicit)
+.git
+.gitignore
+
+# logs
+*.log
+
+# docker compose etc (optional)
+docker-compose.yml

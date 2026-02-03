@@ -10,10 +10,10 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getAllSkills } from "@/db/repositories/skills";
+import { getSkills } from "@/db/repositories/skills";
 
 export default async function SkillsManagement() {
-	const skills = (await getAllSkills()) ?? [];
+	const skills = (await getSkills()) ?? [];
 
 	return (
 		<div>

@@ -24,13 +24,14 @@ export async function POST(req: Request) {
 	//   console.debug(message.content)
 	// }
 
-	const result = streamText({
-		model: azure(process.env.AZURE_OPENAI_DEPLOYMENT_NAME || "gpt-4.1"),
-		messages: messages,
-		onError: async (error) => {
-			if (error !== undefined) console.error(error);
-		},
-	});
+	// const result = streamText({
+	// 	model: azure(process.env.AZURE_OPENAI_DEPLOYMENT_NAME || "gpt-4.1"),
+	// 	messages: messages,
+	// 	onError: async (error) => {
+	// 		if (error !== undefined) console.error(error);
+	// 	},
+	// });
 
-	return result.toDataStreamResponse();
+	// return result.toDataStreamResponse();
+	return new Response("Not implemented", { status: 501 });
 }
