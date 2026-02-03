@@ -50,9 +50,9 @@ const skills: UserSkill[] = [
 ];
 
 //Plan to make the email redundtant by fetching from user data in future
-//Plan to make the email on a higher level so it can be used across multiple components
+const email = "Harrison.Jeffreys@fsp.co";
+
 const teamsMessage = () => {
-	const email = "Harrison.Jeffreys@fsp.co";
 	window.open(
 		`https://teams.microsoft.com/l/chat/0/0?users=${email}`,
 		"_blank",
@@ -60,7 +60,6 @@ const teamsMessage = () => {
 };
 
 const emailUser = () => {
-	const email = "Harrison.Jeffreys@fsp.co";
 	window.open(`mailto:${email}`, "_blank");
 };
 
