@@ -14,7 +14,6 @@ import {
 	getProficiencyDistributionStatsReturnType,
 	getProficiencyDistributionStatsReturnTypePromised,
 } from "@/app/admin/stats/serverFunctions";
-import { use } from "react";
 
 const COLORS = [
 	"hsl(var(--chart-1))",
@@ -23,43 +22,43 @@ const COLORS = [
 	"hsl(var(--chart-4))",
 ];
 
-export default function ProficiencyDistributionChart(
-	params: getProficiencyDistributionStatsReturnType,
-) {
-	const { data: proficiencyData, config: proficiencyConfig } = params;
+// export default function ProficiencyDistributionChart(
+// 	params: getProficiencyDistributionStatsReturnType,
+// ) {
+// 	const { data: proficiencyData, config: proficiencyConfig } = params;
 
-	return (
-		<Card>
-			<CardHeader>
-				<CardTitle>Proficiency Distribution</CardTitle>
-			</CardHeader>
-			<CardContent>
-				<ChartContainer config={proficiencyConfig}>
-					<PieChart>
-						<ChartTooltip
-							cursor={false}
-							content={<ChartTooltipContent hideLabel />}
-						/>
-						<Pie
-							data={proficiencyData}
-							dataKey="count"
-							nameKey="level"
-							cx="50%"
-							cy="50%"
-							outerRadius={80}
-							fill="#8884d8"
-						>
-							{proficiencyData.map((entry, index) => (
-								<Cell
-									key={`cell-${index}`}
-									fill={COLORS[index % COLORS.length]}
-								/>
-							))}
-						</Pie>
-						<ChartLegend content={<ChartLegendContent payload={"ayo"} />} />
-					</PieChart>
-				</ChartContainer>
-			</CardContent>
-		</Card>
-	);
-}
+// 	return (
+// 		<Card>
+// 			<CardHeader>
+// 				<CardTitle>Proficiency Distribution</CardTitle>
+// 			</CardHeader>
+// 			<CardContent>
+// 				<ChartContainer config={proficiencyConfig}>
+// 					<PieChart>
+// 						<ChartTooltip
+// 							cursor={false}
+// 							content={<ChartTooltipContent hideLabel />}
+// 						/>
+// 						<Pie
+// 							data={proficiencyData}
+// 							dataKey="count"
+// 							nameKey="level"
+// 							cx="50%"
+// 							cy="50%"
+// 							outerRadius={80}
+// 							fill="#8884d8"
+// 						>
+// 							{proficiencyData.map((entry, index) => (
+// 								<Cell
+// 									key={`cell-${index}`}
+// 									fill={COLORS[index % COLORS.length]}
+// 								/>
+// 							))}
+// 						</Pie>
+// 						<ChartLegend content={<ChartLegendContent payload={"ayo"} />} />
+// 					</PieChart>
+// 				</ChartContainer>
+// 			</CardContent>
+// 		</Card>
+// 	);
+// }
