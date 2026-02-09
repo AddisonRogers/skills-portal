@@ -1,34 +1,97 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
-	"vcs": {
-		"enabled": false,
-		"clientKind": "git",
-		"useIgnoreFile": false
-	},
-	"files": {
-		"ignoreUnknown": false
-	},
-	"formatter": {
-		"enabled": true,
-		"indentStyle": "tab"
-	},
-	"linter": {
-		"enabled": true,
-		"rules": {
-			"recommended": true
-		}
-	},
-	"javascript": {
-		"formatter": {
-			"quoteStyle": "double"
-		}
-	},
-	"assist": {
-		"enabled": true,
-		"actions": {
-			"source": {
-				"organizeImports": "on"
-			}
-		}
-	}
+  "$schema": "https://biomejs.dev/schemas/2.3.11/schema.json",
+  "linter": {
+    "domains": {
+      "react": "recommended",
+      "project": "recommended",
+      "next": "recommended"
+    },
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "complexity": {
+        "noForEach": "warn",
+        "noExcessiveLinesPerFunction": "error",
+        "useWhile": "error",
+        "noExcessiveCognitiveComplexity": "error"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "error",
+        "useHookAtTopLevel": "error",
+        "noNestedComponentDefinitions": "error",
+        "noUndeclaredDependencies": "error",
+        "noUndeclaredVariables": "error"
+      },
+      "style": {
+        "useImportType": "error",
+        "useExportType": "error",
+        "noExportedImports": "error",
+        "noDefaultExport": "error",
+        "noCommonJs": "error",
+        "noMagicNumbers": "error",
+        "noNestedTernary": "error",
+        "noUselessElse": "error",
+        "useConsistentCurlyBraces": "error",
+        "useConst": "error",
+        "useExportsLast": "error",
+        "useFragmentSyntax": "error",
+        "useReactFunctionComponents": "error",
+        "useReadonlyClassProperties": "error",
+        "useSingleVarDeclarator": "error",
+        "useConsistentTypeDefinitions": {
+          "level": "error",
+          "options": {
+            "style": "type"
+          }
+        },
+        "useFilenamingConvention": {
+          "level": "error",
+          "options": {
+            "strictCase": true,
+            "requireAscii": true,
+            "filenameCases": ["camelCase", "export"]
+          }
+        }
+      },
+      "suspicious": {
+        "noBitwiseOperators": "error",
+        "noConsole": "error",
+        "noUnassignedVariables": "error",
+        "noVar": "error",
+        "useAwait": "error"
+      },
+      "performance": {
+        "noBarrelFile": "error",
+        "noReExportAll": "error"
+      },
+      "nursery": {
+        "useSortedClasses": "error",
+        "noUndeclaredEnvVars": "error",
+        "noDeprecatedImports": "error",
+        "noEqualsToNull": "error",
+        "noMisusedPromises": "error",
+        "noNextAsyncClientComponent": "error",
+        "noUselessUndefined": "error"
+      },
+      "a11y": {
+        "noNoninteractiveElementInteractions": "error"
+      }
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100,
+    "lineEnding": "lf"
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "jsxQuoteStyle": "double",
+      "trailingCommas": "all",
+      "semicolons": "always"
+    }
+  }
 }

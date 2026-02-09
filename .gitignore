@@ -46,3 +46,11 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Editor files
+.vs
+.vscode
+.idea
+
+# Playwright
+/playwright/.auth/
