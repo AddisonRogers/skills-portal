@@ -24,7 +24,7 @@ export default function SortOptions({ sortBy, setSortBy }: Props) {
 	return (
 		<Button
 			onClick={toggle}
-			className="gap-1 px-2 rounded-2xl mt-3 mb-1 ml-3 font-medium"
+			className="gap-1 px-2 rounded-2xl mt-3 mb-1 ml-3 font-medium text-white hover:scale-105"
 		>
 			Sort by: <span className="font-bold">{sortBy}</span>
 		</Button>

@@ -37,9 +37,9 @@ export default function ProfileTabsCard() {
 								onClick={() => setActiveTab(tab.id)}
 								className={cn(
 									"inline-block px-4 py-2 font-semibold text-lg transition-colors duration-150 relative",
-									"hover:text-primary hover:font-medium" +
-										" focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
-									"after:content-[''] after:block after:h-[2px] after:bg-primary after:scale-x-0 after:transition-transform after:duration-200 after:absolute after:left-0 after:right-0 after:-bottom-1 hover:after:scale-x-100",
+									"hover:text-primary hover:font-medium hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
+									"after:content-[''] after:block after:h-[2px] after:bg-primary after:scale-x-0 after:transition-transform after:duration-200 after:absolute after:left-0 after:right-0 after:-bottom-1 hover:after:scale-x-90",
+									activeTab === tab.id && "text-primary after:scale-x-100",
 								)}
 							>
 								{tab.label}

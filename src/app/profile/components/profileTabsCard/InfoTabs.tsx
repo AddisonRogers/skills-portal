@@ -5,7 +5,11 @@ import SkillRadar from "../../../../components/InfoAddOns/SkillRadar";
 import { Card } from "@/components/ui/card";
 import { Avatar } from "@/components/ui/avatar";
 import { UserSkill } from "@/types/skill";
-import { skill } from "@/db/schema";
+import {
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 const skills: UserSkill[] = [
 	{
@@ -45,29 +49,57 @@ const skills: UserSkill[] = [
 	},
 ];
 
+//Plan to make the email redundtant by fetching from user data in future
+const email = "Harrison.Jeffreys@fsp.co";
+
+const teamsMessage = () => {
+	window.open(
+		`https://teams.microsoft.com/l/chat/0/0?users=${email}`,
+		"_blank",
+	);
+};
+
+const emailUser = () => {
+	window.open(`mailto:${email}`, "_blank");
+};
+
 export default function InfoTabs() {
 	const userImg = `https://ui-avatars.com/api/?name=John+Doe&background=0D8ABC&color=fff`;
+	const hoverNav = "hover:text-primary hover:scale-102 hover:cursor-pointer";
+	const idleNav =
+		"w-full backdrop-blur border-b border-gray-200 shadow-sm justify-between items-center rounded-t-2xl inline-block px-4 py-2 font-semibold text-lg transition-colors duration-150 relative ";
 
 	return (
-		<div className="w-full">
-			<Card className="p-0 w-full gap-0">
-				<nav className="flex w-full px-4 backdrop-blur border-b border-gray-200 shadow-sm sticky justify-between items-center rounded-t-2xl mt-3 pb-2">
-					<div className="flex items-start justify-baseline">
-						<a className="inline-block px-4 py-2 font-semibold text-lg transition-colors duration-150 relative">
-							Information
-						</a>
+		<Card className="p-0 w-full gap-0">
+			<Collapsible
+				defaultOpen
+				id="profile-links"
+				className="flex flex-col items-start mb-4 w-full"
+			>
+				<CollapsibleTrigger asChild>
+					<nav className={idleNav + hoverNav}>Information</nav>
+				</CollapsibleTrigger>
+				<CollapsibleContent className="flex flex-row justify-start items-center gap-4">
+					<div className="flex flex-col items-center m-4">
+						<Avatar style={{ width: 150, height: 150 }}>
+							<img src={userImg} alt="User Avatar" />
+						</Avatar>
+						<button className="mt-4 px-4 py-2 bg-primary text-white rounded-2xl hover:bg-primary/80 hover:scale-105 transition w-auto">
+							Edit Profile
+						</button>
 					</div>
-				</nav>
-				<div className="flex flex-row justify-start items-center gap-2">
-					<Avatar className="m-4" style={{ width: 150, height: 150 }}>
-						<img src={userImg} alt="User Avatar" />
-					</Avatar>
 					<div className="flex flex-col justify-center items-start">
 						<a className="inline-block px-4 py-2 font-semibold text-2xl transition-colors duration-150 relative">
 							Ada Lovegrove
 						</a>
-						<a className="inline-block px-4 py-2 text-sm transition-colors duration-150 relative">
+						<a className="inline-block px-4 py-1 text-sm transition-colors duration-150 relative">
 							Senior Cloud Engineer
+						</a>
+						<a
+							className="inline-block px-4 py-1 text-sm transition-colors duration-150 relative hover:underline cursor-pointer hover:text-primary"
+							onClick={emailUser}
+						>
+							Email: test@fsp.co
 						</a>
 						<LevelBar
 							currentXP={345}
@@ -79,47 +111,75 @@ export default function InfoTabs() {
 							text
 						/>
 					</div>
-				</div>
-				<div className="flex justify-center w-full p-4">
-					<button className="px-6 py-2 bg-primary text-white rounded-2xl hover:bg-primary/80 transition">
-						Edit Profile
-					</button>
-				</div>
-				<div>
-					<div className="flex flex-col items-start mb-4">
-						<nav className="flex w-full px-4 backdrop-blur border-b border-gray-200 shadow-sm sticky justify-between items-center rounded-t-2xl mt-3 pb-2">
-							<div className="flex items-start justify-baseline">
-								<a className="inline-block px-4 py-2 font-semibold text-lg transition-colors duration-150 relative">
-									Skill Focus
-								</a>
-							</div>
-						</nav>
-						<p className="text-sm text-muted-foreground mb-2 ml-4">
-							A summary of your primary skills and areas of expertise.
-						</p>
-						<div className="flex items-center flex-wrap gap-2 ml-4">
-							{skills
-								.filter((skill) => skill.proficiency.value >= 4)
-								.map((skill) => (
-									<a
-										key={skill.id}
-										className="border-2 rounded-2xl px-1.5 bg-gray-200 font-semibold text-gray-700"
-									>
-										{skill.skillName}
-									</a>
-								))}
-						</div>
+				</CollapsibleContent>
+			</Collapsible>
+			<Collapsible
+				defaultOpen
+				id="profile-links"
+				className="flex flex-col items-start mb-4 w-full"
+			>
+				<CollapsibleTrigger asChild>
+					<nav className={idleNav + hoverNav}>Profile Links</nav>
+				</CollapsibleTrigger>
+				<CollapsibleContent>
+					<div>
+						<a
+							className="mt-3 ml-2 mr-2 px-4 py-2 bg-primary text-white rounded-2xl hover:bg-primary/80 hover:scale-105 transition w-auto inline-block text-center"
+							href="https://www.linkedin.com/in/joseph-williams-853526385/"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							LinkedIn
+						</a>
+						<button
+							className="mt-3 ml-2 mr-2 px-4 py-2 bg-primary text-white rounded-2xl hover:bg-primary/80 hover:scale-105 transition w-auto"
+							onClick={teamsMessage}
+						>
+							Teams Message
+						</button>
+						<a
+							className="mt-3 ml-2 mr-2 px-4 py-2 bg-primary text-white rounded-2xl hover:bg-primary/80 hover:scale-105 transition w-auto inline-block text-center"
+							href="https://github.com/Joseph72934?tab=overview&from=2026-01-01&to=2026-01-21"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							GitHub
+						</a>
 					</div>
-				</div>
-				<div className="flex flex-col items-center w-full mb-4">
-					<nav className="flex w-full px-4 backdrop-blur border-b border-gray-200 shadow-sm sticky justify-between items-center rounded-t-2xl mt-3 pb-2">
-						<div className="flex items-start justify-baseline">
-							<a className="inline-block px-4 py-2 font-semibold text-lg transition-colors duration-150 relative">
-								Skill Radar
-							</a>
-						</div>
-					</nav>
-					<div className="mt-4">
+				</CollapsibleContent>
+			</Collapsible>
+			<Collapsible
+				defaultOpen
+				id="profile-links"
+				className="flex flex-col items-start mb-4 w-full"
+			>
+				<CollapsibleTrigger asChild>
+					<nav className={idleNav + hoverNav}>Skill Focus</nav>
+				</CollapsibleTrigger>
+				<CollapsibleContent>
+					<p className="text-sm text-muted-foreground mb-2 ml-4">
+						A summary of your primary skills and areas of expertise.
+					</p>
+					<div className="flex items-center flex-wrap gap-2 ml-4">
+						{skills
+							.filter((skill) => skill.proficiency.value >= 4)
+							.map((skill) => (
+								<a
+									key={skill.id}
+									className="border-2 rounded-2xl px-1.5 bg-gray-200 font-semibold text-gray-700"
+								>
+									{skill.skillName}
+								</a>
+							))}
+					</div>
+				</CollapsibleContent>
+			</Collapsible>
+			<Collapsible defaultOpen id="profile-links">
+				<CollapsibleTrigger asChild>
+					<nav className={idleNav + hoverNav}>Skill Radar</nav>
+				</CollapsibleTrigger>
+				<CollapsibleContent>
+					<div className="flex flex-col items-center w-full mb-4">
 						<SkillRadar
 							skills={[
 								{ label: "Frontend", value: 90 },
@@ -130,8 +190,8 @@ export default function InfoTabs() {
 							]}
 						/>
 					</div>
-				</div>
-			</Card>
-		</div>
+				</CollapsibleContent>
+			</Collapsible>
+		</Card>
 	);
 }
