@@ -50,7 +50,7 @@ const skills: UserSkill[] = [
 ];
 
 //Plan to make the email redundtant by fetching from user data in future
-const email = "Harrison.Jeffreys@fsp.co";
+const email = "replace@replace.com";
 
 const teamsMessage = () => {
 	window.open(
@@ -65,23 +65,24 @@ const emailUser = () => {
 
 export default function InfoTabs() {
 	const userImg = `https://ui-avatars.com/api/?name=John+Doe&background=0D8ABC&color=fff`;
-	const hoverNav = "hover:text-primary hover:scale-102 hover:cursor-pointer";
-	const idleNav =
-		"w-full backdrop-blur border-b border-gray-200 shadow-sm justify-between items-center rounded-t-2xl inline-block px-4 py-2 font-semibold text-lg transition-colors duration-150 relative ";
+	const sectionClass = "flex flex-col items-start mb-4 w-full";
+	const navClass =
+		"w-full backdrop-blur border-b border-gray-200 shadow-sm justify-between items-center rounded-t-2xl inline-block px-4 py-2 font-semibold text-lg transition duration-150 relative hover:text-primary hover:scale-105 hover:cursor-pointer";
+	const btnClass = "mt-3 ml-2 mr-2 px-4 py-2 bg-primary text-white rounded-2xl hover:bg-primary/80 hover:scale-105 transition";
 
 	return (
-		<Card className="p-0 w-full gap-0">
+		<Card className="w-full">
 			<Collapsible
 				defaultOpen
 				id="profile-links"
-				className="flex flex-col items-start mb-4 w-full"
+				className={sectionClass}
 			>
 				<CollapsibleTrigger asChild>
-					<nav className={idleNav + hoverNav}>Information</nav>
+					<nav className={navClass}>Information</nav>
 				</CollapsibleTrigger>
 				<CollapsibleContent className="flex flex-row justify-start items-center gap-4">
 					<div className="flex flex-col items-center m-4">
-						<Avatar style={{ width: 150, height: 150 }}>
+						<Avatar className="w-36 h-36">
 							<img src={userImg} alt="User Avatar" />
 						</Avatar>
 						<button className="mt-4 px-4 py-2 bg-primary text-white rounded-2xl hover:bg-primary/80 hover:scale-105 transition w-auto">
@@ -116,15 +117,15 @@ export default function InfoTabs() {
 			<Collapsible
 				defaultOpen
 				id="profile-links"
-				className="flex flex-col items-start mb-4 w-full"
+				className={sectionClass}
 			>
 				<CollapsibleTrigger asChild>
-					<nav className={idleNav + hoverNav}>Profile Links</nav>
+					<nav className={navClass}>Profile Links</nav>
 				</CollapsibleTrigger>
 				<CollapsibleContent>
 					<div>
 						<a
-							className="mt-3 ml-2 mr-2 px-4 py-2 bg-primary text-white rounded-2xl hover:bg-primary/80 hover:scale-105 transition w-auto inline-block text-center"
+							className={btnClass + " inline-block text-center"}
 							href="https://www.linkedin.com/in/joseph-williams-853526385/"
 							target="_blank"
 							rel="noopener noreferrer"
@@ -132,13 +133,13 @@ export default function InfoTabs() {
 							LinkedIn
 						</a>
 						<button
-							className="mt-3 ml-2 mr-2 px-4 py-2 bg-primary text-white rounded-2xl hover:bg-primary/80 hover:scale-105 transition w-auto"
+							className={btnClass}
 							onClick={teamsMessage}
 						>
 							Teams Message
 						</button>
 						<a
-							className="mt-3 ml-2 mr-2 px-4 py-2 bg-primary text-white rounded-2xl hover:bg-primary/80 hover:scale-105 transition w-auto inline-block text-center"
+							className={btnClass + " inline-block text-center"}
 							href="https://github.com/Joseph72934?tab=overview&from=2026-01-01&to=2026-01-21"
 							target="_blank"
 							rel="noopener noreferrer"
@@ -151,10 +152,10 @@ export default function InfoTabs() {
 			<Collapsible
 				defaultOpen
 				id="profile-links"
-				className="flex flex-col items-start mb-4 w-full"
+				className={sectionClass}
 			>
 				<CollapsibleTrigger asChild>
-					<nav className={idleNav + hoverNav}>Skill Focus</nav>
+					<nav className={navClass}>Skill Focus</nav>
 				</CollapsibleTrigger>
 				<CollapsibleContent>
 					<p className="text-sm text-muted-foreground mb-2 ml-4">
@@ -176,7 +177,7 @@ export default function InfoTabs() {
 			</Collapsible>
 			<Collapsible defaultOpen id="profile-links">
 				<CollapsibleTrigger asChild>
-					<nav className={idleNav + hoverNav}>Skill Radar</nav>
+					<nav className={navClass}>Skill Radar</nav>
 				</CollapsibleTrigger>
 				<CollapsibleContent>
 					<div className="flex flex-col items-center w-full mb-4">
