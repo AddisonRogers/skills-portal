@@ -68,15 +68,12 @@ export default function InfoTabs() {
 	const sectionClass = "flex flex-col items-start mb-4 w-full";
 	const navClass =
 		"w-full backdrop-blur border-b border-gray-200 shadow-sm justify-between items-center rounded-t-2xl inline-block px-4 py-2 font-semibold text-lg transition duration-150 relative hover:text-primary hover:scale-105 hover:cursor-pointer";
-	const btnClass = "mt-3 ml-2 mr-2 px-4 py-2 bg-primary text-white rounded-2xl hover:bg-primary/80 hover:scale-105 transition";
+	const btnClass =
+		"mt-3 ml-2 mr-2 px-4 py-2 bg-primary text-white rounded-2xl hover:bg-primary/80 hover:scale-105 transition";
 
 	return (
 		<Card className="w-full">
-			<Collapsible
-				defaultOpen
-				id="profile-links"
-				className={sectionClass}
-			>
+			<Collapsible defaultOpen id="profile-links" className={sectionClass}>
 				<CollapsibleTrigger asChild>
 					<nav className={navClass}>Information</nav>
 				</CollapsibleTrigger>
@@ -114,11 +111,7 @@ export default function InfoTabs() {
 					</div>
 				</CollapsibleContent>
 			</Collapsible>
-			<Collapsible
-				defaultOpen
-				id="profile-links"
-				className={sectionClass}
-			>
+			<Collapsible defaultOpen id="profile-links" className={sectionClass}>
 				<CollapsibleTrigger asChild>
 					<nav className={navClass}>Profile Links</nav>
 				</CollapsibleTrigger>
@@ -132,10 +125,7 @@ export default function InfoTabs() {
 						>
 							LinkedIn
 						</a>
-						<button
-							className={btnClass}
-							onClick={teamsMessage}
-						>
+						<button className={btnClass} onClick={teamsMessage}>
 							Teams Message
 						</button>
 						<a
@@ -149,11 +139,7 @@ export default function InfoTabs() {
 					</div>
 				</CollapsibleContent>
 			</Collapsible>
-			<Collapsible
-				defaultOpen
-				id="profile-links"
-				className={sectionClass}
-			>
+			<Collapsible defaultOpen id="profile-links" className={sectionClass}>
 				<CollapsibleTrigger asChild>
 					<nav className={navClass}>Skill Focus</nav>
 				</CollapsibleTrigger>
