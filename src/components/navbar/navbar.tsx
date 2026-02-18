@@ -4,7 +4,7 @@ import AvatarOrLogin from "@/components/navbar/avatarOrLogin/avatarOrLogin";
 import { ThemeToggle } from "../ThemeToggle";
 
 const navLinks = [
-	{ name: "Home", href: "/" },
+	{ name: "Home", href: "/home" },
 	{ name: "Learn", href: "/learn" },
 	{ name: "Skills", href: "/skills" },
 	{ name: "Projects", href: "/projects" },
