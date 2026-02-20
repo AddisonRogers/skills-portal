@@ -2,7 +2,7 @@
 // Need a drizzle repo where
 
 import { and, eq } from "drizzle-orm";
-import { accessRole, user, userRoles as user_roles } from "@/db/schema";
+import { accessRole, user, jobRole, userRoles as user_roles } from "@/db/schema";
 import { db } from "@/lib/db";
 
 export async function getRoles(userEmail: string) {
@@ -50,6 +50,9 @@ export async function getRolesForUser(userEmail: string) {
 
 	return data;
 }
+
+
+
 
 export async function addRoleToSomeone(
 	userEmail: string,
@@ -137,3 +140,17 @@ export async function updateRole(
 		description: roleDescription,
 	});
 }
+
+export async function getJobTitleForUser(email: string) {
+	const data = await db
+		.select({
+			jobTitle: jobRole.title,
+		})
+		.from(user)
+		.innerJoin(jobRole, eq(user.jobRoleId, jobRole.id))
+		.where(eq(user.email, email))
+		.limit(1);
+
+	return data[0]?.jobTitle ?? null;
+}
+
