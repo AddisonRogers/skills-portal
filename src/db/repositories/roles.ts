@@ -2,7 +2,12 @@
 // Need a drizzle repo where
 
 import { and, eq } from "drizzle-orm";
-import { accessRole, user, jobRole, userRoles as user_roles } from "@/db/schema";
+import {
+	accessRole,
+	user,
+	jobRole,
+	userRoles as user_roles,
+} from "@/db/schema";
 import { db } from "@/lib/db";
 
 export async function getRoles(userEmail: string) {
@@ -50,9 +55,6 @@ export async function getRolesForUser(userEmail: string) {
 
 	return data;
 }
-
-
-
 
 export async function addRoleToSomeone(
 	userEmail: string,
@@ -153,4 +155,3 @@ export async function getJobTitleForUser(email: string) {
 
 	return data[0]?.jobTitle ?? null;
 }
-

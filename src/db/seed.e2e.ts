@@ -9,6 +9,7 @@ import {
 	capabilityUser,
 	location,
 	jobRole,
+	daily_challenge,
 	// session,
 	// account,
 	// verification,
@@ -164,8 +165,164 @@ async function seedE2E() {
 		{ capabilityId: cloudEngineeringCapability.id, userId: "user-002" },
 	]);
 
+
+
+	await db.insert(daily_challenge).values([
+	{
+		challenge: `What is the output?
+
+	int x = 5;
+	int y = 3;
+	Console.WriteLine(x + y);`,
+		answer: "8",
+	},
+	{
+		challenge: `What is the output?
+
+	string name = "John";
+	Console.WriteLine("Hello " + name);`,
+		answer: "Hello John",
+	},
+	{
+		challenge: `What is the output?
+
+	int result = 10 + 2 * 3;
+	Console.WriteLine(result);`,
+		answer: "16",
+	},
+	{
+		challenge: `What is the output?
+
+	int x = 5;
+	x++;
+	Console.WriteLine(x);`,
+		answer: "6",
+	},
+	{
+		challenge: `Fill in the blank:
+
+	___ age = 25;
+	Console.WriteLine(age);`,
+		answer: "int",
+	},
+	{
+		challenge: `What is the output?
+
+	bool isActive = true;
+	Console.WriteLine(isActive);`,
+		answer: "True",
+	},
+	{
+		challenge: `What is the output?
+
+	string text = "Hello";
+	Console.WriteLine(text.Length);`,
+		answer: "5",
+	},
+	{
+		challenge: `What is the output?
+
+	int[] numbers = { 1, 2, 3 };
+	Console.WriteLine(numbers[1]);`,
+		answer: "2",
+	},
+	{
+		challenge: `What is the output?
+
+	Console.WriteLine(10 % 3);`,
+		answer: "1",
+	},
+	{
+		challenge: `Fill in the blank:
+
+	Console.___("Hello World");`,
+		answer: "WriteLine",
+	},
+	{
+		challenge: `What is the output?
+
+	int x = 0;
+	while (x < 3)
+	{
+		x++;
+	}
+	Console.WriteLine(x);`,
+		answer: "3",
+	},
+	{
+		challenge: `What is the output?
+
+	int[] items = { 1, 2, 3, 4 };
+	Console.WriteLine(items.Length);`,
+		answer: "4",
+	},
+	{
+		challenge: `What is the output?
+
+	Console.WriteLine(5 == 5);`,
+		answer: "True",
+	},
+	{
+		challenge: `Fill in the blank:
+
+	int GetNumber()
+	{
+		___ 5;
+	}`,
+		answer: "return",
+	},
+	{
+		challenge: `What is the output?
+
+	int x = default;
+	Console.WriteLine(x);`,
+		answer: "0",
+	},
+	{
+		challenge: `What is the output?
+
+	bool result = true && false;
+	Console.WriteLine(result);`,
+		answer: "False",
+	},
+	{
+		challenge: `What is the output?
+
+	int a = 4;
+	int b = 2;
+	Console.WriteLine(a * b);`,
+		answer: "8",
+	},
+	{
+		challenge: `What is the output?
+
+	string word = "CSharp";
+	Console.WriteLine(word[0]);`,
+		answer: "C",
+	},
+	{
+		challenge: `What is the output?
+
+	int sum = 0;
+	foreach (int n in new int[] { 1, 2, 3 })
+	{
+		sum += n;
+	}
+	Console.WriteLine(sum);`,
+		answer: "6",
+	},
+	{
+		challenge: `Fill in the blank:
+
+	bool isReady = ___;
+	Console.WriteLine(isReady);`,
+		answer: "true",
+	},
+	])
 	console.log("✅ E2E seed complete");
 }
+
+
 
 seedE2E()
 	.then(() => process.exit(0))

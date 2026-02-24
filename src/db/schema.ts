@@ -1,3 +1,4 @@
+// import { varchar } from "drizzle-orm/mysql-core";
 import {
 	boolean,
 	integer,
@@ -8,6 +9,7 @@ import {
 	unique,
 	uniqueIndex,
 	foreignKey,
+	varchar
 } from "drizzle-orm/pg-core";
 
 export const user = pgTable(
@@ -302,3 +304,10 @@ export const jobRole = pgTable("job_role", {
 	title: text("title").notNull().unique(),
 	description: text("description"),
 });
+
+
+export const daily_challenge = pgTable("daily_challenge", {
+	id: serial().primaryKey(),
+	challenge: varchar().notNull().unique(),
+	answer: varchar().notNull(),
+})
